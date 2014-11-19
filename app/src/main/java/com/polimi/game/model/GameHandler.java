@@ -90,9 +90,29 @@ public class GameHandler {
         return null;
     }
 
-    public Integer getGameStatus(){
-        //TODO implement the game's rules
-        return null;
+    public Boolean zeroSeeds(Integer idp){
+        Iterator<Container> ci=this.getContainers().iterator();
+        while (ci.hasNext()){
+            Container c=ci.next();
+            if((c.isBowl())&&(c.getPlayerId().equals(idp))&&(c.getSeeds()>0)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public Integer getGameStatus(Container lastPosition){
+        if(zeroSeeds(this.getActivePlayerId())){//max priority
+            return 3;// gamefinish
+        }else{
+            if((lastPosition.isTray())&&(lastPosition.getPlayerId().equals(this.getActivePlayerId()))){
+                return 2;//again my turn
+            }
+            if((lastPosition.isBowl())&&(lastPosition.getSeeds().equals(1))){
+                return 1;//steal seeds
+            }
+        }
+        return 0;//nothing happens
     }
 
     public void switchPlayer(){
@@ -104,11 +124,25 @@ public class GameHandler {
     }
 
     public void finishGame(){
-        //TODO update statistic and so
+        //TODO require the real player name and update statistic and so
     }
 
-    public void stealSeeds(Integer pointer){
-        //TODO special rule to steal seeds
+    public Tray getTrayByPlayerId(Integer playerId){
+        Iterator<Container> ci=this.getContainers().iterator();
+        while (ci.hasNext()){
+            Container c=ci.next();
+            if((c instanceof Tray)&&(c.getPlayerId().equals(playerId))){
+                return (Tray)c;
+            }
+        }
+        return null;
+    }
+
+    public void stealSeeds(Bowl lastPosition){
+        Bowl oC=lastPosition.getOppositeBowl();
+        Integer seeds=oC.extractSeeds();
+        seeds=seeds+lastPosition.extractSeeds();
+        this.getTrayByPlayerId(this.getActivePlayerId()).incrementSeeds(seeds);
     }
 
     public Integer getActivePlayerId() {

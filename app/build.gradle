@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.1"
 
     defaultConfig {
-        applicationId "com.jamescho.simpleandroidgdf"
+        applicationId "com.polimi.core"
         minSdkVersion 9
         targetSdkVersion 21
     }
@@ -14,6 +14,12 @@ android {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    sourceSets {
+
+        androidTest {
+            java.srcDirs = ['androidTest/java']
         }
     }
 }

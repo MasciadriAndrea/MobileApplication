@@ -16,6 +16,20 @@ public abstract class Container {
         this.nextContainer = nextContainer;
     }
 
+    public Boolean isBowl(){
+        if(this instanceof Bowl) {
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean isTray(){
+        if(this instanceof Tray) {
+            return true;
+        }
+        return false;
+    }
+
     public Container getNextContainer() {
         return nextContainer;
     }
@@ -26,6 +40,10 @@ public abstract class Container {
 
     public void incrementSeeds(){
         this.setSeeds(this.getSeeds()+1);
+    }
+
+    public void incrementSeeds(Integer nSeeds){
+        this.setSeeds(this.getSeeds()+nSeeds);
     }
 
 
