@@ -1,0 +1,55 @@
+package com.polimi.game.model;
+
+/**
+ * Created by Andrea on 18/11/2014.
+ */
+public abstract class Container {
+    private Integer seeds;
+    private Integer id;
+    private Integer playerId;
+    private Container nextContainer;
+
+    protected Container(Integer seeds, Integer id, Integer playerId, Container nextContainer) {
+        this.seeds = seeds;
+        this.id = id;
+        this.playerId = playerId;
+        this.nextContainer = nextContainer;
+    }
+
+    public Container getNextContainer() {
+        return nextContainer;
+    }
+
+    public void setNextContainer(Container nextContainer) {
+        this.nextContainer = nextContainer;
+    }
+
+    public void incrementSeeds(){
+        this.setSeeds(this.getSeeds()+1);
+    }
+
+
+    public Integer getSeeds() {
+        return seeds;
+    }
+
+    public void setSeeds(Integer seeds) {
+        this.seeds = seeds;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(Integer playerId) {
+        this.playerId = playerId;
+    }
+}
