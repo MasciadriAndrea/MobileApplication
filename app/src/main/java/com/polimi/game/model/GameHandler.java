@@ -15,7 +15,7 @@ public class GameHandler {
     private Board board;
     private Integer winnerId;
     private static Integer MEGABRAIN=1;
-    private static Integer TIED=0;
+    private static Integer TIE=0;
     private static Integer ISGAMEFINISHED=3;
     private static Integer ISMYTURNAGAIN=2;
     private static Integer PERFORMSTEAL=1;
@@ -68,7 +68,7 @@ public class GameHandler {
                 }else{
                     this.finishGame();
                 }
-                //else deve giocare ancora il player corrente
+                //else nothing is happen and the player must play again
             }
         }
     }
@@ -142,7 +142,7 @@ public class GameHandler {
             if(t2.getSeeds()>t1.getSeeds()){
                 this.setWinnerId(this.getP2Id());
             }else{
-                this.setWinnerId(this.TIED);
+                this.setWinnerId(this.TIE);
             }
         }
         //TODO require the real player name and update statistic and so
