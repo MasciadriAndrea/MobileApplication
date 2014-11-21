@@ -1,8 +1,6 @@
 package myapplication;
 
 import com.polimi.game.model.Bowl;
-import com.polimi.game.model.Container;
-import com.polimi.game.model.GameHandler;
 
 import junit.framework.TestCase;
 
@@ -20,9 +18,9 @@ public class BowlTest extends TestCase {
 
 
     public void testNumberSeeds() {
-        Integer ns=b1.extractSeeds();
+        Integer ns=b1.pullOutSeeds();
         assertEquals(3,(int)ns);
-        ns=b1.extractSeeds();
+        ns=b1.pullOutSeeds();
         assertEquals(0,(int)ns);
         b1.incrementSeeds(3);
         assertEquals(3, (int) b1.getSeeds());

@@ -10,7 +10,7 @@ public class Bowl extends Container {
         super(id, seeds, playerId, nextContainer);
     }
 
-    public Integer extractSeeds() {
+    public Integer pullOutSeeds() {
         Integer ns=this.getSeeds();
         this.setSeeds(0);
         return ns;

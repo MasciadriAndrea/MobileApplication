@@ -16,15 +16,6 @@ public class GameHandlerTest extends TestCase {
     }
 
 
-
-    public void testInitBoard() {
-        Integer[] initialBoard={0,nIni,nIni,nIni,nIni,nIni,nIni,0,nIni,nIni,nIni,nIni,nIni,nIni};
-        Integer[] board=gh.getBoardStatus();
-        for(int i=0;i<14;i++){
-            assertEquals(initialBoard[i],board[i]);
-        }
-    }
-
     public void testActivePlayer(){
         gh.playTurn(10);//bowl 10 can not be choosen from player1->nothing happen
         assertEquals(1,(int) gh.getActivePlayerId());//player 1 must play
@@ -35,7 +26,7 @@ public class GameHandlerTest extends TestCase {
     public void testTryGameNormal(){
         Integer[] expectedBoard={0,nIni+1,nIni+1,nIni+1,nIni-3,nIni,nIni,0,nIni,nIni,nIni,nIni,nIni,nIni};
         gh.playTurn(5);
-        Integer[] board=gh.getBoardStatus();
+        Integer[] board=gh.getBoard().getBoardStatus();
         for(int i=0;i<14;i++){
             assertEquals(expectedBoard[i],board[i]);
         }
@@ -48,7 +39,7 @@ public class GameHandlerTest extends TestCase {
         assertEquals(1,(int) gh.getActivePlayerId()); //player 1 must play again
         gh.playTurn(3);
         assertEquals(2,(int) gh.getActivePlayerId());//now is turn of player 2
-        Integer[] board=gh.getBoardStatus();
+        Integer[] board=gh.getBoard().getBoardStatus();
         for(int i=0;i<14;i++){
             assertEquals(expectedBoard[i],board[i]);
         }
@@ -63,7 +54,7 @@ public class GameHandlerTest extends TestCase {
         assertEquals(1,(int) gh.getActivePlayerId());//player 1 must play
         gh.playTurn(6);//and he steals!!!!!!!
         assertEquals(2,(int) gh.getActivePlayerId()); //player 2 must play
-        Integer[] board=gh.getBoardStatus();
+        Integer[] board=gh.getBoard().getBoardStatus();
         for(int i=0;i<14;i++){
             assertEquals(expectedBoard[i],board[i]);
         }
@@ -75,7 +66,7 @@ public class GameHandlerTest extends TestCase {
         Integer[] expectedBoard={4,0,0,0,0,0,0,7,0,0,0,0,0,0};
         GameHandler ghF=new GameHandler(1,2,initialBoard);
         ghF.playTurn(2);
-        Integer[] board=ghF.getBoardStatus();
+        Integer[] board=ghF.getBoard().getBoardStatus();
         assertTrue(ghF.getIsGameFinished());
         assertEquals((int) ghF.getWinnerId(),2);
         for(int i=0;i<14;i++){
