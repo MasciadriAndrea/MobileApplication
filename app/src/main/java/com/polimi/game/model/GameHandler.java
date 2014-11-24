@@ -21,54 +21,63 @@ public class GameHandler {
     private static Integer PERFORMSTEAL=1;
 
     public GameHandler(Integer p1Id){
+       //constructor for Human vs Megabrain mode
        Integer p2Id=this.MEGABRAIN;
        this.initGame(p1Id,p2Id,false);
        this.setBoard(new Board(p1Id,p2Id));
    }
 
     public GameHandler(Integer p1Id, Integer p2Id) {
+        //constructor for H vs H mode
         this.initGame(p1Id, p2Id, true);
         this.setBoard(new Board(p1Id, p2Id));
     }
 
     public GameHandler(Integer p1Id, Integer p2Id, int[] initialBoard ) {
+        //constructor for testing with initializated board
         this.initGame(p1Id,p2Id,true);
         this.setBoard(new Board(initialBoard, p1Id, p2Id));
     }
 
     public void playTurn(Integer selectedBowlId){
         this.setSelectedBowlId(selectedBowlId);
-        Container b=this.getBoard().getContainerById(selectedBowlId);
-        if(b.getPlayerId().equals(this.getActivePlayerId())){
-            //if the selected Bowl is own by activePlayer
-            if(b.getSeeds()>0){
-                //if the bowl is not empty
-                Integer seeds= ((Bowl) b).pullOutSeeds();
-                Container pointer=b;
-                for (int i=1;i<=seeds;i++){
-                    pointer=pointer.getNextContainer();
-                    if((pointer.isTray())&&(!pointer.getPlayerId().equals(this.getActivePlayerId()))){
-                        pointer=pointer.getNextContainer();
-                    }
-                    pointer.incrementSeeds();
-                }
-                Integer gameStatus=this.getGameStatus(pointer);
-                if(!gameStatus.equals(this.ISGAMEFINISHED)){
-                    //if the game is not finished
-                    if(gameStatus.equals(this.PERFORMSTEAL)){
-                        //steal seeds
-                        this.stealSeeds((Bowl)pointer);
-                    }
-                    if(!gameStatus.equals(this.ISMYTURNAGAIN)){
-                        this.switchPlayer();
-                        if(this.isMegabrainTurn()){
-                            this.playTurn(this.megabrainSelectBowlId());
+        if((selectedBowlId>0)&&(selectedBowlId<=14)) {
+            //if selectedBowlId inside the range of eligible containers id
+            Container b = this.getBoard().getContainerById(selectedBowlId);
+            if(b.isBowl()){
+                //if the selected container is a Bowl
+                if (b.getPlayerId().equals(this.getActivePlayerId())) {
+                    //if the selected Bowl is own by activePlayer
+                    if (b.getSeeds() > 0) {
+                        //if the bowl is not empty
+                        Integer seeds = ((Bowl) b).pullOutSeeds();
+                        Container pointer = b;
+                        for (int i = 1; i <= seeds; i++) {
+                            pointer = pointer.getNextContainer();
+                            if ((pointer.isTray()) && (!pointer.getPlayerId().equals(this.getActivePlayerId()))) {
+                                pointer = pointer.getNextContainer();
+                            }
+                            pointer.incrementSeeds();
                         }
+                        Integer gameStatus = this.getGameStatus(pointer);
+                        if (!gameStatus.equals(this.ISGAMEFINISHED)) {
+                            //if the game is not finished
+                            if (gameStatus.equals(this.PERFORMSTEAL)) {
+                                //steal seeds
+                                this.stealSeeds((Bowl) pointer);
+                            }
+                            if (!gameStatus.equals(this.ISMYTURNAGAIN)) {
+                                this.switchPlayer();
+                                if (this.isMegabrainTurn()) {
+                                    this.playTurn(this.megabrainSelectBowlId());
+                                }
+                            }
+                        } else {
+                            this.finishGame();
+                        }
+                        //else nothing is happen and the player must play again
                     }
-                }else{
-                    this.finishGame();
                 }
-                //else nothing is happen and the player must play again
             }
         }
     }

@@ -73,6 +73,32 @@ public class GameHandlerTest extends TestCase {
             assertEquals(expectedBoard[i],board[i]);
         }
     }
+
+    public void testGame(){
+        //insert your parameter here
+        int[] initialBoard= {3,1,3,2,2,2,2,1,0,0,3,0,1,2};
+        int[] selectedBowls={0,11,2,1,8,3};
+        /*
+            turn 1: selectedBowlId=0 -> 0 is not eligible as Container ID -> canceled
+            turn 2: selectedBowlId=11 -> 11 is owned by player 2 and now is player 1 turn -> canceled
+            turn 3: selectedBowlId=2 -> ok.. is player1 turn again
+            turn 4: selectedBowlId=1 -> 1 is a tray -> canceled
+            turn 5: selectedBowlId=8 -> 8 is a tray -> canceled
+            turn 6: selectedBowlId=3 -> ok.. now is player 2 turn
+         */
+        Integer[] expectedBoard={5,1,0,2,2,2,2,1,0,0,3,0,1,3};
+        //initialization of the game
+        GameHandler ghF=new GameHandler(1,2,initialBoard);
+        //the game will be played here
+        for(int i=0;i<selectedBowls.length;i++){
+            ghF.playTurn(selectedBowls[i]);
+        }
+        //check the result
+        Integer[] board=ghF.getBoard().getBoardStatus();
+        for(int i=0;i<14;i++){
+            assertEquals(expectedBoard[i],board[i]);
+        }
+    }
 }
 
 
