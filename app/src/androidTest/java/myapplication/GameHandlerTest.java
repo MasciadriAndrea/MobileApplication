@@ -23,7 +23,7 @@ public class GameHandlerTest extends TestCase {
         assertEquals(2,(int) gh.getActivePlayerId());
     }
 
-    public void testTryGameNormal(){
+    public void testGameNormal(){
         Integer[] expectedBoard={0,nIni+1,nIni+1,nIni+1,nIni-3,nIni,nIni,0,nIni,nIni,nIni,nIni,nIni,nIni};
         gh.playTurn(5);
         Integer[] board=gh.getBoard().getBoardStatus();
@@ -32,7 +32,7 @@ public class GameHandlerTest extends TestCase {
         }
     }
 
-    public void testTryGamePlayAgain(){
+    public void testGamePlayAgain(){
         Integer[] expectedBoard={2,5,0,0,nIni,nIni,nIni,0,nIni,nIni,nIni,nIni,4,4};
         assertEquals(1,(int) gh.getActivePlayerId());//player 1 must play
         gh.playTurn(4);
@@ -45,7 +45,7 @@ public class GameHandlerTest extends TestCase {
         }
     }
 
-    public void testTryGameStalSeeds(){
+    public void testGameStealSeeds(){
         Integer[] expectedBoard={5,4,0,4,4,0,nIni,0,4,4,4,0,0,4};
         assertEquals(1,(int) gh.getActivePlayerId());//player 1 must play
         gh.playTurn(3);
