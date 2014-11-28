@@ -4,9 +4,6 @@ import com.polimi.game.model.Bowl;
 
 import junit.framework.TestCase;
 
-/**
- * Created by Andrea on 20/11/2014.
- */
 public class BowlTest extends TestCase {
     protected Bowl b1;
     protected Bowl b2;

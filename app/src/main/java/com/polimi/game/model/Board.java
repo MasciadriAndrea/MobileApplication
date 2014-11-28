@@ -3,9 +3,6 @@ package com.polimi.game.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/**
- * Created by Andrea on 21/11/2014.
- */
 public class Board {
     private ArrayList<Container> containers;
     private static Integer nIni=3;

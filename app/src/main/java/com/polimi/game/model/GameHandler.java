@@ -2,9 +2,7 @@ package com.polimi.game.model;
 
 import java.util.Iterator;
 
-/**
- * Created by Andrea on 18/11/2014.
- */
+
 public class GameHandler {
     private Integer activePlayerId;
     private Integer selectedBowlId;
@@ -13,29 +11,31 @@ public class GameHandler {
     private Boolean isHH;
     private Boolean isGameFinished;
     private Board board;
-    private Integer winnerId;
+    private MatchResult matchResult;
     private static Integer MEGABRAIN=1;
     private static Integer TIE=0;
     private static Integer ISGAMEFINISHED=3;
     private static Integer ISMYTURNAGAIN=2;
     private static Integer PERFORMSTEAL=1;
+    private static Integer nSeeds=3;
+
 
     public GameHandler(Integer p1Id){
        //constructor for Human vs Megabrain mode
        Integer p2Id=this.MEGABRAIN;
-       this.initGame(p1Id,p2Id,false);
+       this.initGame(p1Id,p2Id,false,nSeeds);
        this.setBoard(new Board(p1Id,p2Id));
    }
 
     public GameHandler(Integer p1Id, Integer p2Id) {
         //constructor for H vs H mode
-        this.initGame(p1Id, p2Id, true);
+        this.initGame(p1Id, p2Id, true,nSeeds);
         this.setBoard(new Board(p1Id, p2Id));
     }
 
     public GameHandler(Integer p1Id, Integer p2Id, int[] initialBoard ) {
         //constructor for testing with initializated board
-        this.initGame(p1Id,p2Id,true);
+        this.initGame(p1Id,p2Id,true,initialBoard[2]);
         this.setBoard(new Board(initialBoard, p1Id, p2Id));
     }
 
@@ -82,13 +82,16 @@ public class GameHandler {
         }
     }
 
-    private void initGame(Integer p1Id, Integer p2Id,Boolean isHH){
+    private void initGame(Integer p1Id, Integer p2Id,Boolean isHH,Integer initSeeds){
         this.p1Id = p1Id;
         this.p2Id = p2Id;
         this.setIsHH(isHH);
         this.setIsGameFinished(false);
         this.setActivePlayerId(p1Id);
-        this.setWinnerId(null);
+        this.matchResult=new MatchResult(initSeeds);
+    }
+    private void updateMatchResult(Integer winnerId){
+        this.matchResult.storeData(winnerId);
     }
 
     private Boolean zeroSeeds(Integer idp){
@@ -146,12 +149,12 @@ public class GameHandler {
         t2.incrementSeeds(seeds2);
         this.setIsGameFinished(true);
         if(t1.getSeeds()>t2.getSeeds()){
-            this.setWinnerId(this.getP1Id());
+            this.matchResult.storeData(this.getP1Id());
         }else{
             if(t2.getSeeds()>t1.getSeeds()){
-                this.setWinnerId(this.getP2Id());
+                this.matchResult.storeData(this.getP2Id());
             }else{
-                this.setWinnerId(this.TIE);
+                this.matchResult.storeData(this.TIE);
             }
         }
         //TODO require the real player name and update statistic and so
@@ -218,16 +221,16 @@ public class GameHandler {
         this.isGameFinished = isGameFinished;
     }
 
-    public Integer getWinnerId() {
-        return winnerId;
-    }
-
-    public void setWinnerId(Integer winnerId) {
-        this.winnerId = winnerId;
-    }
-
     public Boolean getIsHH() {
         return isHH;
+    }
+
+    public MatchResult getMatchResult() {
+        return matchResult;
+    }
+
+    public void setMatchResult(MatchResult matchResult) {
+        this.matchResult = matchResult;
     }
 
     public void setIsHH(Boolean isHH) {

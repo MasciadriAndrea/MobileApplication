@@ -1,8 +1,5 @@
 package com.polimi.game.model;
 
-/**
- * Created by Andrea on 18/11/2014.
- */
 public class Bowl extends Container {
     private Bowl oppositeBowl;
 

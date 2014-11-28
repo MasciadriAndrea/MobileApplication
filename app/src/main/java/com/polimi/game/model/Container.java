@@ -1,8 +1,5 @@
 package com.polimi.game.model;
 
-/**
- * Created by Andrea on 18/11/2014.
- */
 public abstract class Container {
     private Integer seeds;
     private Integer id;

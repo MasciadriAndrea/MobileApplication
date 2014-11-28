@@ -1,25 +1,27 @@
 package com.polimi.game.model;
 
-/**
- * Created by Andrea on 18/11/2014.
- */
+import java.util.Date;
+
 public class Player {
-    private Integer idPlayer;
+    private Integer id;
     private String name;
-    private Integer numberWins;
+    private Integer playedGames;
+    private Integer wonGames;
+    private Double wonGameResult;
+    private Double maxScoreResult;
+    private Date lastGamePlayed;
 
-    public Player(Integer idPlayer, String name) {
-        this.idPlayer = idPlayer;
+    public Player(String name, Integer id) {
         this.name = name;
-        this.numberWins = 0;
+        this.id = id;
     }
 
-    public Integer getIdPlayer() {
-        return idPlayer;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdPlayer(Integer idPlayer) {
-        this.idPlayer = idPlayer;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -30,11 +32,43 @@ public class Player {
         this.name = name;
     }
 
-    public Integer getNumberWins() {
-        return numberWins;
+    public Integer getPlayedGames() {
+        return playedGames;
     }
 
-    public void setNumberWins(Integer numberWins) {
-        this.numberWins = numberWins;
+    public void setPlayedGames(Integer playedGames) {
+        this.playedGames = playedGames;
+    }
+
+    public Integer getWonGames() {
+        return wonGames;
+    }
+
+    public void setWonGames(Integer wonGames) {
+        this.wonGames = wonGames;
+    }
+
+    public Double getWonGameResult() {
+        return wonGameResult;
+    }
+
+    public void setWonGameResult(Double wonGameResult) {
+        this.wonGameResult = wonGameResult;
+    }
+
+    public Double getMaxScoreResult() {
+        return maxScoreResult;
+    }
+
+    public void setMaxScoreResult(Double maxScoreResult) {
+        this.maxScoreResult = maxScoreResult;
+    }
+
+    public Date getLastGamePlayed() {
+        return lastGamePlayed;
+    }
+
+    public void setLastGamePlayed(Date lastGamePlayed) {
+        this.lastGamePlayed = lastGamePlayed;
     }
 }

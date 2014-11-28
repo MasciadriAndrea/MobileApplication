@@ -3,9 +3,6 @@ import com.polimi.game.model.GameHandler;
 
 import junit.framework.TestCase;
 
-/**
- * Created by Andrea on 20/11/2014.
- */
 
 public class GameHandlerTest extends TestCase {
     protected GameHandler gh;
@@ -68,7 +65,7 @@ public class GameHandlerTest extends TestCase {
         ghF.playTurn(2);
         Integer[] board=ghF.getBoard().getBoardStatus();
         assertTrue(ghF.getIsGameFinished());
-        assertEquals((int) ghF.getWinnerId(),2);
+        assertEquals((int) ghF.getMatchResult().getWinnerId(),2);
         for(int i=0;i<14;i++){
             assertEquals(expectedBoard[i],board[i]);
         }

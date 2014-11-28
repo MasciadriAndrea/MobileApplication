@@ -6,9 +6,7 @@ import com.polimi.game.model.GameHandler;
 
 import junit.framework.TestCase;
 
-/**
- * Created by Andrea on 21/11/2014.
- */
+
 public class BoardTest extends TestCase {
     protected Board b;
     private Integer nIni=3;
