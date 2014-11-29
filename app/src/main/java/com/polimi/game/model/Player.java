@@ -3,6 +3,9 @@ package com.polimi.game.model;
 import java.util.Date;
 
 public class Player {
+
+    //TODO Class methods not yet implemented
+
     private Integer id;
     private String name;
     private Integer playedGames;
