@@ -4,39 +4,39 @@ import java.util.Iterator;
 
 
 public class GameHandler {
-    private Integer activePlayerId;
+    private Player activePlayer;
     private Integer selectedBowlId;
-    private Integer p1Id;
-    private Integer p2Id;
+    private Player p1;
+    private Player p2;
     private Boolean isHH;
     private Boolean isGameFinished;
     private Board board;
     private MatchResult matchResult;
     private static Integer MEGABRAIN=1;
-    private static Integer TIE=0;
+    private static Player TIE=null;
     private static Integer ISGAMEFINISHED=3;
     private static Integer ISMYTURNAGAIN=2;
     private static Integer PERFORMSTEAL=1;
     private static Integer nSeeds=3;
 
 
-    public GameHandler(Integer p1Id){
+    public GameHandler(Player p1){
        //constructor for Human vs Megabrain mode
        Integer p2Id=this.MEGABRAIN;
-       this.initGame(p1Id,p2Id,false,nSeeds);
-       this.setBoard(new Board(p1Id,p2Id));
+       this.initGame(p1,p2,false,nSeeds);
+       this.setBoard(new Board(p1,p2));
    }
 
-    public GameHandler(Integer p1Id, Integer p2Id) {
+    public GameHandler(Player p1, Player p2) {
         //constructor for H vs H mode
-        this.initGame(p1Id, p2Id, true,nSeeds);
-        this.setBoard(new Board(p1Id, p2Id));
+        this.initGame(p1, p2, true,nSeeds);
+        this.setBoard(new Board(p1, p2));
     }
 
-    public GameHandler(Integer p1Id, Integer p2Id, int[] initialBoard ) {
+    public GameHandler(Player p1, Player p2, int[] initialBoard ) {
         //constructor for testing with initializated board
-        this.initGame(p1Id,p2Id,true,initialBoard[2]);
-        this.setBoard(new Board(initialBoard, p1Id, p2Id));
+        this.initGame(p1,p2,true,initialBoard[2]);
+        this.setBoard(new Board(initialBoard, p1, p2));
     }
 
     public void playTurn(Integer selectedBowlId){
@@ -46,7 +46,7 @@ public class GameHandler {
             Container b = this.getBoard().getContainerById(selectedBowlId);
             if(b.isBowl()){
                 //if the selected container is a Bowl
-                if (b.getPlayerId().equals(this.getActivePlayerId())) {
+                if (b.getPlayer().equals(this.getActivePlayer())) {
                     //if the selected Bowl is own by activePlayer
                     if (b.getSeeds() > 0) {
                         //if the bowl is not empty
@@ -54,7 +54,7 @@ public class GameHandler {
                         Container pointer = b;
                         for (int i = 1; i <= seeds; i++) {
                             pointer = pointer.getNextContainer();
-                            if ((pointer.isTray()) && (!pointer.getPlayerId().equals(this.getActivePlayerId()))) {
+                            if ((pointer.isTray()) && (!pointer.getPlayer().equals(this.getActivePlayer()))) {
                                 pointer = pointer.getNextContainer();
                             }
                             pointer.incrementSeeds();
@@ -82,23 +82,23 @@ public class GameHandler {
         }
     }
 
-    private void initGame(Integer p1Id, Integer p2Id,Boolean isHH,Integer initSeeds){
-        this.p1Id = p1Id;
-        this.p2Id = p2Id;
+    private void initGame(Player p1, Player p2,Boolean isHH,Integer initSeeds){
+        this.p1 = p1;
+        this.p2 = p2;
         this.setIsHH(isHH);
         this.setIsGameFinished(false);
-        this.setActivePlayerId(p1Id);
+        this.setActivePlayer(p1);
         this.matchResult=new MatchResult(initSeeds);
     }
-    private void updateMatchResult(Integer winnerId){
-        this.matchResult.storeData(winnerId);
+    private void updateMatchResult(Player winner){
+        this.matchResult.storeData(winner);
     }
 
-    private Boolean zeroSeeds(Integer idp){
+    private Boolean zeroSeeds(Player player){
         Iterator<Container> ci=this.getBoard().getContainers().iterator();
         while (ci.hasNext()){
             Container c=ci.next();
-            if((c.isBowl())&&(c.getPlayerId().equals(idp))&&(c.getSeeds()>0)){
+            if((c.isBowl())&&(c.getPlayer().equals(player))&&(c.getSeeds()>0)){
                 return false;
             }
         }
@@ -106,13 +106,13 @@ public class GameHandler {
     }
 
     private Integer getGameStatus(Container lastPosition){
-        if(this.zeroSeeds(this.getActivePlayerId())){//max priority
+        if(this.zeroSeeds(this.getActivePlayer())){//max priority
             return 3;// gamefinish
         }else{
-            if((lastPosition.isTray())&&(lastPosition.getPlayerId().equals(this.getActivePlayerId()))){
+            if((lastPosition.isTray())&&(lastPosition.getPlayer().equals(this.getActivePlayer()))){
                 return 2;//again my turn
             }
-            if((lastPosition.isBowl())&&(lastPosition.getSeeds().equals(1))&&(lastPosition.getPlayerId().equals(this.getActivePlayerId()))){
+            if((lastPosition.isBowl())&&(lastPosition.getSeeds().equals(1))&&(lastPosition.getPlayer().equals(this.getActivePlayer()))){
                 //equals 1 due to pre-increment after movement
                 return 1;//steal seeds
             }
@@ -121,10 +121,10 @@ public class GameHandler {
     }
 
     private void switchPlayer(){
-        if (this.getActivePlayerId().equals(this.getP1Id())) {
-            this.setActivePlayerId(this.getP2Id());
+        if (this.getActivePlayer().equals(this.getP1())) {
+            this.setActivePlayer(this.getP2());
         }else{
-            this.setActivePlayerId(this.getP1Id());
+            this.setActivePlayer(this.getP1());
         }
     }
 
@@ -135,7 +135,7 @@ public class GameHandler {
         while (ci.hasNext()){
             Container c=ci.next();
             if(c.isBowl()){
-                if(c.getPlayerId().equals(this.getP1Id())){
+                if(c.getPlayer().equals(this.getP1())){
                     c=(Bowl)c;
                     seeds1=seeds1+(((Bowl) c).pullOutSeeds());
                 }else{
@@ -143,16 +143,16 @@ public class GameHandler {
                 }
             }
         }
-        Tray t1=this.getBoard().getTrayByPlayerId(this.getP1Id());
+        Tray t1=this.getBoard().getTrayByPlayer(this.getP1());
         t1.incrementSeeds(seeds1);
-        Tray t2=this.getBoard().getTrayByPlayerId(this.getP2Id());
+        Tray t2=this.getBoard().getTrayByPlayer(this.getP2());
         t2.incrementSeeds(seeds2);
         this.setIsGameFinished(true);
         if(t1.getSeeds()>t2.getSeeds()){
-            this.matchResult.storeData(this.getP1Id());
+            this.matchResult.storeData(this.getP1());
         }else{
             if(t2.getSeeds()>t1.getSeeds()){
-                this.matchResult.storeData(this.getP2Id());
+                this.matchResult.storeData(this.getP2());
             }else{
                 this.matchResult.storeData(this.TIE);
             }
@@ -169,7 +169,7 @@ public class GameHandler {
     }
 
     private Boolean isMegabrainTurn(){
-        if((!this.getIsHH())&&(this.getActivePlayerId().equals(this.getP2Id()))){
+        if((!this.getIsHH())&&(this.getActivePlayer().equals(this.getP2()))){
             return true;
         }
         return false;
@@ -179,31 +179,31 @@ public class GameHandler {
         Bowl oC=lastPosition.getOppositeBowl();
         Integer seeds=oC.pullOutSeeds();
         seeds=seeds+lastPosition.pullOutSeeds();
-        this.getBoard().getTrayByPlayerId(this.getActivePlayerId()).incrementSeeds(seeds);
+        this.getBoard().getTrayByPlayer(this.getActivePlayer()).incrementSeeds(seeds);
     }
 
-    public Integer getActivePlayerId() {
-        return activePlayerId;
+    public Player getActivePlayer() {
+        return activePlayer;
     }
 
-    public void setActivePlayerId(Integer activePlayerId) {
-        this.activePlayerId = activePlayerId;
+    public void setActivePlayer(Player activePlayer) {
+        this.activePlayer = activePlayer;
     }
 
-    public Integer getP1Id() {
-        return p1Id;
+    public Player getP1() {
+        return p1;
     }
 
-    public void setP1Id(Integer p1Id) {
-        this.p1Id = p1Id;
+    public void setP1(Player p1) {
+        this.p1 = p1;
     }
 
-    public Integer getP2Id() {
-        return p2Id;
+    public Player getP2() {
+        return p2;
     }
 
-    public void setP2Id(Integer p2Id) {
-        this.p2Id = p2Id;
+    public void setP2(Player p2) {
+        this.p2 = p2;
     }
 
     public Integer getSelectedBowlId() {

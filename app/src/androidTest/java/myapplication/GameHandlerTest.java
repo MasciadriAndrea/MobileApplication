@@ -1,5 +1,6 @@
 package myapplication;
 import com.polimi.game.model.GameHandler;
+import com.polimi.game.model.Player;
 
 import junit.framework.TestCase;
 
@@ -7,17 +8,21 @@ import junit.framework.TestCase;
 public class GameHandlerTest extends TestCase {
     protected GameHandler gh;
     private Integer nIni=3;
+    private Player p1;
+    private Player p2;
 
     protected void setUp() {
-       gh=new GameHandler(1,2);
+        p1=new Player("Foo",1);
+        p2=new Player("Bar",2);
+        gh=new GameHandler(p1,p2);
     }
 
 
     public void testActivePlayer(){
         gh.playTurn(10);//bowl 10 can not be choosen from player1->nothing happen
-        assertEquals(1,(int) gh.getActivePlayerId());//player 1 must play
+        assertEquals(p1,gh.getActivePlayer());//player 1 must play
         gh.playTurn(5);//player 1 play---> now active player change
-        assertEquals(2,(int) gh.getActivePlayerId());
+        assertEquals(p2,gh.getActivePlayer());
     }
 
     public void testGameNormal(){
@@ -31,11 +36,11 @@ public class GameHandlerTest extends TestCase {
 
     public void testGamePlayAgain(){
         Integer[] expectedBoard={2,5,0,0,nIni,nIni,nIni,0,nIni,nIni,nIni,nIni,4,4};
-        assertEquals(1,(int) gh.getActivePlayerId());//player 1 must play
+        assertEquals(p1, gh.getActivePlayer());//player 1 must play
         gh.playTurn(4);
-        assertEquals(1,(int) gh.getActivePlayerId()); //player 1 must play again
+        assertEquals(p1, gh.getActivePlayer()); //player 1 must play again
         gh.playTurn(3);
-        assertEquals(2,(int) gh.getActivePlayerId());//now is turn of player 2
+        assertEquals(p2, gh.getActivePlayer());//now is turn of player 2
         Integer[] board=gh.getBoard().getBoardStatus();
         for(int i=0;i<14;i++){
             assertEquals(expectedBoard[i],board[i]);
@@ -44,13 +49,13 @@ public class GameHandlerTest extends TestCase {
 
     public void testGameStealSeeds(){
         Integer[] expectedBoard={5,4,0,4,4,0,nIni,0,4,4,4,0,0,4};
-        assertEquals(1,(int) gh.getActivePlayerId());//player 1 must play
+        assertEquals(p1, gh.getActivePlayer());//player 1 must play
         gh.playTurn(3);
-        assertEquals(2,(int) gh.getActivePlayerId()); //player 2 must play
+        assertEquals(p2, gh.getActivePlayer()); //player 2 must play
         gh.playTurn(12);
-        assertEquals(1,(int) gh.getActivePlayerId());//player 1 must play
+        assertEquals(p1, gh.getActivePlayer());//player 1 must play
         gh.playTurn(6);//and he steals!!!!!!!
-        assertEquals(2,(int) gh.getActivePlayerId()); //player 2 must play
+        assertEquals(p2, gh.getActivePlayer()); //player 2 must play
         Integer[] board=gh.getBoard().getBoardStatus();
         for(int i=0;i<14;i++){
             assertEquals(expectedBoard[i],board[i]);
@@ -61,11 +66,11 @@ public class GameHandlerTest extends TestCase {
     public void testEndGame(){
         int[] initialBoard= {3,1,0,0,0,0,0,1,0,0,3,0,1,2};
         Integer[] expectedBoard={4,0,0,0,0,0,0,7,0,0,0,0,0,0};
-        GameHandler ghF=new GameHandler(1,2,initialBoard);
+        GameHandler ghF=new GameHandler(p1,p2,initialBoard);
         ghF.playTurn(2);
         Integer[] board=ghF.getBoard().getBoardStatus();
         assertTrue(ghF.getIsGameFinished());
-        assertEquals((int) ghF.getMatchResult().getWinnerId(),2);
+        assertEquals( ghF.getMatchResult().getWinner(),p2);
         for(int i=0;i<14;i++){
             assertEquals(expectedBoard[i],board[i]);
         }
@@ -85,7 +90,7 @@ public class GameHandlerTest extends TestCase {
          */
         Integer[] expectedBoard={5,1,0,2,2,2,2,1,0,0,3,0,1,3};
         //initialization of the game
-        GameHandler ghF=new GameHandler(1,2,initialBoard);
+        GameHandler ghF=new GameHandler(p1,p2,initialBoard);
         //the game will be played here
         for(int i=0;i<selectedBowls.length;i++){
             ghF.playTurn(selectedBowls[i]);

@@ -3,13 +3,13 @@ package com.polimi.game.model;
 public abstract class Container {
     private Integer seeds;
     private Integer id;
-    private Integer playerId;
+    private Player player;
     private Container nextContainer;
 
-    protected Container(Integer id, Integer seeds, Integer playerId, Container nextContainer) {
+    protected Container(Integer id, Integer seeds, Player player, Container nextContainer) {
         this.seeds = seeds;
         this.id = id;
-        this.playerId = playerId;
+        this.player = player;
         this.nextContainer = nextContainer;
     }
 
@@ -60,11 +60,11 @@ public abstract class Container {
         this.id = id;
     }
 
-    public Integer getPlayerId() {
-        return playerId;
+    public Player getPlayer() {
+        return player;
     }
 
-    public void setPlayerId(Integer playerId) {
-        this.playerId = playerId;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

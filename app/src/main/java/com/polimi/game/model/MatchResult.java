@@ -3,7 +3,7 @@ package com.polimi.game.model;
 import java.util.Date;
 
 public class MatchResult {
-    private Integer winnerId;
+    private Player winner;
     private Integer p1Seeds;
     private Integer p2Seeds;
     private Integer seedsPerBowl;
@@ -13,23 +13,23 @@ public class MatchResult {
 
     public MatchResult(Integer seedsPerBowl) {
         this.seedsPerBowl = seedsPerBowl;
-        this.winnerId=null;
+        this.winner=null;
         this.p1Seeds=0;
         this.p2Seeds=0;
         this.bestMoveP1=0;
         this.bestMoveP2=0;
         //TODO full data field this.data
     }
-    public void storeData(Integer winnerId){
-        this.winnerId=winnerId;
+    public void storeData(Player player){
+        this.winner=player;
         // /TODO calculate indexes and update database
     }
-    public Integer getWinnerId() {
-        return winnerId;
+    public Player getWinner() {
+        return winner;
     }
 
-    public void setWinnerId(Integer winnerId) {
-        this.winnerId = winnerId;
+    public void setWinner(Player winner) {
+        this.winner = winner;
     }
 
     public Integer getP1Seeds() {

@@ -1,14 +1,17 @@
 package myapplication;
 
+import com.polimi.game.model.Player;
 import com.polimi.game.model.Tray;
 
 import junit.framework.TestCase;
 
 public class TrayTest extends TestCase {
     protected Tray t1;
+    private Player p1;
 
     protected void setUp() {
-        t1=new Tray(1,0,1,null);
+        p1=new Player("Foo",1);
+        t1=new Tray(1,0,p1,null);
     }
 
 

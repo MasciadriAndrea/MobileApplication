@@ -17,6 +17,21 @@ public class Player {
     public Player(String name, Integer id) {
         this.name = name;
         this.id = id;
+        this.playedGames = null;
+        this.wonGames = null;
+        this.wonGameResult = null;
+        this.maxScoreResult = null;
+        this.lastGamePlayed = null;
+    }
+
+    public Player(Integer id, String name, Integer playedGames, Integer wonGames, Double wonGameResult, Double maxScoreResult, Date lastGamePlayed) {
+        this.id = id;
+        this.name = name;
+        this.playedGames = playedGames;
+        this.wonGames = wonGames;
+        this.wonGameResult = wonGameResult;
+        this.maxScoreResult = maxScoreResult;
+        this.lastGamePlayed = lastGamePlayed;
     }
 
     public Integer getId() {

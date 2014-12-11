@@ -3,8 +3,9 @@ package com.polimi.game.model;
 public class Bowl extends Container {
     private Bowl oppositeBowl;
 
-    public Bowl(Integer id, Integer seeds, Integer playerId,  Container nextContainer) {
-        super(id, seeds, playerId, nextContainer);
+
+    public Bowl(Integer id, Integer seeds, Player player,  Container nextContainer) {
+        super(id, seeds, player, nextContainer);
     }
 
     public Integer pullOutSeeds() {

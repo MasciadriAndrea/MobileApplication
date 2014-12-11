@@ -1,16 +1,21 @@
 package myapplication;
 
 import com.polimi.game.model.Bowl;
+import com.polimi.game.model.Player;
 
 import junit.framework.TestCase;
 
 public class BowlTest extends TestCase {
     protected Bowl b1;
     protected Bowl b2;
+    private Player p1;
+    private Player p2;
 
     protected void setUp() {
-        b1=new Bowl(1, 3, 1, null);
-        b2=new Bowl(2,3,2, b1);
+        p1=new Player("Foo",1);
+        p2=new Player("Bar",2);
+        b1=new Bowl(1, 3, p1, null);
+        b2=new Bowl(2, 3, p2, b1);
     }
 
 
