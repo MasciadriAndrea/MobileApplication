@@ -1,4 +1,4 @@
-package com.polimi.game.model;
+package it.polimi.game.model;
 
 public class Bowl extends Container {
     private Bowl oppositeBowl;

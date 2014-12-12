@@ -1,4 +1,4 @@
-package com.polimi.framework.util;
+package it.polimi.framework.util;
 
 import java.util.Random;
 

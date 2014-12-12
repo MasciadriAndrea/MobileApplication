@@ -1,4 +1,4 @@
-package com.polimi.core;
+package it.polimi.core;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,10 +8,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 
-import com.polimi.framework.util.InputHandler;
-import com.polimi.framework.util.Painter;
-import com.polimi.game.state.LoadState;
-import com.polimi.game.state.State;
+import it.polimi.framework.util.InputHandler;
+import it.polimi.framework.util.Painter;
+import it.polimi.game.state.LoadState;
+import it.polimi.game.state.State;
 
 public class GameView extends SurfaceView implements Runnable {
 

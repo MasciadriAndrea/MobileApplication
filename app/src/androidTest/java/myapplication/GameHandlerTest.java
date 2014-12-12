@@ -1,6 +1,6 @@
 package myapplication;
-import com.polimi.game.model.GameHandler;
-import com.polimi.game.model.Player;
+import it.polimi.game.model.GameHandler;
+import it.polimi.game.model.Player;
 
 import junit.framework.TestCase;
 

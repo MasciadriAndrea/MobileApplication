@@ -1,6 +1,4 @@
-package com.polimi.game.model;
-
-import java.util.Date;
+package it.polimi.game.model;
 
 public class MatchResult {
     private Player winner;

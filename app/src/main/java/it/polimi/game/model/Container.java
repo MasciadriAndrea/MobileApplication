@@ -1,4 +1,4 @@
-package com.polimi.game.model;
+package it.polimi.game.model;
 
 public abstract class Container {
     private Integer seeds;

@@ -1,8 +1,8 @@
-package com.polimi.game.state;
+package it.polimi.game.state;
 
 import android.view.MotionEvent;
-import com.polimi.framework.util.Painter;
-import com.polimi.core.Assets;
+import it.polimi.framework.util.Painter;
+import it.polimi.core.Assets;
 
 public class LoadState extends State {
 	@Override

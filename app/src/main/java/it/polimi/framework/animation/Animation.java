@@ -1,6 +1,6 @@
-package com.polimi.framework.animation;
+package it.polimi.framework.animation;
 
-import com.polimi.framework.util.Painter;
+import it.polimi.framework.util.Painter;
 
 public class Animation {
 	private Frame[] frames;

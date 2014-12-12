@@ -1,4 +1,4 @@
-package com.polimi.core;
+package it.polimi.core;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

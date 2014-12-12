@@ -1,4 +1,4 @@
-package com.polimi.framework.animation;
+package it.polimi.framework.animation;
 
 import android.graphics.Bitmap;
 

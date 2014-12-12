@@ -1,4 +1,4 @@
-package com.polimi.game.model;
+package it.polimi.game.model;
 
 import java.util.Iterator;
 
@@ -52,13 +52,6 @@ public class GameHandler {
                         //if the bowl is not empty
                         Integer seeds = ((Bowl) b).pullOutSeeds();
                         Container pointer = b;
-                        for (int i = 1; i <= seeds; i++) {
-                            pointer = pointer.getNextContainer();
-                            if ((pointer.isTray()) && (!pointer.getPlayer().equals(this.getActivePlayer()))) {
-                                pointer = pointer.getNextContainer();
-                            }
-                            pointer.incrementSeeds();
-                        }
                         Integer gameStatus = this.getGameStatus(pointer);
                         if (!gameStatus.equals(this.ISGAMEFINISHED)) {
                             //if the game is not finished

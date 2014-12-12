@@ -1,4 +1,4 @@
-package com.polimi.core;
+package it.polimi.core;
 
 import java.io.IOException;
 import java.io.InputStream;

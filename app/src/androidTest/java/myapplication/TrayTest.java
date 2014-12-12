@@ -1,7 +1,7 @@
 package myapplication;
 
-import com.polimi.game.model.Player;
-import com.polimi.game.model.Tray;
+import it.polimi.game.model.Player;
+import it.polimi.game.model.Tray;
 
 import junit.framework.TestCase;
 

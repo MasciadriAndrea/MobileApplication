@@ -1,10 +1,10 @@
-package com.polimi.framework.util;
+package it.polimi.framework.util;
 
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import com.polimi.game.state.State;
-import com.polimi.core.GameMainActivity;
+import it.polimi.game.state.State;
+import it.polimi.core.GameMainActivity;
 
 public class InputHandler implements OnTouchListener {
 	private State currentState;
