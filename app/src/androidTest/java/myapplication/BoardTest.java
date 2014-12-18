@@ -20,7 +20,7 @@ public class BoardTest extends TestCase {
     }
 
     public void testInitBoard() {
-        Integer[] initialBoard={0,nIni,nIni,nIni,nIni,nIni,nIni,0,nIni,nIni,nIni,nIni,nIni,nIni};
+        Integer[] initialBoard={nIni,nIni,nIni,nIni,nIni,nIni,0,nIni,nIni,nIni,nIni,nIni,nIni,0};
         Integer[] boardStatus=b.getBoardStatus();
         for(int i=0;i<14;i++){
             assertEquals(initialBoard[i],boardStatus[i]);
@@ -28,11 +28,13 @@ public class BoardTest extends TestCase {
     }
 
     public void testModifiedBoard(){
-        int[] initialBoard={0,nIni,nIni+2,nIni,nIni,nIni,nIni,0,nIni,nIni,nIni,nIni,nIni,nIni};
-        Board b1=new Board(initialBoard,p1,p2);
+        Integer[] expectedBoard={nIni,nIni+2,nIni,nIni,nIni,nIni,0,nIni,nIni,nIni,nIni,nIni,nIni-1,0};
+        int[] initialBoardP1={nIni,nIni+2,nIni,nIni,nIni,nIni,0};
+        int[] initialBoardP2={nIni,nIni,nIni,nIni,nIni,nIni-1,0};
+        Board b1=new Board(initialBoardP1,initialBoardP2,p1,p2);
         Integer[] boardStatus=b1.getBoardStatus();
         for(int i=0;i<14;i++){
-            assertEquals((Integer) initialBoard[i],boardStatus[i]);
+            assertEquals((Integer) expectedBoard[i],boardStatus[i]);
         }
     }
 

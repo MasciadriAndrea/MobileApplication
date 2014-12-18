@@ -26,7 +26,7 @@ public class GameHandlerTest extends TestCase {
     }
 
     public void testGameNormal(){
-        Integer[] expectedBoard={0,nIni+1,nIni+1,nIni+1,nIni-3,nIni,nIni,0,nIni,nIni,nIni,nIni,nIni,nIni};
+        Integer[] expectedBoard={nIni,nIni,nIni,nIni,nIni-3,nIni+1,0+1,nIni+1,nIni,nIni,nIni,nIni,nIni,0};
         gh.playTurn(5);
         Integer[] board=gh.getBoard().getBoardStatus();
         for(int i=0;i<14;i++){
@@ -35,7 +35,7 @@ public class GameHandlerTest extends TestCase {
     }
 
     public void testGamePlayAgain(){
-        Integer[] expectedBoard={2,5,0,0,nIni,nIni,nIni,0,nIni,nIni,nIni,nIni,4,4};
+        Integer[] expectedBoard={nIni,nIni,nIni-3,nIni-3+1,nIni+1+1,nIni+1+1,0+1,nIni,nIni,nIni,nIni,nIni,nIni,0};
         assertEquals(p1, gh.getActivePlayer());//player 1 must play
         gh.playTurn(4);
         assertEquals(p1, gh.getActivePlayer()); //player 1 must play again
@@ -48,13 +48,13 @@ public class GameHandlerTest extends TestCase {
     }
 
     public void testGameStealSeeds(){
-        Integer[] expectedBoard={5,4,0,4,4,0,nIni,0,4,4,4,0,0,4};
+        Integer[] expectedBoard={nIni,0,nIni+1,nIni+1,0,nIni+1,5,nIni+1,0,0,nIni+1,nIni+1,nIni+1,0};
         assertEquals(p1, gh.getActivePlayer());//player 1 must play
-        gh.playTurn(3);
+        gh.playTurn(5);
         assertEquals(p2, gh.getActivePlayer()); //player 2 must play
-        gh.playTurn(12);
+        gh.playTurn(9);
         assertEquals(p1, gh.getActivePlayer());//player 1 must play
-        gh.playTurn(6);//and he steals!!!!!!!
+        gh.playTurn(2);//and he steals!!!!!!!
         assertEquals(p2, gh.getActivePlayer()); //player 2 must play
         Integer[] board=gh.getBoard().getBoardStatus();
         for(int i=0;i<14;i++){
@@ -64,10 +64,11 @@ public class GameHandlerTest extends TestCase {
 
 
     public void testEndGame(){
-        int[] initialBoard= {3,1,0,0,0,0,0,1,0,0,3,0,1,2};
-        Integer[] expectedBoard={4,0,0,0,0,0,0,7,0,0,0,0,0,0};
-        GameHandler ghF=new GameHandler(p1,p2,initialBoard);
-        ghF.playTurn(2);
+        int[] initialBoardP1= {0,0,0,0,0,3,6};
+        int[] initialBoardP2= {0,1,6,4,5,1,10};
+        Integer[] expectedBoard={0,0,0,0,0,0,7,0,0,0,0,0,0,29};
+        GameHandler ghF=new GameHandler(p1,p2,initialBoardP1,initialBoardP2,nIni);
+        ghF.playTurn(6);
         Integer[] board=ghF.getBoard().getBoardStatus();
         assertTrue(ghF.getIsGameFinished());
         assertEquals( ghF.getMatchResult().getWinner(),p2);
@@ -78,19 +79,18 @@ public class GameHandlerTest extends TestCase {
 
     public void testGame(){
         //insert your parameter here
-        int[] initialBoard= {3,1,3,2,2,2,2,1,0,0,3,0,1,2};
-        int[] selectedBowls={0,11,2,1,8,3};
+        int[] initialBoardP1= {2,1,0,3,0,0,1};
+        int[] initialBoardP2= {2,2,2,2,3,1,3};
+        int[] selectedBowls={0,11,4,5};
         /*
             turn 1: selectedBowlId=0 -> 0 is not eligible as Container ID -> canceled
             turn 2: selectedBowlId=11 -> 11 is owned by player 2 and now is player 1 turn -> canceled
             turn 3: selectedBowlId=2 -> ok.. is player1 turn again
-            turn 4: selectedBowlId=1 -> 1 is a tray -> canceled
-            turn 5: selectedBowlId=8 -> 8 is a tray -> canceled
-            turn 6: selectedBowlId=3 -> ok.. now is player 2 turn
+            turn 4: selectedBowlId=3 -> ok.. now is player 2 turn
          */
-        Integer[] expectedBoard={5,1,0,2,2,2,2,1,0,0,3,0,1,3};
+       Integer[] expectedBoard={2,1,0,0,0,2,2,2,2,2,2,3,1,3};
         //initialization of the game
-        GameHandler ghF=new GameHandler(p1,p2,initialBoard);
+        GameHandler ghF=new GameHandler(p1,p2,initialBoardP1,initialBoardP2,nIni);
         //the game will be played here
         for(int i=0;i<selectedBowls.length;i++){
             ghF.playTurn(selectedBowls[i]);
@@ -101,6 +101,7 @@ public class GameHandlerTest extends TestCase {
             assertEquals(expectedBoard[i],board[i]);
         }
     }
+
 }
 
 
