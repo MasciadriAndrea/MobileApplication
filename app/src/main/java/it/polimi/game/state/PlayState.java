@@ -79,7 +79,6 @@ public class PlayState extends State{
 
     public boolean onTouch(MotionEvent e, int scaledX, int scaledY){
         if (e.getAction() == MotionEvent.ACTION_DOWN) {
-            Log.v("play state","giu");
            for(UIButton u:bp1) {
                 u.onTouchDown(scaledX, scaledY);
             }
@@ -94,7 +93,7 @@ public class PlayState extends State{
                 if (ub.isPressed(scaledX, scaledY)) {
                     ub.cancel();
                     Game.getInstance().getGh().playTurn(i);
-                    Log.v("play state","premuto "+i);
+                    Log.v("play state","selected bowl id ->"+i);
                 }
             }
             for(UIButton ub:bp2) {
@@ -102,19 +101,15 @@ public class PlayState extends State{
                 if (ub.isPressed(scaledX, scaledY)) {
                     ub.cancel();
                     Game.getInstance().getGh().playTurn(i);
-                    Log.v("play state", "premuto " + i);
+                    Log.v("play state","selected bowl id ->"+i);
                 }
             }
-
-           // else {
                for(UIButton u:bp1) {
                     u.cancel();
                  }
                 for(UIButton ub:bp2) {
                     ub.cancel();
                 }
-            //Log.v("play state", "cancel");
-            //}
         }
         return true;
     }

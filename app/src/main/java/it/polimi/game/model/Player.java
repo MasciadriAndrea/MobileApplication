@@ -34,6 +34,24 @@ public class Player {
         this.lastGamePlayed = lastGamePlayed;
     }
 
+    public void updateWonGameResult(){
+        this.setWonGameResult((double) (this.getWonGames()/this.getPlayedGames()));
+    }
+
+    public void incrementWins(){
+        this.setWonGames(this.getWonGames()+1);
+    }
+
+    public void incrementPlayedGames(){
+        this.setPlayedGames(this.getPlayedGames() + 1);
+    }
+
+    public void updateMaxScoreResult(Double result){
+        if(this.getMaxScoreResult()<result)
+            this.setMaxScoreResult(result);
+
+    }
+
     public Integer getId() {
         return id;
     }

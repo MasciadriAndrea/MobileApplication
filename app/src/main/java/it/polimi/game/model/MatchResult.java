@@ -1,49 +1,88 @@
 package it.polimi.game.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 public class MatchResult {
     private Player winner;
-    private Integer p1Seeds;
-    private Integer p2Seeds;
+    private Player loser;
+    private Integer winnerSeeds;
+    private Integer looserSeeds;
     private Integer seedsPerBowl;
     private Integer bestMoveP1;
     private Integer bestMoveP2;
-    private String data;
+    private Date data;
+    private Player p1,p2;
 
-    public MatchResult(Integer seedsPerBowl) {
+    public MatchResult(Integer seedsPerBowl,Player p1, Player p2) {
         this.seedsPerBowl = seedsPerBowl;
         this.winner=null;
-        this.p1Seeds=0;
-        this.p2Seeds=0;
+        this.loser=null;
+        this.winnerSeeds=0;
+        this.looserSeeds=0;
         this.bestMoveP1=0;
         this.bestMoveP2=0;
-        //TODO full data field this.data
+        this.p1=p1;
+        this.p2=p2;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar calendar = new GregorianCalendar();
+        this.data=calendar.getTime();
     }
-    public void storeData(Player player){
+
+    public void storeData(Player player, Integer seeds1, Integer seeds2){
         this.winner=player;
-        // /TODO calculate indexes and update database
+        this.loser=p1;
+        if(this.winner.equals(this.p1)) {
+            this.loser=p2;
+            this.winnerSeeds=seeds1;
+            this.looserSeeds=seeds2;
+        }else{
+            this.winnerSeeds=seeds2;
+            this.looserSeeds=seeds1;
+        }
+
+        this.winner.setLastGamePlayed(this.data);
+        this.loser.setLastGamePlayed(this.data);
+        this.winner.incrementPlayedGames();
+        this.loser.incrementPlayedGames();
+        this.winner.incrementWins();
+        this.loser.updateWonGameResult();
+        this.winner.updateWonGameResult();
+        this.loser.updateMaxScoreResult(looserSeeds.doubleValue());//TODO this result must be normalized!
+        this.winner.updateMaxScoreResult(winnerSeeds.doubleValue());//TODO this result must be normalized!
+        BestMovesHandler.getInstance().insertResult(this.p1.getId(),this.getBestMove(this.p1));//TODO maybe this value should be normalized
+        BestMovesHandler.getInstance().insertResult(this.p2.getId(),this.getBestMove(this.p2));//TODO maybe this value should be normalized
+        //TODO save this 2 players in DB and also best 10
     }
+
+    public Integer getBestMove(Player p){
+        if(p.equals(this.p1)){
+            return this.getBestMoveP1();
+        }else{
+            return  this.getBestMoveP2();
+        }
+    }
+
+    public void updateBestMove(Integer numSeeds,Player p){
+            if(p.equals(this.p1)){
+                if(numSeeds>this.getBestMoveP1()){
+                    this.setBestMoveP1(numSeeds);
+                }
+            }else{
+                if(numSeeds>this.getBestMoveP2()){
+                    this.setBestMoveP2(numSeeds);
+                }
+            }
+    }
+
     public Player getWinner() {
         return winner;
     }
 
     public void setWinner(Player winner) {
         this.winner = winner;
-    }
-
-    public Integer getP1Seeds() {
-        return p1Seeds;
-    }
-
-    public void setP1Seeds(Integer p1Seeds) {
-        this.p1Seeds = p1Seeds;
-    }
-
-    public Integer getP2Seeds() {
-        return p2Seeds;
-    }
-
-    public void setP2Seeds(Integer p2Seeds) {
-        this.p2Seeds = p2Seeds;
     }
 
     public Integer getSeedsPerBowl() {
@@ -70,11 +109,11 @@ public class MatchResult {
         this.bestMoveP2 = bestMoveP2;
     }
 
-    public String getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.data = data;
     }
 }

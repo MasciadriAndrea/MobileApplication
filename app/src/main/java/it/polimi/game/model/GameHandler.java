@@ -1,6 +1,7 @@
 package it.polimi.game.model;
 
 import android.Manifest;
+import android.util.Log;
 
 import java.util.Iterator;
 import java.util.List;
@@ -57,11 +58,11 @@ public class GameHandler {
               //if the selected Bowl is own by activePlayer
                     if (currentBowl.getSeeds() > 0) {
                         //if the bowl is not empty
-                        Integer seeds = currentBowl.pullOutSeeds();
-                        Bowl pointer = currentBowl;
-
                         SemiBoard sbAP=this.getBoard().getSemiBoardByPlayer(this.getActivePlayer());
                         SemiBoard sbOP=this.getBoard().getSemiBoardByPlayer(this.getInactivePlayer());
+                        Integer seedsInTrayFirst=sbAp.getTray().getSeeds();
+                        Integer seeds = currentBowl.pullOutSeeds();
+                        Bowl pointer = currentBowl;
                         Integer start=sbAP.getBowls().indexOf(currentBowl);
                         Boolean finishedInTA=false;
                         Boolean finishedInTO=false;
@@ -95,8 +96,6 @@ public class GameHandler {
                             start=1;
                         }
 
-
-                        Boolean skip=false;
                         Integer gameStatus = this.getGameStatus(pointer,finishedInTA,finishedInTO);
                             if (gameStatus.equals(this.PERFORMSTEAL)) {
                                 //steal seeds
@@ -106,6 +105,10 @@ public class GameHandler {
                                     gameStatus=this.ISGAMEFINISHED;
                                 }
                             }
+                        Integer seedsInTrayAfter=sbAp.getTray().getSeeds();//Play again will be computed in different moves
+                        this.getMatchResult().updateBestMove(seedsInTrayAfter-seedsInTrayFirst,this.getActivePlayer());
+                        Log.v("GameHandler: ","seeds earned in this move:"+(seedsInTrayAfter-seedsInTrayFirst));
+                        Log.v("GameHandler: ","best move of the player:"+this.getMatchResult().getBestMove(this.getActivePlayer()));
                         if (!gameStatus.equals(this.ISGAMEFINISHED)) {
                             //if the game is not finished
                             if (!gameStatus.equals(this.ISMYTURNAGAIN)){
@@ -130,10 +133,7 @@ public class GameHandler {
         this.setIsHH(isHH);
         this.setIsGameFinished(false);
         this.setActivePlayer(p1);
-        this.matchResult=new MatchResult(initSeeds);
-    }
-    private void updateMatchResult(Player winner){
-        this.matchResult.storeData(winner);
+        this.matchResult=new MatchResult(initSeeds,p1,p2);
     }
 
     private Boolean zeroSeeds(Player player){
@@ -186,16 +186,18 @@ public class GameHandler {
         Tray t2=this.getBoard().getSemiBoardByPlayer(this.getP2()).getTray();
         t2.incrementSeeds(seeds2);
         this.setIsGameFinished(true);
+
+        Player win=null;
         if(t1.getSeeds()>t2.getSeeds()){
-            this.matchResult.storeData(this.getP1());
+            win=this.getP1();
         }else{
             if(t2.getSeeds()>t1.getSeeds()){
-                this.matchResult.storeData(this.getP2());
+                win=this.getP2();
             }else{
-                this.matchResult.storeData(this.TIE);
+                win=this.TIE;
             }
         }
-        //TODO require the real player name and update statistic and so
+        this.matchResult.storeData(win,t1.getSeeds(),t2.getSeeds());// update all the result in matchResult, player and bestmoves
     }
 
     private Integer megabrainSelectBowlId(){
@@ -258,6 +260,7 @@ public class GameHandler {
     public void setSelectedBowlId(Integer selectedBowlId) {
         this.selectedBowlId = selectedBowlId;
     }
+
     public Boolean getIsGameFinished() {
         return isGameFinished;
     }
