@@ -17,10 +17,10 @@ public class Player {
     public Player(String name, Integer id) {
         this.name = name;
         this.id = id;
-        this.playedGames = null;
-        this.wonGames = null;
-        this.wonGameResult = null;
-        this.maxScoreResult = null;
+        this.playedGames = 0;
+        this.wonGames = 0;
+        this.wonGameResult = Double.longBitsToDouble(0);
+        this.maxScoreResult = Double.longBitsToDouble(0);
         this.lastGamePlayed = null;
     }
 

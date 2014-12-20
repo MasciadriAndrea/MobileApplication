@@ -65,9 +65,7 @@ public class GameHandler {
                         Bowl pointer = currentBowl;
                         Integer start=sbAP.getBowls().indexOf(currentBowl);
                         Boolean finishedInTA=false;
-                        Boolean finishedInTO=false;
                         while(seeds>0){
-                            finishedInTO=false;
                             for(Bowl bowl:sbAP.getBowls().subList(start+1,sbAP.getBowls().size())){
                                 if(seeds>0){
                                     bowl.incrementSeeds();
@@ -88,15 +86,10 @@ public class GameHandler {
                                     pointer=bowl;
                                 }
                             }
-                            if(seeds>0){
-                                finishedInTO=true;
-                                sbOP.getTray().incrementSeeds();
-                                seeds--;
-                            }
                             start=1;
                         }
 
-                        Integer gameStatus = this.getGameStatus(pointer,finishedInTA,finishedInTO);
+                        Integer gameStatus = this.getGameStatus(pointer,finishedInTA);
                             if (gameStatus.equals(this.PERFORMSTEAL)) {
                                 //steal seeds
                                 this.stealSeeds(pointer);
@@ -146,9 +139,9 @@ public class GameHandler {
         return true;
     }
 
-    private Integer getGameStatus(Bowl lastPosition,Boolean finishedInTA, Boolean finishedInTO){
+    private Integer getGameStatus(Bowl lastPosition,Boolean finishedInTA){
         //max priority
-        if((!finishedInTA)&&(!finishedInTO)&&(lastPosition.getSeeds().equals(1))&&(this.getBoard().getSemiBoardByPlayer(this.getActivePlayer()).getBowls().contains(lastPosition))){
+        if((!finishedInTA)&&(lastPosition.getSeeds().equals(1))&&(this.getBoard().getSemiBoardByPlayer(this.getActivePlayer()).getBowls().contains(lastPosition))){
             //equals 1 due to pre-increment after movement
             return 1;//steal seeds
         }

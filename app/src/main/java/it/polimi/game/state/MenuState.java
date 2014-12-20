@@ -1,10 +1,15 @@
 package it.polimi.game.state;
 
+import android.content.Intent;
 import android.util.Log;
+import android.app.Activity;
 import android.view.MotionEvent;
+
 import it.polimi.framework.util.Painter;
 import it.polimi.core.Assets;
 import it.polimi.framework.util.UIButton;
+
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 public class MenuState extends State {
     private UIButton playButton, statisticButton, settingButton;
@@ -46,7 +51,7 @@ public class MenuState extends State {
                 setCurrentState(new PlayState());
             } else if (settingButton.isPressed(scaledX, scaledY)) {
                 settingButton.cancel();
-                //setCurrentState(new ScoreState());
+
             }else if (statisticButton.isPressed(scaledX, scaledY)) {
                 statisticButton.cancel();
                 //setCurrentState(new ScoreState());
