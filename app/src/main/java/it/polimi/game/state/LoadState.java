@@ -7,8 +7,7 @@ import it.polimi.core.Assets;
 public class LoadState extends State {
 	@Override
 	public void init() {
-
-        Assets.load();
+       Assets.load();
 	}
 
 	@Override

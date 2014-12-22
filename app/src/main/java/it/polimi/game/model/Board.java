@@ -5,37 +5,42 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Board {
-    private List<Container> containers;
+    //private List<Container> containers;
+    private List<SemiBoard> playerElements;
+
     private static Integer nIni=3;
 
     public Board(Player p1, Player p2) {
         this.buildBoard(p1,p2);
     }
 
-    public Board(int[] initialBoard, Player p1, Player p2) {
-        this.buildBoard(initialBoard,p1,p2);
+    public Board(int[] initialBoardP1,int[] initialBoardP2, Player p1, Player p2) {
+        this.buildBoard(initialBoardP1,initialBoardP2,p1,p2);
     }
 
-    public Container getNextContainer(Integer idActualBowl){
-        Iterator<Container> ci=this.getContainers().iterator();
-        while (ci.hasNext()){
-            Container c=ci.next();
-            if(c.getId().equals(idActualBowl)){
-                return c.getNextContainer();
+    public SemiBoard getSemiBoardByPlayer(Player p){
+        for (SemiBoard sm:this.playerElements){
+            if (sm.getPlayer().equals(p)){
+                return sm;
             }
-        }
-        return null;
+        }return null;
     }
 
     public Integer[] getBoardStatus(){
         Integer[] res={0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-        for(Integer i=1;i<=14;i++){
-            res[i-1]=this.getContainerById(i).getSeeds();
+        int i=0;
+        for(SemiBoard sb:this.playerElements){
+            for(Bowl bowl:sb.getBowls()){
+                res[i]=bowl.getSeeds();
+                i++;
+            }
+            res[i]=sb.getTray().getSeeds();
+            i++;
         }
         return res;
     }
 
-    public Container getContainerById(Integer idContainer){
+    /*public Container getContainerById(Integer idContainer){
         Iterator<Container> ci=this.getContainers().iterator();
         while (ci.hasNext()){
             Container c=ci.next();
@@ -44,49 +49,34 @@ public class Board {
             }
         }
         return null;
-    }
+    }*/
 
     public Tray getTrayByPlayer(Player player){
-        Iterator<Container> ci=this.getContainers().iterator();
-        while (ci.hasNext()){
-            Container c=ci.next();
-            if((c instanceof Tray)&&(c.getPlayer().equals(player))){
-                return (Tray)c;
-            }
-        }
-        return null;
+        return this.getSemiBoardByPlayer(player).getTray();
     }
 
     private void buildBoard(Player p1, Player p2){
-        int[] initialBoard={0,nIni,nIni,nIni,nIni,nIni,nIni,0,nIni,nIni,nIni,nIni,nIni,nIni};
-        this.buildBoard(initialBoard, p1, p2);
+        int[] initialBoardDefault={nIni,nIni,nIni,nIni,nIni,nIni,0};
+        this.buildBoard(initialBoardDefault,initialBoardDefault, p1, p2);
     }
 
-    private void buildBoard(int[] initialBoard, Player p1, Player p2){
-        int[] opposite={0,8,14,13,12,11,10,9,1,7,6,5,4,3,2};
-        List cont=new ArrayList<Container>();
-        this.containers=cont;
-        Tray t1=new Tray(1,initialBoard[0],p1,null);
-        Container c= (Container) t1;
-        cont.add(c);
-        for(Integer i=2; i<=7;i++){
-            c=(Container) new Bowl(i,initialBoard[i-1],p1,c);
-            cont.add(c);
+    private void buildBoard(int[] initialBoardP1,int[] initialBoardP2, Player p1, Player p2){
+        List bowlsP1=new ArrayList<Bowl>();
+        List bowlsP2=new ArrayList<Bowl>();
+        for (Integer i=0;i<initialBoardP1.length-1;i++){
+           Bowl bowlp1=new Bowl(i+1,initialBoardP1[i]);
+           Bowl bowlp2=new Bowl((12-i),initialBoardP2[5-i]);
+           bowlp1.setOppositeBowl(bowlp2);
+           bowlp2.setOppositeBowl(bowlp1);
+           bowlsP1.add(bowlp1);
+           bowlsP2.add(0,bowlp2);
         }
-        c=(Container) new Tray(8,initialBoard[7],p2,c);
-        cont.add(c);
-        for(Integer i=9; i<=14;i++){
-            Bowl d=new Bowl(i,initialBoard[i-1],p2,c);
-            Bowl oC=(Bowl) getContainerById(opposite[i]);
-            oC.setOppositeBowl(d);
-            d.setOppositeBowl(oC);
-            c=(Container) d;
-            cont.add(c);
-        }
-        t1.setNextContainer(c);
+        Tray t1=new Tray(0,initialBoardP1[6]);
+        Tray t2=new Tray(0,initialBoardP2[6]);
+        this.playerElements=new ArrayList<SemiBoard>();
+        playerElements.add(new SemiBoard(bowlsP1,t1,p1));
+        playerElements.add(new SemiBoard(bowlsP2,t2,p2));
+
     }
 
-    public List getContainers(){
-        return this.containers;
-    }
 }

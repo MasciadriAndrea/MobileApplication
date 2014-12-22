@@ -15,13 +15,19 @@ import android.media.SoundPool;
 public class Assets {
 	private static SoundPool soundPool;
 	private static MediaPlayer mediaPlayer;
-	public static Bitmap welcome;
-    public static Bitmap menu;
+	public static Bitmap background,welcome,bowl,playUp,playDown,statisticUp,statisticDown,settingsUp,settingsDown;
 	// 1. Load Assets, initialize Frames and Animations.
 	public static void load() {
 
         welcome = loadBitmap("welcome.png", false);
-        menu = loadBitmap("menu.png", false);
+        background = loadBitmap("background.png", false);
+        playUp = loadBitmap("playUp.png", false);
+        playDown = loadBitmap("playDown.png", false);
+        settingsUp = loadBitmap("SettingUp.png", false);
+        settingsDown = loadBitmap("SettingDown.png", false);
+        statisticUp = loadBitmap("statisticUp.png", false);
+        statisticDown = loadBitmap("statisticDown.png", false);
+        bowl = loadBitmap("bowl.png", false);
     }
 	
 	// 2. Load sounds here

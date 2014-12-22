@@ -1,17 +1,14 @@
 package myapplication;
 
-import it.polimi.game.model.Player;
 import it.polimi.game.model.Tray;
 
 import junit.framework.TestCase;
 
 public class TrayTest extends TestCase {
     protected Tray t1;
-    private Player p1;
 
     protected void setUp() {
-        p1=new Player("Foo",1);
-        t1=new Tray(1,0,p1,null);
+        t1=new Tray(1,0);
     }
 
 
@@ -23,11 +20,6 @@ public class TrayTest extends TestCase {
         assertEquals(3,(int)ns);
         t1.incrementSeeds();
         assertEquals(4, (int) t1.getSeeds());
-    }
-
-    public void testIsTray() {
-        assertTrue(t1.isTray());
-        assertFalse(t1.isBowl());
     }
 
 }

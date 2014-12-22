@@ -17,10 +17,10 @@ public class Player {
     public Player(String name, Integer id) {
         this.name = name;
         this.id = id;
-        this.playedGames = null;
-        this.wonGames = null;
-        this.wonGameResult = null;
-        this.maxScoreResult = null;
+        this.playedGames = 0;
+        this.wonGames = 0;
+        this.wonGameResult = Double.longBitsToDouble(0);
+        this.maxScoreResult = Double.longBitsToDouble(0);
         this.lastGamePlayed = null;
     }
 
@@ -32,6 +32,24 @@ public class Player {
         this.wonGameResult = wonGameResult;
         this.maxScoreResult = maxScoreResult;
         this.lastGamePlayed = lastGamePlayed;
+    }
+
+    public void updateWonGameResult(){
+        this.setWonGameResult((double) (this.getWonGames()/this.getPlayedGames()));
+    }
+
+    public void incrementWins(){
+        this.setWonGames(this.getWonGames()+1);
+    }
+
+    public void incrementPlayedGames(){
+        this.setPlayedGames(this.getPlayedGames() + 1);
+    }
+
+    public void updateMaxScoreResult(Double result){
+        if(this.getMaxScoreResult()<result)
+            this.setMaxScoreResult(result);
+
     }
 
     public Integer getId() {

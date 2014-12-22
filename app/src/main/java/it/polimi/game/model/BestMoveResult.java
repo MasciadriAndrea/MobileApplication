@@ -5,8 +5,6 @@ public class BestMoveResult {
     private Integer idP;
     private Integer result;
 
-    //TODO Class methods not yet implemented
-
 
     public BestMoveResult(Integer idP, Integer result) {
         this.idP = idP;

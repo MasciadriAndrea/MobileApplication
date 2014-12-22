@@ -1,6 +1,10 @@
 package it.polimi.game.model;
 
+import android.Manifest;
+import android.util.Log;
+
 import java.util.Iterator;
+import java.util.List;
 
 
 public class GameHandler {
@@ -22,7 +26,7 @@ public class GameHandler {
 
     public GameHandler(Player p1){
        //constructor for Human vs Megabrain mode
-       Integer p2Id=this.MEGABRAIN;
+       Player p2=new Player("MEGABRAIN", this.MEGABRAIN);
        this.initGame(p1,p2,false,nSeeds);
        this.setBoard(new Board(p1,p2));
    }
@@ -33,33 +37,74 @@ public class GameHandler {
         this.setBoard(new Board(p1, p2));
     }
 
-    public GameHandler(Player p1, Player p2, int[] initialBoard ) {
+    public GameHandler(Player p1, Player p2, int[] initialBoardP1,int[] initialBoardP2,int iniS ) {
         //constructor for testing with initializated board
-        this.initGame(p1,p2,true,initialBoard[2]);
-        this.setBoard(new Board(initialBoard, p1, p2));
+        this.initGame(p1,p2,true,iniS);
+        this.setBoard(new Board(initialBoardP1,initialBoardP2, p1, p2));
     }
 
     public void playTurn(Integer selectedBowlId){
         this.setSelectedBowlId(selectedBowlId);
-        if((selectedBowlId>0)&&(selectedBowlId<=14)) {
+        Bowl currentBowl=null;
+        if((selectedBowlId>0)&&(selectedBowlId<=12)) {
             //if selectedBowlId inside the range of eligible containers id
-            Container b = this.getBoard().getContainerById(selectedBowlId);
-            if(b.isBowl()){
-                //if the selected container is a Bowl
-                if (b.getPlayer().equals(this.getActivePlayer())) {
-                    //if the selected Bowl is own by activePlayer
-                    if (b.getSeeds() > 0) {
+            SemiBoard sbAp=this.getBoard().getSemiBoardByPlayer(this.getActivePlayer());
+            for (Bowl bowl:sbAp.getBowls()){
+                if(bowl.getId().equals(selectedBowlId)){
+                    currentBowl=bowl;
+                }
+            }
+            if(currentBowl!= null){
+              //if the selected Bowl is own by activePlayer
+                    if (currentBowl.getSeeds() > 0) {
                         //if the bowl is not empty
-                        Integer seeds = ((Bowl) b).pullOutSeeds();
-                        Container pointer = b;
-                        Integer gameStatus = this.getGameStatus(pointer);
-                        if (!gameStatus.equals(this.ISGAMEFINISHED)) {
-                            //if the game is not finished
+                        SemiBoard sbAP=this.getBoard().getSemiBoardByPlayer(this.getActivePlayer());
+                        SemiBoard sbOP=this.getBoard().getSemiBoardByPlayer(this.getInactivePlayer());
+                        Integer seedsInTrayFirst=sbAp.getTray().getSeeds();
+                        Integer seeds = currentBowl.pullOutSeeds();
+                        Bowl pointer = currentBowl;
+                        Integer start=sbAP.getBowls().indexOf(currentBowl);
+                        Boolean finishedInTA=false;
+                        while(seeds>0){
+                            for(Bowl bowl:sbAP.getBowls().subList(start+1,sbAP.getBowls().size())){
+                                if(seeds>0){
+                                    bowl.incrementSeeds();
+                                    seeds--;
+                                    pointer=bowl;
+                                }
+                            }
+                            if(seeds>0){
+                                finishedInTA=true;
+                                sbAP.getTray().incrementSeeds();
+                                seeds--;
+                            }
+                            if (seeds>0) finishedInTA=false;
+                            for(Bowl bowl:sbOP.getBowls()){
+                                if(seeds>0){
+                                    bowl.incrementSeeds();
+                                    seeds--;
+                                    pointer=bowl;
+                                }
+                            }
+                            start=1;
+                        }
+
+                        Integer gameStatus = this.getGameStatus(pointer,finishedInTA);
                             if (gameStatus.equals(this.PERFORMSTEAL)) {
                                 //steal seeds
-                                this.stealSeeds((Bowl) pointer);
+                                this.stealSeeds(pointer);
+                                //pay attention if now the game is finished!
+                                if(this.zeroSeeds(this.getActivePlayer())){
+                                    gameStatus=this.ISGAMEFINISHED;
+                                }
                             }
-                            if (!gameStatus.equals(this.ISMYTURNAGAIN)) {
+                        Integer seedsInTrayAfter=sbAp.getTray().getSeeds();//Play again will be computed in different moves
+                        this.getMatchResult().updateBestMove(seedsInTrayAfter-seedsInTrayFirst,this.getActivePlayer());
+                        Log.v("GameHandler: ","seeds earned in this move:"+(seedsInTrayAfter-seedsInTrayFirst));
+                        Log.v("GameHandler: ","best move of the player:"+this.getMatchResult().getBestMove(this.getActivePlayer()));
+                        if (!gameStatus.equals(this.ISGAMEFINISHED)) {
+                            //if the game is not finished
+                            if (!gameStatus.equals(this.ISMYTURNAGAIN)){
                                 this.switchPlayer();
                                 if (this.isMegabrainTurn()) {
                                     this.playTurn(this.megabrainSelectBowlId());
@@ -72,7 +117,7 @@ public class GameHandler {
                     }
                 }
             }
-        }
+
     }
 
     private void initGame(Player p1, Player p2,Boolean isHH,Integer initSeeds){
@@ -81,33 +126,30 @@ public class GameHandler {
         this.setIsHH(isHH);
         this.setIsGameFinished(false);
         this.setActivePlayer(p1);
-        this.matchResult=new MatchResult(initSeeds);
-    }
-    private void updateMatchResult(Player winner){
-        this.matchResult.storeData(winner);
+        this.matchResult=new MatchResult(initSeeds,p1,p2);
     }
 
     private Boolean zeroSeeds(Player player){
-        Iterator<Container> ci=this.getBoard().getContainers().iterator();
-        while (ci.hasNext()){
-            Container c=ci.next();
-            if((c.isBowl())&&(c.getPlayer().equals(player))&&(c.getSeeds()>0)){
+        List<Bowl> ci=this.getBoard().getSemiBoardByPlayer(player).getBowls();
+        for (Bowl bowl:ci){
+            if(bowl.getSeeds()>0){
                 return false;
             }
         }
         return true;
     }
 
-    private Integer getGameStatus(Container lastPosition){
-        if(this.zeroSeeds(this.getActivePlayer())){//max priority
+    private Integer getGameStatus(Bowl lastPosition,Boolean finishedInTA){
+        //max priority
+        if((!finishedInTA)&&(lastPosition.getSeeds().equals(1))&&(this.getBoard().getSemiBoardByPlayer(this.getActivePlayer()).getBowls().contains(lastPosition))){
+            //equals 1 due to pre-increment after movement
+            return 1;//steal seeds
+        }
+        if(this.zeroSeeds(this.getActivePlayer())){
             return 3;// gamefinish
-        }else{
-            if((lastPosition.isTray())&&(lastPosition.getPlayer().equals(this.getActivePlayer()))){
+        }else {
+            if (finishedInTA) {
                 return 2;//again my turn
-            }
-            if((lastPosition.isBowl())&&(lastPosition.getSeeds().equals(1))&&(lastPosition.getPlayer().equals(this.getActivePlayer()))){
-                //equals 1 due to pre-increment after movement
-                return 1;//steal seeds
             }
         }
         return 0;//nothing happens
@@ -122,35 +164,33 @@ public class GameHandler {
     }
 
     private void finishGame(){
-        Iterator<Container> ci=this.getBoard().getContainers().iterator();
+        List<Bowl> bowlsP1=this.getBoard().getSemiBoardByPlayer(getP1()).getBowls();
+        List<Bowl> bowlsP2=this.getBoard().getSemiBoardByPlayer(getP2()).getBowls();
         Integer seeds1=0;
         Integer seeds2=0;
-        while (ci.hasNext()){
-            Container c=ci.next();
-            if(c.isBowl()){
-                if(c.getPlayer().equals(this.getP1())){
-                    c=(Bowl)c;
-                    seeds1=seeds1+(((Bowl) c).pullOutSeeds());
-                }else{
-                    seeds2=seeds2+(((Bowl) c).pullOutSeeds());
-                }
-            }
+        for(Bowl bowl:bowlsP1){
+            seeds1=seeds1+bowl.pullOutSeeds();
         }
-        Tray t1=this.getBoard().getTrayByPlayer(this.getP1());
+        Tray t1=this.getBoard().getSemiBoardByPlayer(this.getP1()).getTray();
         t1.incrementSeeds(seeds1);
-        Tray t2=this.getBoard().getTrayByPlayer(this.getP2());
+        for(Bowl bowl:bowlsP2){
+            seeds2=seeds2+bowl.pullOutSeeds();
+        }
+        Tray t2=this.getBoard().getSemiBoardByPlayer(this.getP2()).getTray();
         t2.incrementSeeds(seeds2);
         this.setIsGameFinished(true);
+
+        Player win=null;
         if(t1.getSeeds()>t2.getSeeds()){
-            this.matchResult.storeData(this.getP1());
+            win=this.getP1();
         }else{
             if(t2.getSeeds()>t1.getSeeds()){
-                this.matchResult.storeData(this.getP2());
+                win=this.getP2();
             }else{
-                this.matchResult.storeData(this.TIE);
+                win=this.TIE;
             }
         }
-        //TODO require the real player name and update statistic and so
+        this.matchResult.storeData(win,t1.getSeeds(),t2.getSeeds());// update all the result in matchResult, player and bestmoves
     }
 
     private Integer megabrainSelectBowlId(){
@@ -177,6 +217,13 @@ public class GameHandler {
 
     public Player getActivePlayer() {
         return activePlayer;
+    }
+
+    public Player getInactivePlayer(){
+        if(this.getP1().equals(this.getActivePlayer())){
+            return this.getP2();
+        }
+        return this.getP1();
     }
 
     public void setActivePlayer(Player activePlayer) {
@@ -206,6 +253,7 @@ public class GameHandler {
     public void setSelectedBowlId(Integer selectedBowlId) {
         this.selectedBowlId = selectedBowlId;
     }
+
     public Boolean getIsGameFinished() {
         return isGameFinished;
     }
