@@ -9,7 +9,6 @@ import it.polimi.framework.util.Painter;
 import it.polimi.core.Assets;
 import it.polimi.framework.util.UIButton;
 
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 public class MenuState extends State {
     private UIButton playButton, statisticButton, settingButton;

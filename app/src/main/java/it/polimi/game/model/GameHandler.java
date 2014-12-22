@@ -17,7 +17,7 @@ public class GameHandler {
     private Board board;
     private MatchResult matchResult;
     private static Integer MEGABRAIN=1;
-    private static Player TIE=null;
+    private static Player TIE=new Player("TIE",0);
     private static Integer ISGAMEFINISHED=3;
     private static Integer ISMYTURNAGAIN=2;
     private static Integer PERFORMSTEAL=1;
@@ -100,8 +100,11 @@ public class GameHandler {
                             }
                         Integer seedsInTrayAfter=sbAp.getTray().getSeeds();//Play again will be computed in different moves
                         this.getMatchResult().updateBestMove(seedsInTrayAfter-seedsInTrayFirst,this.getActivePlayer());
-                        Log.v("GameHandler: ","seeds earned in this move:"+(seedsInTrayAfter-seedsInTrayFirst));
-                        Log.v("GameHandler: ","best move of the player:"+this.getMatchResult().getBestMove(this.getActivePlayer()));
+
+                        //TODO
+
+                        //Log.v("GameHandler: ","seeds earned in this move:"+(seedsInTrayAfter-seedsInTrayFirst));
+                        //Log.v("GameHandler: ","best move of the player:"+this.getMatchResult().getBestMove(this.getActivePlayer()));
                         if (!gameStatus.equals(this.ISGAMEFINISHED)) {
                             //if the game is not finished
                             if (!gameStatus.equals(this.ISMYTURNAGAIN)){
@@ -168,16 +171,22 @@ public class GameHandler {
         List<Bowl> bowlsP2=this.getBoard().getSemiBoardByPlayer(getP2()).getBowls();
         Integer seeds1=0;
         Integer seeds2=0;
+        String str="inside finishGame -> ";
         for(Bowl bowl:bowlsP1){
             seeds1=seeds1+bowl.pullOutSeeds();
+            str+=bowl.getSeeds().toString()+"-";
         }
         Tray t1=this.getBoard().getSemiBoardByPlayer(this.getP1()).getTray();
+        str+=t1.getSeeds().toString()+"-";
         t1.incrementSeeds(seeds1);
         for(Bowl bowl:bowlsP2){
             seeds2=seeds2+bowl.pullOutSeeds();
+            str+=bowl.getSeeds().toString()+"-";
         }
         Tray t2=this.getBoard().getSemiBoardByPlayer(this.getP2()).getTray();
         t2.incrementSeeds(seeds2);
+        str+=t2.getSeeds().toString()+"-";
+        System.out.println(str);
         this.setIsGameFinished(true);
 
         Player win=null;
@@ -190,7 +199,13 @@ public class GameHandler {
                 win=this.TIE;
             }
         }
+        //TODO
+        if(t2.getSeeds()+t1.getSeeds()!=36){
+            System.out.println("ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR");
+        }
         this.matchResult.storeData(win,t1.getSeeds(),t2.getSeeds());// update all the result in matchResult, player and bestmoves
+        //TODO
+        System.out.println("uhuuuuuuuuuu   the winner is "+this.getMatchResult().getWinner().getName());
     }
 
     private Integer megabrainSelectBowlId(){

@@ -21,7 +21,7 @@ public class LogicHandler {
     }
 
     public static LogicHandler getInstance(){
-        if (instance.equals(null)){
+        if (instance==null){
             instance=new LogicHandler();
         }
         return instance;
@@ -46,13 +46,14 @@ public class LogicHandler {
 
 
     public void recursivePlay(Integer[] board,Player activePlayer,Player p1,Player p2,Integer selectedBowlId,Integer nSeeds,Integer idParent,Integer id,BufferedWriter bw) throws IOException {
-        int[] iniP1={};
-        int[] iniP2={};
+        int[] iniP1={0,0,0,0,0,0,0};
+        int[] iniP2={0,0,0,0,0,0,0};
         for(int i=0;i<7;i++){
             iniP1[i]=board[i];
             iniP2[i]=board[i+7];
         }
         GameHandler gh=new GameHandler(p1,p2,iniP1,iniP2,nSeeds);
+        gh.setActivePlayer(activePlayer);
         Boolean isEmpty=false;
         for(Bowl bowl:gh.getBoard().getSemiBoardByPlayer(activePlayer).getBowls()){
             if((bowl.getId().equals(selectedBowlId))&&(bowl.getSeeds().equals(0))){
@@ -65,8 +66,12 @@ public class LogicHandler {
         Player nextActivePlayer=gh.getActivePlayer();
         Boolean gameFinish=gh.getIsGameFinished();
             //TODO
-            System.out.println(idParent.toString()+";"+id.toString()+";"+nextActivePlayer.getId().toString()+";"+board.toString());
-            saveOutput(boardAfter, idParent, id, nextActivePlayer.getId(),bw);
+            String boardStr="";
+            for(int i=0;i<14;i++){
+                boardStr=boardStr+boardAfter[i].toString()+"-";
+            }
+            System.out.println(idParent.toString()+";"+id.toString()+";"+nextActivePlayer.getId().toString()+";"+boardStr);
+            saveOutput(boardStr, idParent, id, nextActivePlayer.getId(),bw);
             if (!gameFinish) {
                 Integer[] moves = {};
                 if (nextActivePlayer.equals(p1)) {
@@ -81,8 +86,8 @@ public class LogicHandler {
         }
     }
 
-    public void saveOutput(Integer[] board, Integer idP, Integer id, Integer idNextP,BufferedWriter bw) throws IOException {
-        bw.write(idP.toString()+";"+id.toString()+";"+idNextP.toString()+";"+board.toString()+"\n");
+    public void saveOutput(String board, Integer idP, Integer id, Integer idNextP,BufferedWriter bw) throws IOException {
+        bw.write(idP.toString()+";"+id.toString()+";"+idNextP.toString()+";"+board+"\n");
     }
 }
 
