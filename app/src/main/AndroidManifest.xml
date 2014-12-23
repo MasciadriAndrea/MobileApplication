@@ -32,6 +32,10 @@
             android:name="it.polimi.activities.ChoosePlayerActivity"
             android:label="@string/title_activity_choose_player" >
         </activity>
+        <activity
+            android:name="it.polimi.activities.LoadActivity"
+            android:label="@string/title_activity_load" >
+        </activity>
     </application>
 
 </manifest>
