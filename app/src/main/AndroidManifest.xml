@@ -22,11 +22,6 @@
         <activity
             android:name="it.polimi.activities.MenuActivity"
             android:label="@string/title_activity_menu" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="it.polimi.activities.ChoosePlayerActivity"
@@ -35,6 +30,11 @@
         <activity
             android:name="it.polimi.activities.LoadActivity"
             android:label="@string/title_activity_load" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

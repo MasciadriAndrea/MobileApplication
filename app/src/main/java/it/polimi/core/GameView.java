@@ -1,5 +1,6 @@
 package it.polimi.core;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,7 +10,7 @@ import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import it.polimi.framework.util.InputHandler;
 import it.polimi.framework.util.Painter;
-import it.polimi.game.state.LoadState;
+import it.polimi.game.state.PlayState;
 import it.polimi.game.state.State;
 
 public class GameView extends SurfaceView implements Runnable {
@@ -19,7 +20,6 @@ public class GameView extends SurfaceView implements Runnable {
 	private Rect gameImageDst;
 	private Canvas gameCanvas;
 	private Painter graphics;
-
 	private Thread gameThread;
 	private volatile boolean running = false;
 	private volatile State currentState;
@@ -42,7 +42,7 @@ public class GameView extends SurfaceView implements Runnable {
 			public void surfaceCreated(SurfaceHolder holder) {
 				initInput();
 				if (currentState == null) {
-					setCurrentState(new LoadState());
+					setCurrentState(new PlayState());
 				}
 				initGame();
 			}

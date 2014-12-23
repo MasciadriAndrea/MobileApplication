@@ -12,6 +12,9 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 
+import it.polimi.game.model.Game;
+import it.polimi.game.model.GameHandler;
+
 public class Assets {
 	private static SoundPool soundPool;
 	private static MediaPlayer mediaPlayer;
@@ -59,7 +62,7 @@ public class Assets {
 	private static Bitmap loadBitmap(String filename, boolean transparency) {
 		InputStream inputStream = null;
 		try {
-			inputStream = GameMainActivity.assets.open(filename);
+			inputStream = Game.getInstance().getAssets().open(filename);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

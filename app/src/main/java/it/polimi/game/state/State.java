@@ -1,5 +1,6 @@
 package it.polimi.game.state;
 
+import android.app.Activity;
 import android.view.MotionEvent;
 import it.polimi.framework.util.Painter;
 import it.polimi.core.GameMainActivity;
