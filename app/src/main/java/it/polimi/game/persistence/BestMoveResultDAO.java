@@ -15,4 +15,6 @@ public class BestMoveResultDAO implements ContractDAO {
     public void close() {
 
     }
+
+
 }

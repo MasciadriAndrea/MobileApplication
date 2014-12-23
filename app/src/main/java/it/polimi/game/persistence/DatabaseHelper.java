@@ -9,10 +9,20 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "";
-    private static final String DATABASE_CREATE = "";
+    private static final String DATABASE_NAME = "Bantumi.db";
     private static final int SCHEMA_VERSION = 1;
-    private static final String DATABASE_UPGRADING = "" ;
+
+    public static final String PLAYER = "Player";
+    public static final String[] PLAYER_FIELDS= {"id","name","playedGames","wonGames","wonGamesResult","maxScoreResult","lastGamePlayed"};
+    private static final String DATABASE_CREATE = "create table "+ PLAYER +" ("+PLAYER_FIELDS[1]+" integer primary key autoincrement,"
+            +PLAYER_FIELDS[2]+" text not null,"
+            +PLAYER_FIELDS[3]+" integer,"
+            +PLAYER_FIELDS[4]+" integer,"
+            +PLAYER_FIELDS[5]+" double,"
+            +PLAYER_FIELDS[6]+" double,"
+            +PLAYER_FIELDS[7]+" date)";
+    private static final String DATABASE_UPGRADING = "DROP TABLE IF EXISTS " + PLAYER  ;
+
     private static DatabaseHelper singleton = null;
 
     public DatabaseHelper(Context applicationContext) {
