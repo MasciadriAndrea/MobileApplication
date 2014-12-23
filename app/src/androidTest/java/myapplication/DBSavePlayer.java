@@ -10,9 +10,6 @@ import java.util.Date;
 import it.polimi.game.model.Player;
 import it.polimi.game.persistence.PlayerDAO;
 
-/**
- * Created by Paolo on 23/12/2014.
- */
 public class DBSavePlayer extends AndroidTestCase {
 
     private PlayerDAO playerDAO;
@@ -34,7 +31,7 @@ public class DBSavePlayer extends AndroidTestCase {
         Player dbPlayer = playerDAO.addPlayer(setPlayer());
         Player staticPlayer = setPlayer();
         assertEquals(staticPlayer.getName(),dbPlayer.getName());
-
+        assertEquals(staticPlayer.getLastGamePlayed(),dbPlayer.getLastGamePlayed());
     }
 
     private Player setPlayer(){

@@ -11,22 +11,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Bantumi.db";
     private static final int SCHEMA_VERSION = 1;
-
-    public static final String PLAYER = "Player";
-    public static final String[] PLAYER_FIELDS= {"id","name","playedGames","wonGames","wonGamesResult","maxScoreResult","lastGamePlayed"};
-    private static final String DATABASE_CREATE = "create table "+ PLAYER +" ("+PLAYER_FIELDS[1]+" integer primary key autoincrement,"
-            +PLAYER_FIELDS[2]+" text not null,"
-            +PLAYER_FIELDS[3]+" integer,"
-            +PLAYER_FIELDS[4]+" integer,"
-            +PLAYER_FIELDS[5]+" double,"
-            +PLAYER_FIELDS[6]+" double,"
-            +PLAYER_FIELDS[7]+" date)";
-    private static final String DATABASE_UPGRADING = "DROP TABLE IF EXISTS " + PLAYER  ;
+    public static String PLAYER = "Player";
+    public String[] PLAYER_FIELDS;
+    private String DATABASE_CREATE;
+    private String DATABASE_UPGRADING;
 
     private static DatabaseHelper singleton = null;
 
     public DatabaseHelper(Context applicationContext) {
         super(applicationContext, DATABASE_NAME, null, SCHEMA_VERSION);
+        PLAYER_FIELDS= new String[]{"id", "name", "playedGames", "wonGames", "wonGamesResult", "maxScoreResult", "lastGamePlayed"};
+        DATABASE_CREATE = "create table "+ PLAYER +" ("+PLAYER_FIELDS[0]+" integer primary key autoincrement,"
+                +PLAYER_FIELDS[1]+" text not null,"
+                +PLAYER_FIELDS[2]+" integer,"
+                +PLAYER_FIELDS[3]+" integer,"
+                +PLAYER_FIELDS[4]+" double,"
+                +PLAYER_FIELDS[5]+" double,"
+                +PLAYER_FIELDS[6]+" date)";
+        DATABASE_UPGRADING = "DROP TABLE IF EXISTS " + PLAYER  ;
     }
 
     synchronized static DatabaseHelper getInstance(Context ctxt) {

@@ -10,17 +10,15 @@ import java.util.Date;
 
 import it.polimi.game.model.Player;
 
-/**
- * Created by Paolo on 18/12/2014.
- */
 public class PlayerDAO implements ContractDAO {
 
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
-    private String[] PLAYER_TABLE_COLUMNS = DatabaseHelper.PLAYER_FIELDS;
+    private static String[] PLAYER_TABLE_COLUMNS;
 
     public PlayerDAO(Context context){
         dbHelper = DatabaseHelper.getInstance(context);
+        PLAYER_TABLE_COLUMNS = dbHelper.PLAYER_FIELDS;
     }
 
     @Override
