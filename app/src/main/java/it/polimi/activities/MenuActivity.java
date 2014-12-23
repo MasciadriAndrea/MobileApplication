@@ -12,6 +12,8 @@ import android.view.WindowManager;
 
 import com.polimi.core.R;
 
+import it.polimi.core.GameMainActivity;
+
 public class MenuActivity extends Activity {
 
     @Override
@@ -24,7 +26,16 @@ public class MenuActivity extends Activity {
     }
 
     public void onClickSinglePlay(View arg0){
-        Intent i = new Intent(this,ChoosePlayerActivity.class);
+
+    }
+
+    public void onClickMultiPlay(View arg0){
+        // Intent i = new Intent(this,ChoosePlayerActivity.class);
+        Intent i = new Intent(this,GameMainActivity.class);
         startActivity(i);
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }
