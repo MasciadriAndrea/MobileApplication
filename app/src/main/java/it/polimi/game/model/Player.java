@@ -34,6 +34,10 @@ public class Player {
         this.lastGamePlayed = lastGamePlayed;
     }
 
+    public Player() {
+        super();
+    }
+
     public void updateWonGameResult(){
         this.setWonGameResult((double) (this.getWonGames()/this.getPlayedGames()));
     }
