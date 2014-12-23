@@ -18,6 +18,10 @@
             android:label="@string/app_name"
             android:screenOrientation="sensorLandscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="it.polimi.activities.MenuActivity"
+            android:label="@string/title_activity_menu" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,8 +29,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="it.polimi.activities.exampleActivity"
-            android:label="@string/title_activity_example" >
+            android:name="it.polimi.activities.ChoosePlayerActivity"
+            android:label="@string/title_activity_choose_player" >
         </activity>
     </application>
 
