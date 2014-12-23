@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.MotionEvent;
-
-import it.polimi.activities.exampleActivity;
 import it.polimi.core.GameMainActivity;
 import it.polimi.framework.util.Painter;
 import it.polimi.core.Assets;
@@ -54,8 +52,6 @@ public class MenuState extends State {
                 setCurrentState(new PlayState());
             } else if (settingButton.isPressed(scaledX, scaledY)) {
                 settingButton.cancel();
-                //Intent i=new Intent(exampleActivity.class);
-                //startActivity(i);
             }else if (statisticButton.isPressed(scaledX, scaledY)) {
                 statisticButton.cancel();
                 //setCurrentState(new ScoreState());
