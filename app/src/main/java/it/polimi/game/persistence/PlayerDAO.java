@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import it.polimi.game.model.Player;
 
@@ -53,6 +55,21 @@ public class PlayerDAO implements ContractDAO {
         Player newPlayer = buildPlayer(cursor);
         cursor.close();
         return newPlayer;
+
+    }
+
+    public List<Player> getLastPlayers(){
+
+        List<Player> listPlayers = new ArrayList<Player>();
+        Cursor cursor = db.query(DatabaseHelper.PLAYER,null,null,null,null,null,dbHelper.PLAYER_FIELDS[6],"5");
+
+        int i=0;
+        while (cursor.moveToNext()) {
+            listPlayers.add(i,buildPlayer(cursor));
+            i++;
+        }
+
+        return listPlayers;
 
     }
 

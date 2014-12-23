@@ -17,15 +17,22 @@ import android.widget.ListView;
 
 import com.polimi.core.R;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+
+import it.polimi.game.model.Player;
+import it.polimi.game.persistence.PlayerDAO;
 
 public class ChoosePlayerActivity extends Activity {
 
     EditText username;
     ListView lv;
     String itemSelected;
+
+    PlayerDAO playerDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +41,30 @@ public class ChoosePlayerActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_choose_player);
+
+        playerDAO = new PlayerDAO(this);
+        try {
+            playerDAO.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         username=(EditText) findViewById(R.id.editText);
         lv=(ListView) findViewById(R.id.listView);
 
         // fill the array of values by a query over the player ordered by last game
-        String[] values = new String[] { "Paolo", "Andrea","Anna", "Giovanni" };
+        /*String[] values = new String[] { "Paolo", "Andrea","Anna", "Giovanni" };
         final ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < values.length; ++i) {
             list.add(values[i]);
-        }
+        }*/
 
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
+        List<Player> listPlayers = playerDAO.getLastPlayers();
+        List<String> listNames = new ArrayList<String>();
+        for (Player p : listPlayers)
+            listNames.add(p.getName());
+
+        final StableArrayAdapter adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, listNames,listPlayers);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,7 +81,7 @@ public class ChoosePlayerActivity extends Activity {
     }
 
     public void onClickB(View arg0){
-       /* String txtStr = username.getText().toString();
+        /*String txtStr = username.getText().toString();
         Intent i = new Intent(this,a2.class);
         if (txtStr != "")
             i.putExtra("username", txtStr);
@@ -72,14 +92,14 @@ public class ChoosePlayerActivity extends Activity {
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
 
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+        LinkedHashMap<String, Integer> mIdMap = new LinkedHashMap<String, Integer>();
 
         public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
+                                  List<String> objects, List<Player> listPlayers) {
             super(context, textViewResourceId, objects);
             for (int i = 0; i < objects.size(); ++i) {
                 //here instead i put the id of the player
-                mIdMap.put(objects.get(i), i);
+                mIdMap.put(objects.get(i),listPlayers.get(i).getId() );
             }
         }
 
