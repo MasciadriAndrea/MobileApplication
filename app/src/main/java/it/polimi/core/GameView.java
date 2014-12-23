@@ -7,7 +7,6 @@ import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
-
 import it.polimi.framework.util.InputHandler;
 import it.polimi.framework.util.Painter;
 import it.polimi.game.state.LoadState;
@@ -127,7 +126,6 @@ public class GameView extends SurfaceView implements Runnable {
 
 	public void onResume() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void onPause() {

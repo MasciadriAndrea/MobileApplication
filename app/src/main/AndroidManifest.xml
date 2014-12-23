@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.polimi.core"
     android:versionCode="1"
-    android:versionName="1.1"
-    >
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -21,8 +20,13 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="it.polimi.activities.exampleActivity"
+            android:label="@string/title_activity_example" >
         </activity>
     </application>
 

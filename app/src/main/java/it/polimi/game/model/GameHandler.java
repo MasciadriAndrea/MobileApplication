@@ -17,7 +17,7 @@ public class GameHandler {
     private Board board;
     private MatchResult matchResult;
     private static Integer MEGABRAIN=1;
-    private static Player TIE=new Player("TIE",0);
+    public static Player TIE=new Player("TIE",0);
     private static Integer ISGAMEFINISHED=3;
     private static Integer ISMYTURNAGAIN=2;
     private static Integer PERFORMSTEAL=1;
@@ -186,7 +186,8 @@ public class GameHandler {
         Tray t2=this.getBoard().getSemiBoardByPlayer(this.getP2()).getTray();
         t2.incrementSeeds(seeds2);
         str+=t2.getSeeds().toString()+"-";
-        System.out.println(str);
+        //TODO
+        //System.out.println(str);
         this.setIsGameFinished(true);
 
         Player win=null;
@@ -205,7 +206,7 @@ public class GameHandler {
         }
         this.matchResult.storeData(win,t1.getSeeds(),t2.getSeeds());// update all the result in matchResult, player and bestmoves
         //TODO
-        System.out.println("uhuuuuuuuuuu   the winner is "+this.getMatchResult().getWinner().getName());
+       // System.out.println("uhuuuuuuuuuu   the winner is "+this.getMatchResult().getWinner().getName());
     }
 
     private Integer megabrainSelectBowlId(){
