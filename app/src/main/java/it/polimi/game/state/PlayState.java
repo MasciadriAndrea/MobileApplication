@@ -24,9 +24,6 @@ public class PlayState extends State{
     private GameHandler gh;
 
     public void init(){
-        p1=new Player("Foo",1);
-        p2=new Player("Bar",2);
-        Game.getInstance().setGh(new GameHandler(p1,p2));
         gh=Game.getInstance().getGh();
         bp1=new ArrayList<UIButton>();
         bp2=new ArrayList<UIButton>();

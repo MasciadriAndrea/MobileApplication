@@ -32,6 +32,7 @@ public class DBSavePlayer extends AndroidTestCase {
         Player staticPlayer = setPlayer();
         assertEquals(staticPlayer.getName(),dbPlayer.getName());
         assertEquals(staticPlayer.getLastGamePlayed(),dbPlayer.getLastGamePlayed());
+       // playerDAO.dropDB();
     }
 
     private Player setPlayer(){

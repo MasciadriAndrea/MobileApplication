@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import it.polimi.game.model.Game;
 import it.polimi.game.model.Player;
 
 public class PlayerDAO implements ContractDAO {
@@ -57,11 +58,54 @@ public class PlayerDAO implements ContractDAO {
         return newPlayer;
 
     }
+    public Player addPlayer(String playerName) {
+
+        ContentValues values = new ContentValues();
+
+        values.put(PLAYER_TABLE_COLUMNS[1], playerName);
+        values.put(PLAYER_TABLE_COLUMNS[2], 0);
+        values.put(PLAYER_TABLE_COLUMNS[3], 0);
+        values.put(PLAYER_TABLE_COLUMNS[4], 0);
+        values.put(PLAYER_TABLE_COLUMNS[5], 0);
+        values.put(PLAYER_TABLE_COLUMNS[6], 0);
+
+        long playerId = db.insert(DatabaseHelper.PLAYER,null,values);
+
+        Cursor cursor = db.query(DatabaseHelper.PLAYER,
+                PLAYER_TABLE_COLUMNS,PLAYER_TABLE_COLUMNS[0] + " = "
+                        + playerId,null,null,null,null);
+
+        cursor.moveToFirst();
+
+        Player newPlayer = buildPlayer(cursor);
+        cursor.close();
+        return newPlayer;
+
+    }
+
+    public void dropDB(){
+        db.delete(DatabaseHelper.PLAYER,null,null);
+    }
 
     public List<Player> getLastPlayers(){
 
         List<Player> listPlayers = new ArrayList<Player>();
         Cursor cursor = db.query(DatabaseHelper.PLAYER,null,null,null,null,null,dbHelper.PLAYER_FIELDS[6],"5");
+
+        int i=0;
+        while (cursor.moveToNext()) {
+            listPlayers.add(i,buildPlayer(cursor));
+            i++;
+        }
+
+        return listPlayers;
+
+    }
+
+    public List<Player> getAllPlayers(){
+
+        List<Player> listPlayers = new ArrayList<Player>();
+        Cursor cursor = db.query(DatabaseHelper.PLAYER,null,null,null,null,null,dbHelper.PLAYER_FIELDS[6]);
 
         int i=0;
         while (cursor.moveToNext()) {

@@ -23,7 +23,6 @@ public class GameHandler {
     private static Integer PERFORMSTEAL=1;
     private static Integer nSeeds=3;
 
-
     public GameHandler(Player p1){
        //constructor for Human vs Megabrain mode
        Player p2=new Player("MEGABRAIN", this.MEGABRAIN);

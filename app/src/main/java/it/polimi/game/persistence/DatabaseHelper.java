@@ -1,8 +1,6 @@
 package it.polimi.game.persistence;
 
-/**
- * Created by Paolo on 18/12/2014.
- */
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -22,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(applicationContext, DATABASE_NAME, null, SCHEMA_VERSION);
         PLAYER_FIELDS= new String[]{"id", "name", "playedGames", "wonGames", "wonGamesResult", "maxScoreResult", "lastGamePlayed"};
         DATABASE_CREATE = "create table "+ PLAYER +" ("+PLAYER_FIELDS[0]+" integer primary key autoincrement,"
-                +PLAYER_FIELDS[1]+" text not null,"
+                +PLAYER_FIELDS[1]+" text unique not null,"
                 +PLAYER_FIELDS[2]+" integer,"
                 +PLAYER_FIELDS[3]+" integer,"
                 +PLAYER_FIELDS[4]+" double,"
@@ -42,6 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(DATABASE_CREATE);
+
     }
 
     @Override

@@ -30,8 +30,9 @@ public class MenuActivity extends Activity {
     }
 
     public void onClickMultiPlay(View arg0){
-        // Intent i = new Intent(this,ChoosePlayerActivity.class);
-        Intent i = new Intent(this,GameMainActivity.class);
+        Intent i = new Intent(this,ChoosePlayerActivity.class);
+        i.putExtra("player", 0);
+        i.putExtra("isSinglePlayer",false);
         startActivity(i);
     }
 

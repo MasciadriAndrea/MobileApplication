@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -23,7 +25,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import it.polimi.core.Assets;
+import it.polimi.core.GameMainActivity;
+import it.polimi.game.model.Game;
+import it.polimi.game.model.GameHandler;
 import it.polimi.game.model.Player;
+import it.polimi.game.model.PlayerHandler;
 import it.polimi.game.persistence.PlayerDAO;
 
 public class ChoosePlayerActivity extends Activity {
@@ -31,8 +38,10 @@ public class ChoosePlayerActivity extends Activity {
     EditText username;
     ListView lv;
     String itemSelected;
-
     PlayerDAO playerDAO;
+    int playerId;
+    Boolean isSinglePlayer;
+    Button select;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +50,9 @@ public class ChoosePlayerActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_choose_player);
-
+        Intent i=getIntent();
+        playerId=i.getIntExtra("player",0);
+        isSinglePlayer=i.getBooleanExtra("isSinglePlayer",false);
         playerDAO = new PlayerDAO(this);
         try {
             playerDAO.open();
@@ -51,7 +62,7 @@ public class ChoosePlayerActivity extends Activity {
 
         username=(EditText) findViewById(R.id.editText);
         lv=(ListView) findViewById(R.id.listView);
-
+        select=(Button) findViewById(R.id.button);
         // fill the array of values by a query over the player ordered by last game
         /*String[] values = new String[] { "Paolo", "Andrea","Anna", "Giovanni" };
         final ArrayList<String> list = new ArrayList<String>();
@@ -59,7 +70,8 @@ public class ChoosePlayerActivity extends Activity {
             list.add(values[i]);
         }*/
 
-        List<Player> listPlayers = playerDAO.getLastPlayers();
+        List<Player> listPlayers = PlayerHandler.getInstance().getPlayers();
+        listPlayers.remove(PlayerHandler.getInstance().getPlayerById(playerId));
         List<String> listNames = new ArrayList<String>();
         for (Player p : listPlayers)
             listNames.add(p.getName());
@@ -81,13 +93,44 @@ public class ChoosePlayerActivity extends Activity {
     }
 
     public void onClickB(View arg0){
-        /*String txtStr = username.getText().toString();
-        Intent i = new Intent(this,a2.class);
-        if (txtStr != "")
-            i.putExtra("username", txtStr);
-        else if ((itemSelected != null))
-            i.putExtra("username",itemSelected);
-        startActivity(i);*/
+        username.clearFocus();
+        String txtStr = username.getText().toString();
+        Boolean oldOne=false;
+        Player selectedPlayer=null;
+        for(Player p:PlayerHandler.getInstance().getPlayers()){
+            if(p.getName().equals(txtStr)){
+                oldOne=true;
+                selectedPlayer=p;
+            }
+        }
+        if((txtStr.length()>0)&&(!oldOne)){
+            selectedPlayer=playerDAO.addPlayer(txtStr);
+            PlayerHandler.getInstance().updateList();
+        }
+
+        if(isSinglePlayer){
+            //start game versus megabrain
+            Player p1=selectedPlayer;
+            Game.getInstance().setGh(new GameHandler(p1));
+            Intent i = new Intent(this,GameMainActivity.class);
+            startActivity(i);
+        }else{
+            //multiplayer
+            if(playerId==0){
+                //ask for player 2
+                Intent i = new Intent(this,ChoosePlayerActivity.class);
+                i.putExtra("player", selectedPlayer.getId());
+                i.putExtra("isSinglePlayer",false);
+                startActivity(i);
+            }else{
+                //start multiplayer game
+                Player p1=PlayerHandler.getInstance().getPlayerById(playerId);
+                Player p2=selectedPlayer;
+                Game.getInstance().setGh(new GameHandler(p1,p2));
+                Intent i = new Intent(this,GameMainActivity.class);
+                startActivity(i);
+            }
+        }
     }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
@@ -109,12 +152,22 @@ public class ChoosePlayerActivity extends Activity {
             return mIdMap.get(item);
         }
 
+
+
         @Override
         public boolean hasStableIds() {
             return true;
         }
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+
 
 
 }
