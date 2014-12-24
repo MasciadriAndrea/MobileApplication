@@ -34,15 +34,20 @@ public class LogicHandler {
     public static void main(String[] args) throws IOException {
         FileWriter fw=new FileWriter("tree.txt");
         BufferedWriter bw=new BufferedWriter(fw);
-        Player p1=new Player("Anna",1);
+        Player p1=new Player("Megabrain",1);
         Player p2=new Player("Andrea",2);
         Integer[] board={3,3,3,3,3,3,0,3,3,3,3,3,3,0};
         Integer nSeeds=3;
-        for(Integer i=1;i<7;i++){
-            LogicHandler.getInstance().recursivePlay(board,p1,p1,p2,i,nSeeds,0,LogicHandler.getInstance().getId(),bw,6);
-        }
-        System.out.println("number of valid configurations generated: "+LogicHandler.getInstance().id.toString());
-        bw.close();
+
+//        for(Integer i=1;i<7;i++){
+//            LogicHandler.getInstance().recursivePlay(board,p1,p1,p2,i,nSeeds,0,LogicHandler.getInstance().getId(),bw,6);
+//        }
+
+        Turn turn = LogicHandler.getInstance().computeStatesTree(board, p2, p1, p2, 7, 3, null, 3);
+
+        String anna = "hey Andrea";
+//        System.out.println("number of valid configurations generated: "+LogicHandler.getInstance().id.toString());
+//        bw.close();
     }
 
 
@@ -88,6 +93,72 @@ public class LogicHandler {
                 }
             }
         }
+    }
+
+    public Turn computeStatesTree(Integer[] board,Player activePlayer,Player p1,Player p2,Integer selectedBowlId,Integer nSeeds,Turn parent,Integer level) throws IOException {
+        if(level>0) {
+
+        Turn turn = new Turn(parent, activePlayer, selectedBowlId);
+
+            level--;
+            int[] iniP1 = {0, 0, 0, 0, 0, 0, 0};
+            int[] iniP2 = {0, 0, 0, 0, 0, 0, 0};
+            for (int i = 0; i < 7; i++) {
+                iniP1[i] = board[i];
+                iniP2[i] = board[i + 7];
+            }
+            GameHandler gh = new GameHandler(p1, p2, iniP1, iniP2, nSeeds);
+            gh.setActivePlayer(activePlayer);
+            Boolean isEmpty = false;
+            for (Bowl bowl : gh.getBoard().getSemiBoardByPlayer(activePlayer).getBowls()) {
+                if ((bowl.getId().equals(selectedBowlId)) && (bowl.getSeeds().equals(0))) {
+                    isEmpty = true;
+                }
+            }
+            if (!isEmpty) {
+                gh.playTurn(selectedBowlId);
+                Integer[] boardAfter = gh.getBoard().getBoardStatus();
+
+                turn.setBoard(boardAfter);
+                turn.setScoreDif(getScoreDif(p1, p2, gh));
+
+                Player nextActivePlayer = gh.getActivePlayer();
+
+                turn.setNextPlayer(nextActivePlayer);
+
+                Boolean gameFinish = gh.getIsGameFinished();
+
+                Turn[] children = new Turn[]{null, null, null, null, null, null};
+
+                if ((!gameFinish)&&(level>0)) {
+                    Integer[] moves = {};
+                    if (nextActivePlayer.equals(p1)) {
+                        moves = new Integer[]{1, 2, 3, 4, 5, 6};
+                    } else {
+                        moves = new Integer[]{7, 8, 9, 10, 11, 12};
+                    }
+                    for (int i = 0; i< 6; i++) {
+                        children[i] = computeStatesTree(boardAfter, nextActivePlayer,p1, p2, moves[i], nSeeds,turn, level);
+                    }
+                }
+
+                turn.setChildren(children);
+                return turn;
+            }
+        }
+        return null;
+    }
+
+    private Integer getScoreDif(Player p1, Player p2, GameHandler gh){
+        int scoreDif;
+
+        if (p1.getId().equals(1)){
+            scoreDif = gh.getBoard().getSemiBoardByPlayer(p1).getTray().getSeeds() - gh.getBoard().getSemiBoardByPlayer(p2).getTray().getSeeds();
+        } else {
+            scoreDif = gh.getBoard().getSemiBoardByPlayer(p2).getTray().getSeeds() - gh.getBoard().getSemiBoardByPlayer(p1).getTray().getSeeds();
+        }
+
+        return scoreDif;
     }
 
     public void saveOutput(String board, Integer idP, Integer id, Integer idNextP,BufferedWriter bw) throws IOException {
