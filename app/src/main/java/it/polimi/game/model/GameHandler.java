@@ -6,6 +6,9 @@ import android.util.Log;
 import java.util.Iterator;
 import java.util.List;
 
+import it.polimi.game.model.megabrain.LogicHandler;
+import it.polimi.game.model.megabrain.Turn;
+
 
 public class GameHandler {
     private Player activePlayer;
@@ -26,8 +29,12 @@ public class GameHandler {
     public GameHandler(Player p1){
        //constructor for Human vs Megabrain mode
        Player p2=new Player("MEGABRAIN", this.MEGABRAIN);
-       this.initGame(p1,p2,false,nSeeds);
-       this.setBoard(new Board(p1,p2));
+       this.initGame(p2,p1,false,nSeeds);
+       this.setBoard(new Board(p2,p1));
+       if(this.activePlayer.equals(p2)){
+        this.playTurn(this.megabrainSelectBowlId());
+       }
+
    }
 
     public GameHandler(Player p1, Player p2) {
@@ -104,13 +111,14 @@ public class GameHandler {
 
                         //Log.v("GameHandler: ","seeds earned in this move:"+(seedsInTrayAfter-seedsInTrayFirst));
                         //Log.v("GameHandler: ","best move of the player:"+this.getMatchResult().getBestMove(this.getActivePlayer()));
+                        //Log.v("Play turn","turn result:"+gameStatus.toString());
                         if (!gameStatus.equals(this.ISGAMEFINISHED)) {
                             //if the game is not finished
                             if (!gameStatus.equals(this.ISMYTURNAGAIN)){
                                 this.switchPlayer();
-                                if (this.isMegabrainTurn()) {
-                                    this.playTurn(this.megabrainSelectBowlId());
-                                }
+
+                            }if (this.isMegabrainTurn()) {
+                                this.playTurn(this.megabrainSelectBowlId());
                             }
                         } else {
                             this.finishGame();
@@ -210,14 +218,20 @@ public class GameHandler {
 
     private Integer megabrainSelectBowlId(){
         //TODO just for MEGABRAIN
-        //in the GameState we will have a loop of game
-        //and there we can decide if the selected bowl
-        //should come from UI or MEGABRAIN
-        return null;
+
+        Integer sbp= LogicHandler.getInstance().megabrainSelectBowlPosition(this.getBoard().getBoardStatus(),this.getActivePlayer(),this.p1,this.p2,nSeeds,5);
+        Integer[] moves = {};
+        if (activePlayer.equals(p1)) {//if megabrain (activePlayer) is p1
+            moves = new Integer[]{1, 2, 3, 4, 5, 6};
+        } else {
+            moves = new Integer[]{7, 8, 9, 10, 11, 12};
+        }
+        Log.v("Megabrain","MB want to select bowl n: "+moves[sbp].toString());
+        return moves[sbp];
     }
 
     private Boolean isMegabrainTurn(){
-        if((!this.getIsHH())&&(this.getActivePlayer().equals(this.getP2()))){
+        if((!this.getIsHH())&&(this.getActivePlayer().getId().equals(1))){
             return true;
         }
         return false;

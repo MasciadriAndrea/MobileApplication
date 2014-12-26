@@ -1,5 +1,7 @@
 package it.polimi.game.model.megabrain;
 
+import android.util.Log;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,7 +34,7 @@ public class LogicHandler {
     }
 
     public static void main(String[] args) throws IOException {
-        FileWriter fw=new FileWriter("tree.txt");
+        /*FileWriter fw=new FileWriter("tree.txt");
         BufferedWriter bw=new BufferedWriter(fw);
         Player p1=new Player("Megabrain",1);
         Player p2=new Player("Andrea",2);
@@ -47,7 +49,9 @@ public class LogicHandler {
 
         String anna = "hey Andrea";
 //        System.out.println("number of valid configurations generated: "+LogicHandler.getInstance().id.toString());
-//        bw.close();
+//        bw.close();*/
+       // System.out.println(Math.max(null, 5));
+       // System.out.println(Math.min(null, -5));
     }
 
 
@@ -95,7 +99,138 @@ public class LogicHandler {
         }
     }
 
-    public Turn computeStatesTree(Integer[] board,Player activePlayer,Player p1,Player p2,Integer selectedBowlId,Integer nSeeds,Turn parent,Integer level) throws IOException {
+    public Integer megabrainSelectBowlPosition(Integer[] board,Player activePlayer,Player p1,Player p2,Integer nSeeds,Integer level){
+        Turn root=new Turn();
+        root.setActualPlayer(activePlayer);
+        root.setBoard(board);
+        root.setScoreDif(0);
+        Integer[] moves = {};
+        Turn[] children = new Turn[]{null, null, null, null, null, null};
+        if (activePlayer.equals(p1)) {//if megabrain (activePlayer) is p1
+            moves = new Integer[]{1, 2, 3, 4, 5, 6};
+        } else {
+            moves = new Integer[]{7, 8, 9, 10, 11, 12};
+        }
+        for (Integer i=0;i<6;i++) {
+            children[i]=computeStatesTree(board, activePlayer, p1, p2, moves[i], nSeeds, root, level);
+        }
+        root.setChildren(children);
+        this.recursiveCutChildren(root);
+        int maxScore=-36;
+        int position= 0;
+        Integer[] score={-36,-36,-36,-36,-36,-36};
+        for(Integer i=0;i<6;i++){
+            score[i]=recursiveGetMaxScore(root.getChildren()[i]);
+            Log.v("LogicHandler","position "+i.toString()+" has maximum score over one leaf equal to "+score[i].toString());
+            if(maxScore < score[i]){
+                maxScore = score[i];
+                position = i;
+            }
+        }
+        if(maxScore==-36){
+            Integer start;
+            if (activePlayer.equals(p1)) {
+                start=0;
+            }else{
+                start=7;
+            }
+            for(int i=start;i<6+start;i++){
+                if(board[i]>0){
+                    position=i-start;
+                }
+            }
+        }
+        return position;
+    }
+
+    public void recursiveCutChildren(Turn node){
+        if(node!=null) {
+            Turn[] children=node.getChildren();
+            Boolean hasChild=false;
+            for(Integer i=0;i<6;i++){
+                if(children[i]!=null){
+                    hasChild=true;
+                }
+            }
+            if(hasChild){
+                //TODO check
+                Integer[] score={36,36,36,36,36,36};
+                if(!node.getActualPlayer().getId().equals(1)){//if it is not Megabrain
+                    int minScore=36;
+                    int position= 0;
+                    for(Integer i=0;i<6;i++){
+                       score[i]=recursiveGetMinScore(node);
+                        if(minScore > score[i]){
+                            minScore = score[i];
+                            position = i;
+                        }
+                    }
+                    for(Integer i=0;i<6;i++){
+                        if(score[i]>minScore){
+                            node.getChildren()[i]=null;
+                        }
+                    }
+                }
+                for(Integer i=0;i<6;i++){
+                    recursiveCutChildren(children[i]);
+                }
+
+            }
+        }
+
+    }
+
+    public Integer recursiveGetMaxScore(Turn node){
+        //TODO change this number
+        Integer maxScore=-36;
+        Integer score;
+        Boolean isLeaf=false;
+        if(node!=null){
+            for(Integer i=0;i<6;i++){
+                if(node.getChildren()[i]!=null){
+                    score=recursiveGetMaxScore(node.getChildren()[i]);
+                    isLeaf=true;
+                }else{
+                    score=-36;
+                }
+                if(score>maxScore){
+                    maxScore=score;
+                }
+            }
+            if(isLeaf){
+                Integer[] board=node.getBoard();
+                return node.getScoreDif();
+            }
+        }
+        return maxScore;
+    }
+
+    public Integer recursiveGetMinScore(Turn node){
+        //TODO change this number
+        Integer minScore=36;
+        Integer score;
+        Boolean isLeaf=false;
+        if(node!=null){
+            for(Integer i=0;i<6;i++){
+                if(node.getChildren()[i]!=null){
+                    isLeaf=true;
+                    score=recursiveGetMinScore(node.getChildren()[i]);
+                }else{
+                    score=36;
+                }
+                if(score<minScore){
+                    minScore=score;
+                }
+            }
+            if(isLeaf){
+                Integer[] board=node.getBoard();
+                return node.getScoreDif();
+            }
+        }
+        return minScore;
+    }
+
+    public Turn computeStatesTree(Integer[] board,Player activePlayer,Player p1,Player p2,Integer selectedBowlId,Integer nSeeds,Turn parent,Integer level) {
         if(level>0) {
 
         Turn turn = new Turn(parent, activePlayer, selectedBowlId);
@@ -109,6 +244,16 @@ public class LogicHandler {
             }
             GameHandler gh = new GameHandler(p1, p2, iniP1, iniP2, nSeeds);
             gh.setActivePlayer(activePlayer);
+            Integer selectedPointer,ns;
+            if(activePlayer.equals(p1)){
+                selectedPointer=selectedBowlId-1;
+                ns=iniP1[selectedPointer];
+            }else{
+                selectedPointer=selectedBowlId-7;
+                ns=iniP2[selectedPointer];
+            }
+            Integer lostSeeds=ns+selectedPointer-6;
+            turn.setLostSeeds(lostSeeds);
             Boolean isEmpty = false;
             for (Bowl bowl : gh.getBoard().getSemiBoardByPlayer(activePlayer).getBowls()) {
                 if ((bowl.getId().equals(selectedBowlId)) && (bowl.getSeeds().equals(0))) {
@@ -120,7 +265,7 @@ public class LogicHandler {
                 Integer[] boardAfter = gh.getBoard().getBoardStatus();
 
                 turn.setBoard(boardAfter);
-                turn.setScoreDif(getScoreDif(p1, p2, gh));
+                turn.setScoreDif(getScoreDif(p1, p2, gh,turn));
 
                 Player nextActivePlayer = gh.getActivePlayer();
 
@@ -149,13 +294,19 @@ public class LogicHandler {
         return null;
     }
 
-    private Integer getScoreDif(Player p1, Player p2, GameHandler gh){
+    //TODO Anna! Change function to get the best choice
+    private Integer getScoreDif(Player p1, Player p2, GameHandler gh,Turn turn){
         int scoreDif;
-
-        if (p1.getId().equals(1)){
+        if (p1.getId().equals(1)){//player 1 is megabrain
             scoreDif = gh.getBoard().getSemiBoardByPlayer(p1).getTray().getSeeds() - gh.getBoard().getSemiBoardByPlayer(p2).getTray().getSeeds();
+            scoreDif+= gh.getBoard().getSemiBoardByPlayer(p1).getNumberOfNonEmptyBowl();
+            //scoreDif=scoreDif*2;
+            //scoreDif-= turn.getLostSeeds();
         } else {
             scoreDif = gh.getBoard().getSemiBoardByPlayer(p2).getTray().getSeeds() - gh.getBoard().getSemiBoardByPlayer(p1).getTray().getSeeds();
+            scoreDif+= gh.getBoard().getSemiBoardByPlayer(p2).getNumberOfNonEmptyBowl();
+            //scoreDif=scoreDif*2;
+            //scoreDif-= turn.getLostSeeds();
         }
 
         return scoreDif;

@@ -11,7 +11,17 @@ public class Turn {
     private Integer selectedBowl;
     private Integer[] board;
     private Integer scoreDif;
+    private Integer lostSeeds;
 
+    public Turn(){
+       this.children = null;
+        this.parent = null;
+        this.actualPlayer = null;
+        this.nextPlayer = null;
+        this.selectedBowl = null;
+        this.board = null;
+        this.scoreDif = null;
+    }
 
     public Turn(Turn[] children, Turn parent, Player actualPlayer, Player nextPlayer, Integer selectedBowl, Integer[] board, Integer scoreDif) {
         this.children = children;
@@ -87,5 +97,13 @@ public class Turn {
 
     public void setScoreDif(Integer scoreDif) {
         this.scoreDif = scoreDif;
+    }
+
+    public Integer getLostSeeds() {
+        return lostSeeds;
+    }
+
+    public void setLostSeeds(Integer lostSeeds) {
+        this.lostSeeds = lostSeeds;
     }
 }
