@@ -23,6 +23,7 @@ public class PlayerDAO implements ContractDAO {
     synchronized public static PlayerDAO getInstance(Context ctxt) {
         if (singleton == null) {
             singleton = new PlayerDAO(ctxt.getApplicationContext());
+            singleton.addPlayer(new Player("Megabrain",1));
         }
         return singleton ;
     }
