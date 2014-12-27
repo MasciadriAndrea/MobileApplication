@@ -53,7 +53,7 @@ public class ChoosePlayerActivity extends Activity {
         Intent i=getIntent();
         playerId=i.getIntExtra("player",0);
         isSinglePlayer=i.getBooleanExtra("isSinglePlayer",false);
-        playerDAO = new PlayerDAO(this);
+        playerDAO = PlayerDAO.getInstance(this);
         try {
             playerDAO.open();
         } catch (SQLException e) {
@@ -63,12 +63,6 @@ public class ChoosePlayerActivity extends Activity {
         username=(EditText) findViewById(R.id.editText);
         lv=(ListView) findViewById(R.id.listView);
         select=(Button) findViewById(R.id.button);
-        // fill the array of values by a query over the player ordered by last game
-        /*String[] values = new String[] { "Paolo", "Andrea","Anna", "Giovanni" };
-        final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < values.length; ++i) {
-            list.add(values[i]);
-        }*/
 
         List<Player> listPlayers = PlayerHandler.getInstance().getPlayers();
         listPlayers.remove(PlayerHandler.getInstance().getPlayerById(playerId));
@@ -101,10 +95,12 @@ public class ChoosePlayerActivity extends Activity {
             if(p.getName().equals(txtStr)){
                 oldOne=true;
                 selectedPlayer=p;
+                Log.v("choosePlayerActivity","nella lista ha trovato il player che si chiama"+ selectedPlayer.getName());
             }
         }
         if((txtStr.length()>0)&&(!oldOne)){
             selectedPlayer=playerDAO.addPlayer(txtStr);
+            Log.v("choosePlayerActivity","entrato ad aggiungere il player chiamato"+ selectedPlayer.getName());
             PlayerHandler.getInstance().updateList();
         }
 
@@ -114,14 +110,16 @@ public class ChoosePlayerActivity extends Activity {
             Game.getInstance().setGh(new GameHandler(p1));
             Intent i = new Intent(this,GameMainActivity.class);
             startActivity(i);
+            finish();
         }else{
             //multiplayer
-            if(playerId==0){
+            if(playerId == 0){
                 //ask for player 2
                 Intent i = new Intent(this,ChoosePlayerActivity.class);
                 i.putExtra("player", selectedPlayer.getId());
                 i.putExtra("isSinglePlayer",false);
                 startActivity(i);
+                finish();
             }else{
                 //start multiplayer game
                 Player p1=PlayerHandler.getInstance().getPlayerById(playerId);
@@ -164,7 +162,6 @@ public class ChoosePlayerActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-
     }
 
 

@@ -29,11 +29,11 @@ public class MenuActivity extends Activity {
     }
 
     public void onClickSinglePlay(View arg0){
-        Intent i = new Intent(this,GameMainActivity.class);
-        //i.putExtra("player", 0);
-        // i.putExtra("isSinglePlayer",false);
-        Player p1= new Player("Anna",2);
-        Game.getInstance().setGh(new GameHandler(p1));
+        Intent i = new Intent(this,ChoosePlayerActivity.class);
+        i.putExtra("player", 0);
+        i.putExtra("isSinglePlayer",true);
+        /*Player p1= new Player("Anna",2);
+        Game.getInstance().setGh(new GameHandler(p1));*/
         startActivity(i);
     }
 

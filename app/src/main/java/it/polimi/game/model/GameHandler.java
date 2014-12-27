@@ -31,7 +31,7 @@ public class GameHandler {
        Player p2=new Player("MEGABRAIN", this.MEGABRAIN);
        this.initGame(p2,p1,false,nSeeds);
        this.setBoard(new Board(p2,p1));
-       if(this.activePlayer.equals(p2)){
+       if(this.activePlayer.equals(p1)){
         this.playTurn(this.megabrainSelectBowlId());
        }
 
