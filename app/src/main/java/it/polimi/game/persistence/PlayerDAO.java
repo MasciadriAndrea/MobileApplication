@@ -20,10 +20,17 @@ public class PlayerDAO implements ContractDAO {
     private static PlayerDAO singleton = null;
     private static String[] PLAYER_TABLE_COLUMNS;
 
-    synchronized public static PlayerDAO getInstance(Context ctxt) {
+    synchronized public static PlayerDAO getInstance(Context ctxt)  {
         if (singleton == null) {
             singleton = new PlayerDAO(ctxt.getApplicationContext());
-            singleton.addPlayer(new Player("Megabrain",1));
+            try {
+                singleton.open();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            if(singleton.getPlayerById(1)==null) {
+                singleton.addPlayer("Megabrain");
+            }
         }
         return singleton ;
     }
@@ -70,12 +77,12 @@ public class PlayerDAO implements ContractDAO {
     public Player addPlayer(String playerName) {
 
         ContentValues values = new ContentValues();
-
+        Integer i=0;
         values.put(PLAYER_TABLE_COLUMNS[1], playerName);
         values.put(PLAYER_TABLE_COLUMNS[2], 0);
         values.put(PLAYER_TABLE_COLUMNS[3], 0);
-        values.put(PLAYER_TABLE_COLUMNS[4], 0);
-        values.put(PLAYER_TABLE_COLUMNS[5], 0);
+        values.put(PLAYER_TABLE_COLUMNS[4], i.doubleValue());
+        values.put(PLAYER_TABLE_COLUMNS[5], i.doubleValue());
         values.put(PLAYER_TABLE_COLUMNS[6], 0);
 
         long playerId = db.insert(DatabaseHelper.PLAYER,null,values);

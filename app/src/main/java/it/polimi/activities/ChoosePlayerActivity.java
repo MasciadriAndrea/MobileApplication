@@ -66,6 +66,7 @@ public class ChoosePlayerActivity extends Activity {
 
         List<Player> listPlayers = PlayerHandler.getInstance().getPlayers();
         listPlayers.remove(PlayerHandler.getInstance().getPlayerById(playerId));
+        listPlayers.remove(PlayerHandler.getInstance().getPlayerById(1));//megabrain
         List<String> listNames = new ArrayList<String>();
         for (Player p : listPlayers)
             listNames.add(p.getName());
@@ -88,7 +89,7 @@ public class ChoosePlayerActivity extends Activity {
 
     public void onClickB(View arg0){
         username.clearFocus();
-        String txtStr = username.getText().toString();
+        String txtStr = username.getText().toString().trim();
         Boolean oldOne=false;
         Player selectedPlayer=null;
         for(Player p:PlayerHandler.getInstance().getPlayers()){
@@ -98,7 +99,7 @@ public class ChoosePlayerActivity extends Activity {
                 Log.v("choosePlayerActivity","nella lista ha trovato il player che si chiama"+ selectedPlayer.getName());
             }
         }
-        if((txtStr.length()>0)&&(!oldOne)){
+        if((!txtStr.equals(""))&&(!oldOne)){
             selectedPlayer=playerDAO.addPlayer(txtStr);
             Log.v("choosePlayerActivity","entrato ad aggiungere il player chiamato"+ selectedPlayer.getName());
             PlayerHandler.getInstance().updateList();
