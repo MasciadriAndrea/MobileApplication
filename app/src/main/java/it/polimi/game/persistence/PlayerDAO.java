@@ -83,6 +83,34 @@ public class PlayerDAO implements ContractDAO {
 
     }
 
+    public Player getPlayerByName(String name){
+
+        Cursor cursor = db.query(DatabaseHelper.PLAYER, PLAYER_TABLE_COLUMNS,
+                PLAYER_TABLE_COLUMNS[1] + " = " + name, null, null, null, null);
+        Player player = new Player();
+        if (cursor.moveToFirst()){
+            player = buildPlayer(cursor);
+            return player;
+        }
+        else
+            return null;
+    }
+
+    public Player getPlayerById(Integer id) {
+
+        String[] whereArgs = new String[]{
+                id.toString()
+        };
+        Cursor cursor = db.query(DatabaseHelper.PLAYER, PLAYER_TABLE_COLUMNS,
+                PLAYER_TABLE_COLUMNS[1] + " = ? ", whereArgs, null, null, null);
+        Player player = new Player();
+        if (cursor.moveToFirst()) {
+            player = buildPlayer(cursor);
+            return player;
+        } else
+            return null;
+    }
+
     public void dropDB(){
         db.delete(DatabaseHelper.PLAYER,null,null);
     }

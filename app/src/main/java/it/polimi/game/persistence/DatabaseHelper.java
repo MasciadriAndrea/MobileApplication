@@ -12,6 +12,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static String PLAYER = "Player";
     public String[] PLAYER_FIELDS;
     private String DATABASE_CREATE;
+    private String INSERT_MEGABRAIN;
     private String DATABASE_UPGRADING;
 
     private static DatabaseHelper singleton = null;
@@ -26,6 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +PLAYER_FIELDS[4]+" double,"
                 +PLAYER_FIELDS[5]+" double,"
                 +PLAYER_FIELDS[6]+" date)";
+        INSERT_MEGABRAIN = new String("insert into " + PLAYER + " values (1,MEGABRAIN,0,0,0.0,0.0,0 )");
         DATABASE_UPGRADING = "DROP TABLE IF EXISTS " + PLAYER  ;
     }
 
@@ -39,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(DATABASE_CREATE);
+        sqLiteDatabase.execSQL(DATABASE_CREATE + INSERT_MEGABRAIN);
 
     }
 

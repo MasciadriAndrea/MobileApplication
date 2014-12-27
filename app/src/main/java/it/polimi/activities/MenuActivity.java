@@ -38,12 +38,12 @@ public class MenuActivity extends Activity {
     }
 
     public void onClickMultiPlay(View arg0){
-        Intent i = new Intent(this,GameMainActivity.class);
-        //i.putExtra("player", 0);
-       // i.putExtra("isSinglePlayer",false);
-        Player p1= new Player("Andrea",1);
+        Intent i = new Intent(this,ChoosePlayerActivity.class);
+        i.putExtra("player", 0);
+        i.putExtra("isSinglePlayer",false);
+        /*Player p1= new Player("Andrea",1);
         Player p2=new Player("Anna",2);
-        Game.getInstance().setGh(new GameHandler(p1,p2));
+        Game.getInstance().setGh(new GameHandler(p1,p2));*/
         startActivity(i);
     }
 
