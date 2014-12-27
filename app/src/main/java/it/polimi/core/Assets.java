@@ -18,7 +18,7 @@ import it.polimi.game.model.GameHandler;
 public class Assets {
 	private static SoundPool soundPool;
 	private static MediaPlayer mediaPlayer;
-	public static Bitmap background,welcome,bowl,playUp,playDown,statisticUp,statisticDown,settingsUp,settingsDown;
+	public static Bitmap background,welcome,bowl,playUp,playDown,statisticUp,statisticDown,settingsUp,settingsDown,tray;
 	// 1. Load Assets, initialize Frames and Animations.
 	public static void load() {
 
@@ -31,6 +31,7 @@ public class Assets {
         statisticUp = loadBitmap("statisticUp.png", false);
         statisticDown = loadBitmap("statisticDown.png", false);
         bowl = loadBitmap("bowl.png", false);
+        tray = loadBitmap("tray.png", false);
     }
 	
 	// 2. Load sounds here

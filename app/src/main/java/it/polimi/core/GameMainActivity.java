@@ -23,7 +23,7 @@ public class GameMainActivity extends Activity {
 		sGame = new GameView(this, GAME_WIDTH, GAME_HEIGHT);
 		setContentView(sGame);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        Game.getInstance().setGameActivity(this);
+        //Game.getInstance().setGameActivity(this);
 	}
 
 	@Override

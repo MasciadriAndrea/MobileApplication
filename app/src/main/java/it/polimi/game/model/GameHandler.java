@@ -8,6 +8,7 @@ import java.util.List;
 
 import it.polimi.game.model.megabrain.LogicHandler;
 import it.polimi.game.model.megabrain.Turn;
+import it.polimi.game.persistence.PlayerDAO;
 
 
 public class GameHandler {
@@ -28,9 +29,9 @@ public class GameHandler {
 
     public GameHandler(Player p1){
        //constructor for Human vs Megabrain mode
-       Player p2=new Player("MEGABRAIN", this.MEGABRAIN);
-       this.initGame(p2,p1,false,nSeeds);
-       this.setBoard(new Board(p2,p1));
+       Player p2= PlayerHandler.getInstance().getPlayerById(1);//this is megabrain
+       this.initGame(p1,p2,false,nSeeds);
+       this.setBoard(new Board(p1,p2));
        if(this.activePlayer.equals(p2)){
         this.playTurn(this.megabrainSelectBowlId());
        }

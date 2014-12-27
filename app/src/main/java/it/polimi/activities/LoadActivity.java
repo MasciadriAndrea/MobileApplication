@@ -24,6 +24,7 @@ public class LoadActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_load);
         Game.getInstance().setAssets(getAssets());
+        Game.getInstance().setGameActivity(this);
         Assets.load();
         Intent i = new Intent(this,MenuActivity.class);
         startActivity(i);

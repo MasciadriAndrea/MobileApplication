@@ -28,11 +28,11 @@ public class PlayState extends State{
         bp1=new ArrayList<UIButton>();
         bp2=new ArrayList<UIButton>();
         for (int i=0;i<6;i++){
-            bp1.add(new UIButton(50+(80*i), 300, 120+(80*i), 370, Assets.bowl, Assets.bowl));
-            bp2.add(new UIButton(450-(80*i), 50, 520-(80*i), 120, Assets.bowl, Assets.bowl));
+            bp1.add(new UIButton(10+(100*i), 270, 110+(100*i), 370, Assets.bowl, Assets.bowl));
+            bp2.add(new UIButton(610-(100*i), 10, 710-(100*i), 110, Assets.bowl, Assets.bowl));
         }
-        t1=new UIButton(450, 180, 520, 240, Assets.bowl, Assets.bowl);
-        t2=new UIButton(50, 180, 120, 240, Assets.bowl, Assets.bowl);
+        t1=new UIButton(610, 140, 710, 240, Assets.tray, Assets.tray);
+        t2=new UIButton(10, 140, 110, 240, Assets.tray, Assets.tray);
     };
 
     public void update(float delta){
@@ -48,28 +48,28 @@ public class PlayState extends State{
         Integer[] bs=gh.getBoard().getBoardStatus();
         int i=0;
         for(UIButton ub:bp1) {
-            g.drawString(bs[i].toString(), 50+(80*i), 390);
+            g.drawString(bs[i].toString(), 60+(100*i), 260);
             ub.render(g);
             i++;
         }
         if(gh.getActivePlayer().equals(gh.getP1())){
             g.setColor(Color.BLUE);
         }
-        g.drawString(gh.getP1().getName(),550, 390);
+        g.drawString(gh.getP1().getName(),510, 250);
         g.setColor(Color.WHITE);
-        g.drawString(bs[i].toString(),530, 260);
+        g.drawString(bs[i].toString(),120, 190);
         t1.render(g);
         i++;
         for(UIButton ub:bp2) {
-            g.drawString(bs[i].toString(),450-(80*(i-7)), 140);
+            g.drawString(bs[i].toString(),660-(100*(i-7)), 120);
             ub.render(g);
             i++;
         }
-        g.drawString(bs[i].toString(), 50, 260);
+        g.drawString(bs[i].toString(), 510, 190);
         if(gh.getActivePlayer().equals(gh.getP2())){
             g.setColor(Color.BLUE);
         }
-        g.drawString(gh.getP2().getName(),550, 140);
+        g.drawString(gh.getP2().getName(),510, 250);
         g.setColor(Color.WHITE);
         t2.render(g);
     };

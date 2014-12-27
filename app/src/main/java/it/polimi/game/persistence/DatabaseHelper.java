@@ -26,14 +26,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +PLAYER_FIELDS[3]+" integer,"
                 +PLAYER_FIELDS[4]+" double,"
                 +PLAYER_FIELDS[5]+" double,"
-                +PLAYER_FIELDS[6]+" date)";
-        INSERT_MEGABRAIN = new String("insert into " + PLAYER + " values (1,MEGABRAIN,0,0,0.0,0.0,0 )");
+                +PLAYER_FIELDS[6]+" date);";
+        //INSERT_MEGABRAIN = new String("insert into " + PLAYER + " values (1,\"MEGABRAIN\",0,0,0.0,0.0,0 );");
         DATABASE_UPGRADING = "DROP TABLE IF EXISTS " + PLAYER  ;
     }
 
     synchronized static DatabaseHelper getInstance(Context ctxt) {
         if (singleton == null) {
             singleton = new DatabaseHelper(ctxt.getApplicationContext());
+
         }
 
         return (singleton);

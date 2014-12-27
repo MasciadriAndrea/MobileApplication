@@ -102,7 +102,7 @@ public class PlayerDAO implements ContractDAO {
                 id.toString()
         };
         Cursor cursor = db.query(DatabaseHelper.PLAYER, PLAYER_TABLE_COLUMNS,
-                PLAYER_TABLE_COLUMNS[1] + " = ? ", whereArgs, null, null, null);
+                PLAYER_TABLE_COLUMNS[0] + " = ? ", whereArgs, null, null, null);
         Player player = new Player();
         if (cursor.moveToFirst()) {
             player = buildPlayer(cursor);
