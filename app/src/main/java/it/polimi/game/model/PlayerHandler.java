@@ -12,7 +12,7 @@ public class PlayerHandler {
     PlayerDAO playerDAO=null;
 
     public PlayerHandler() {
-        playerDAO = new PlayerDAO(Game.getInstance().getGameActivity());
+        playerDAO = PlayerDAO.getInstance(Game.getInstance().getGameActivity());
         try {
             playerDAO.open();
         } catch (SQLException e) {

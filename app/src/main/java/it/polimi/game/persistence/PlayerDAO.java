@@ -17,9 +17,17 @@ public class PlayerDAO implements ContractDAO {
 
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
+    private static PlayerDAO singleton = null;
     private static String[] PLAYER_TABLE_COLUMNS;
 
-    public PlayerDAO(Context context){
+    synchronized public static PlayerDAO getInstance(Context ctxt) {
+        if (singleton == null) {
+            singleton = new PlayerDAO(ctxt.getApplicationContext());
+        }
+        return singleton ;
+    }
+
+    private PlayerDAO(Context context){
         dbHelper = DatabaseHelper.getInstance(context);
         PLAYER_TABLE_COLUMNS = dbHelper.PLAYER_FIELDS;
     }
