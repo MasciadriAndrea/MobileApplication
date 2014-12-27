@@ -66,11 +66,10 @@ public class ChoosePlayerActivity extends Activity {
         select=(Button) findViewById(R.id.button);
 
         List<Player> listPlayers = PlayerHandler.getInstance().getPlayers();
-        listPlayers.remove(PlayerHandler.getInstance().getPlayerById(playerId));
-        listPlayers.remove(PlayerHandler.getInstance().getPlayerById(1));//megabrain
         List<String> listNames = new ArrayList<String>();
         for (Player p : listPlayers)
-            listNames.add(p.getName());
+            if((!p.getId().equals(playerId))&&(!p.getId().equals(1))){
+                listNames.add(p.getName());}
 
         final StableArrayAdapter adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, listNames,listPlayers);
         lv.setAdapter(adapter);
@@ -99,12 +98,12 @@ public class ChoosePlayerActivity extends Activity {
                 oldOne=true;
                 isValid=true;
                 selectedPlayer=p;
-                Log.v("choosePlayerActivity","nella lista ha trovato il player che si chiama"+ selectedPlayer.getName());
+                Log.v("choosePlayerActivity","found player "+ selectedPlayer.getName());
             }
         }
         if((!txtStr.equals(""))&&(!oldOne)){
             selectedPlayer=playerDAO.addPlayer(txtStr);
-            Log.v("choosePlayerActivity","entrato ad aggiungere il player chiamato"+ selectedPlayer.getName());
+            Log.v("choosePlayerActivity","found player "+ selectedPlayer.getName());
             PlayerHandler.getInstance().updateList();
             isValid=true;
         }
@@ -177,6 +176,7 @@ public class ChoosePlayerActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        this.finish();
     }
 
 
