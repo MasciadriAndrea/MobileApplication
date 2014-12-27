@@ -1,6 +1,7 @@
 package it.polimi.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -91,10 +92,12 @@ public class ChoosePlayerActivity extends Activity {
         username.clearFocus();
         String txtStr = username.getText().toString().trim();
         Boolean oldOne=false;
+        Boolean isValid=false;
         Player selectedPlayer=null;
         for(Player p:PlayerHandler.getInstance().getPlayers()){
             if(p.getName().equals(txtStr)){
                 oldOne=true;
+                isValid=true;
                 selectedPlayer=p;
                 Log.v("choosePlayerActivity","nella lista ha trovato il player che si chiama"+ selectedPlayer.getName());
             }
@@ -103,33 +106,44 @@ public class ChoosePlayerActivity extends Activity {
             selectedPlayer=playerDAO.addPlayer(txtStr);
             Log.v("choosePlayerActivity","entrato ad aggiungere il player chiamato"+ selectedPlayer.getName());
             PlayerHandler.getInstance().updateList();
+            isValid=true;
         }
-
-        if(isSinglePlayer){
-            //start game versus megabrain
-            Player p1=selectedPlayer;
-            Game.getInstance().setGh(new GameHandler(p1));
-            Intent i = new Intent(this,GameMainActivity.class);
-            startActivity(i);
-            finish();
-        }else{
-            //multiplayer
-            if(playerId == 0){
-                //ask for player 2
-                Intent i = new Intent(this,ChoosePlayerActivity.class);
-                i.putExtra("player", selectedPlayer.getId());
-                i.putExtra("isSinglePlayer",false);
+        if(isValid){
+            if(isSinglePlayer){
+                //start game versus megabrain
+                Player p1=selectedPlayer;
+                Game.getInstance().setGh(new GameHandler(p1));
+                Intent i = new Intent(this,GameMainActivity.class);
                 startActivity(i);
                 finish();
             }else{
-                //start multiplayer game
-                Player p1=PlayerHandler.getInstance().getPlayerById(playerId);
-                Player p2=selectedPlayer;
-                Game.getInstance().setGh(new GameHandler(p1,p2));
-                Intent i = new Intent(this,GameMainActivity.class);
-                startActivity(i);
+                //multiplayer
+                if(playerId == 0){
+                    //ask for player 2
+                    Intent i = new Intent(this,ChoosePlayerActivity.class);
+                    i.putExtra("player", selectedPlayer.getId());
+                    i.putExtra("isSinglePlayer",false);
+                    startActivity(i);
+                    finish();
+                }else{
+                    //start multiplayer game
+                    Player p1=PlayerHandler.getInstance().getPlayerById(playerId);
+                    Player p2=selectedPlayer;
+                    Game.getInstance().setGh(new GameHandler(p1,p2));
+                    Intent i = new Intent(this,GameMainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
         }
+        select.clearFocus();
+        //TODO
+        // 1. Instantiate an AlertDialog.Builder with its constructor
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // 2. Chain together various setter methods to set the dialog characteristics
+        builder.setMessage("Insert a name!").setTitle("Bzzz");
+        AlertDialog dialog = builder.create();
     }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
