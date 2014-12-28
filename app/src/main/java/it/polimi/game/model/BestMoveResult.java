@@ -2,21 +2,38 @@ package it.polimi.game.model;
 
 
 public class BestMoveResult {
-    private Integer idP;
+    private Integer id;
+    private Player player;
     private Integer result;
 
 
-    public BestMoveResult(Integer idP, Integer result) {
-        this.idP = idP;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public BestMoveResult(Player player, Integer result) {
+
+        this.player = player;
         this.result = result;
     }
 
-    public Integer getIdP() {
-        return idP;
-    }
+    public BestMoveResult(Integer id, Player player, Integer result) {
 
-    public void setIdP(Integer idP) {
-        this.idP = idP;
+        this.id = id;
+        this.player = player;
+        this.result = result;
     }
 
     public Integer getResult() {
