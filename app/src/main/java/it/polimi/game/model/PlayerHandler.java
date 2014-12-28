@@ -11,7 +11,7 @@ public class PlayerHandler {
     private static PlayerHandler instance = null;
     PlayerDAO playerDAO=null;
 
-    public PlayerHandler() {
+    private PlayerHandler() {
         playerDAO = PlayerDAO.getInstance(Game.getInstance().getGameActivity());
         try {
             playerDAO.open();
