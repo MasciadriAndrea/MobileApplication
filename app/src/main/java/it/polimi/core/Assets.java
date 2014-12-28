@@ -8,17 +8,19 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
+import android.graphics.Matrix;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 
+import it.polimi.framework.animation.Animation;
 import it.polimi.game.model.Game;
 import it.polimi.game.model.GameHandler;
 
 public class Assets {
 	private static SoundPool soundPool;
 	private static MediaPlayer mediaPlayer;
-	public static Bitmap background,welcome,bowl,playUp,playDown,statisticUp,statisticDown,settingsUp,settingsDown,tray;
+	public static Bitmap background,welcome,bowl,playUp,playDown,statisticUp,statisticDown,settingsUp,settingsDown,tray,bee_red,bee_green,bee_megabrain,bowl_red,bowl_green;
 	// 1. Load Assets, initialize Frames and Animations.
 	public static void load() {
 
@@ -32,6 +34,11 @@ public class Assets {
         statisticDown = loadBitmap("statisticDown.png", false);
         bowl = loadBitmap("bowl.png", false);
         tray = loadBitmap("tray.png", false);
+        bowl_red = loadBitmap("bowl_red.png", false);
+        bowl_green = loadBitmap("bowl_green.png", false);
+        bee_red = loadBitmap("bee_red.png", false);
+        bee_green = loadBitmap("bee_green.png", false);
+        bee_megabrain = loadBitmap("bee_megabrain.png", false);
     }
 	
 	// 2. Load sounds here
@@ -114,4 +121,14 @@ public class Assets {
 			e.printStackTrace();
 		}
 	}
+
+    public static Bitmap rotate(Bitmap b,float x)
+    {   int width = b.getWidth();
+        int height = b.getHeight();
+        Matrix matrix = new Matrix();
+        matrix.postRotate(x);
+        Bitmap resizedBitmap = Bitmap.createBitmap(b, 0, 0,width, height, matrix, true);
+        return resizedBitmap;
+    }
+
 }

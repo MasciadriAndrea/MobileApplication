@@ -9,8 +9,8 @@ import android.view.WindowManager;
 import it.polimi.game.model.Game;
 
 public class GameMainActivity extends Activity {
-	public static final int GAME_WIDTH = 800;
-	public static final int GAME_HEIGHT = 450;
+	public static final int GAME_WIDTH = 1920;
+	public static final int GAME_HEIGHT = 1200;
 	public static GameView sGame;
 	public static AssetManager assets;
 	private static SharedPreferences prefs;

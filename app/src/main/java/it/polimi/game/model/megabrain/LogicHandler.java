@@ -121,7 +121,7 @@ public class LogicHandler {
         Integer[] score={-36,-36,-36,-36,-36,-36};
         for(Integer i=0;i<6;i++){
             score[i]=recursiveGetMaxScore(root.getChildren()[i]);
-            Log.v("LogicHandler","position "+i.toString()+" has maximum score over one leaf equal to "+score[i].toString());
+            //Log.v("LogicHandler","position "+i.toString()+" has maximum score over one leaf equal to "+score[i].toString());
             if(maxScore < score[i]){
                 maxScore = score[i];
                 position = i;

@@ -28,5 +28,6 @@ public class LoadActivity extends Activity {
         Assets.load();
         Intent i = new Intent(this,MenuActivity.class);
         startActivity(i);
+        this.finish();
     }
 }

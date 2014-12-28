@@ -28,12 +28,12 @@ public class ScoreState extends State {
     public void render(Painter g) {
         g.drawImage(Assets.background, 0, 0);
         g.setColor(Color.WHITE);
-        g.setFont(Typeface.DEFAULT_BOLD, 50);
-        g.drawString("The winner is:", 120, 175);
-        g.setFont(Typeface.DEFAULT_BOLD, 70);
-        g.drawString(Game.getInstance().getGh().getMatchResult().getWinner().getName(), 370, 260);
-        g.setFont(Typeface.DEFAULT_BOLD, 50);
-        g.drawString("Touch the screen.", 220, 350);
+        g.setFont(Typeface.DEFAULT_BOLD, 100);
+        g.drawString("The winner is:", 240, 350);
+        g.setFont(Typeface.DEFAULT_BOLD, 140);
+        g.drawString(Game.getInstance().getGh().getMatchResult().getWinner().getName(), 740, 520);
+        g.setFont(Typeface.DEFAULT_BOLD, 100);
+        g.drawString("Touch the screen.", 440, 700);
     }
 
     @Override

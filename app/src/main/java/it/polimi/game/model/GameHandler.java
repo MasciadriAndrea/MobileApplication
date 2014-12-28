@@ -38,6 +38,12 @@ public class GameHandler {
 
    }
 
+    public Boolean graphicsOn(){
+        if((this.equals(Game.getInstance().getGh()))&&(Game.getInstance().getGraphic()))
+            return true;
+        return false;
+    }
+
     public GameHandler(Player p1, Player p2) {
         //constructor for H vs H mode
         this.initGame(p1, p2, true,nSeeds);
@@ -48,6 +54,32 @@ public class GameHandler {
         //constructor for testing with initializated board
         this.initGame(p1,p2,true,iniS);
         this.setBoard(new Board(initialBoardP1,initialBoardP2, p1, p2));
+    }
+
+    public void updatePositionBee(Integer bowlId){
+        if(this.equals(Game.getInstance().getGh())){
+            Game.getInstance().makeUnPlayable();
+            if(activePlayer.equals(p1)){
+                Game.getInstance().setxBee1(Game.getInstance().getxBowl()[bowlId]);
+                Game.getInstance().setyBee1(Game.getInstance().getyBowl()[bowlId]);
+            }else{
+                Game.getInstance().setxBee2(Game.getInstance().getxBowl()[bowlId]);
+                Game.getInstance().setyBee2(Game.getInstance().getyBowl()[bowlId]);
+            }}
+        while(!Game.getInstance().beesInPosition()){}
+    }
+
+    public void updatePositionBee(){
+        if(this.equals(Game.getInstance().getGh())){
+            Game.getInstance().makeUnPlayable();
+            if(activePlayer.equals(p1)){
+                Game.getInstance().setxBee1(1585);
+                Game.getInstance().setyBee1(475);
+            }else{
+                Game.getInstance().setxBee2(85);
+                Game.getInstance().setyBee2(475);
+            }}
+        while(!Game.getInstance().beesInPosition()){}
     }
 
     public void playTurn(Integer selectedBowlId){
@@ -64,6 +96,10 @@ public class GameHandler {
             if(currentBowl!= null){
               //if the selected Bowl is own by activePlayer
                     if (currentBowl.getSeeds() > 0) {
+                        //update position bee
+                         if(graphicsOn()){
+                            updatePositionBee(selectedBowlId-1);
+                        }
                         //if the bowl is not empty
                         SemiBoard sbAP=this.getBoard().getSemiBoardByPlayer(this.getActivePlayer());
                         SemiBoard sbOP=this.getBoard().getSemiBoardByPlayer(this.getInactivePlayer());
@@ -75,12 +111,18 @@ public class GameHandler {
                         while(seeds>0){
                             for(Bowl bowl:sbAP.getBowls().subList(start+1,sbAP.getBowls().size())){
                                 if(seeds>0){
+                                    if(graphicsOn()){
+                                        updatePositionBee(bowl.getId()-1);
+                                    }
                                     bowl.incrementSeeds();
                                     seeds--;
                                     pointer=bowl;
                                 }
                             }
                             if(seeds>0){
+                                if(graphicsOn()){
+                                    updatePositionBee();
+                                }
                                 finishedInTA=true;
                                 sbAP.getTray().incrementSeeds();
                                 seeds--;
@@ -88,6 +130,9 @@ public class GameHandler {
                             if (seeds>0) finishedInTA=false;
                             for(Bowl bowl:sbOP.getBowls()){
                                 if(seeds>0){
+                                    if(graphicsOn()){
+                                        updatePositionBee(bowl.getId()-1);
+                                    }
                                     bowl.incrementSeeds();
                                     seeds--;
                                     pointer=bowl;
@@ -115,6 +160,7 @@ public class GameHandler {
                         //Log.v("Play turn","turn result:"+gameStatus.toString());
                         if (!gameStatus.equals(this.ISGAMEFINISHED)) {
                             //if the game is not finished
+                            Game.getInstance().makePlayable();
                             if (!gameStatus.equals(this.ISMYTURNAGAIN)){
                                 this.switchPlayer();
 
@@ -240,8 +286,17 @@ public class GameHandler {
 
     private void stealSeeds(Bowl lastPosition){
         Bowl oC=lastPosition.getOppositeBowl();
+        if(graphicsOn()){
+            updatePositionBee(oC.getId()-1);
+        }
         Integer seeds=oC.pullOutSeeds();
+        if(graphicsOn()){
+            updatePositionBee(lastPosition.getId()-1);
+        }
         seeds=seeds+lastPosition.pullOutSeeds();
+        if(graphicsOn()){
+            updatePositionBee();
+        }
         this.getBoard().getTrayByPlayer(this.getActivePlayer()).incrementSeeds(seeds);
     }
 
