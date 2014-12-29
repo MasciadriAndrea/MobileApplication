@@ -1,5 +1,7 @@
 package it.polimi.game.state;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
@@ -11,31 +13,49 @@ import java.util.List;
 import it.polimi.core.Assets;
 import it.polimi.framework.util.Painter;
 import it.polimi.core.GameMainActivity;
+import it.polimi.framework.util.RandomNumberGenerator;
 import it.polimi.framework.util.UIButton;
 import it.polimi.game.model.Bee;
+import it.polimi.game.model.Bowl;
 import it.polimi.game.model.Game;
 import it.polimi.game.model.GameHandler;
 import it.polimi.game.model.Player;
+import it.polimi.game.model.Seed;
+import it.polimi.game.model.Tray;
 
 public class PlayState extends State{
     private List<UIButton> bp1;
     private List<UIButton> bp2;
     private UIButton t1,t2;
+    private Bitmap p1Bee,p2Bee,bowlP1,bowlP2,bowlInactive;
     Bee bee1,bee2;
     private GameHandler gh;
+    private static int color1=Color.rgb(33,0,0);
+    private static int color2=Color.BLUE;
+    private Bitmap[] seedImg;
 
     public void init(){
+        Game.getInstance().makePlayable();
         gh=Game.getInstance().getGh();
+        seedImg=new Bitmap[]{Assets.seed0,Assets.seed45,Assets.seed90,Assets.seed135};
         bp1=new ArrayList<UIButton>();
         bp2=new ArrayList<UIButton>();
+        bowlP1=Assets.bowl_green;
+        bowlP2=Assets.bowl_red;
+        bowlInactive=Assets.bowl;
         for (int i=0;i<6;i++){
-            bp1.add(new UIButton(85+(250*i), 865, 335+(250*i), 1115, Assets.bowl, Assets.bowl));
-            bp2.add(new UIButton(1585-(250*i), 85, 1835-(250*i), 335, Assets.bowl, Assets.bowl));
+            bp1.add(new UIButton(85+(250*i), 865, 335+(250*i), 1115, bowlP1, bowlP1));
+            bp2.add(new UIButton(1585-(250*i), 85, 1835-(250*i), 335, bowlP2, bowlP2));
         }
         bee1=Game.getInstance().getBee1();
         bee2=Game.getInstance().getBee2();
+        p1Bee=Assets.bee_green;
+        if(Game.getInstance().getGh().getP1().getId().equals(1)){p1Bee=Assets.bee_megabrain;}
+        p2Bee=Assets.bee_red;
+        if(Game.getInstance().getGh().getP2().getId().equals(1)){p2Bee=Assets.bee_megabrain;}
         t1=new UIButton(1585, 475, 1835, 725, Assets.tray, Assets.tray);
         t2=new UIButton(85, 475, 335, 725, Assets.tray, Assets.tray);
+        createSeeds();
     };
 
     public void update(float delta){
@@ -61,37 +81,79 @@ public class PlayState extends State{
 
     public void render(Painter g){
         g.drawImage(Assets.background, 0, 0);
-        g.setColor(Color.WHITE);
-        g.setFont(Typeface.MONOSPACE, 50);
+        g.setColor(color1);
+        g.setFont(Typeface.DEFAULT_BOLD, 50);
         Integer[] bs=gh.getBoard().getBoardStatus();
         int i=0;
-        for(UIButton ub:bp1) {
-            g.drawString(bs[i].toString(), 210+(250*i), 835);
-            ub.render(g);
-            i++;
-        }
         if(gh.getActivePlayer().equals(gh.getP1())){
-            g.setColor(Color.BLUE);
+            for (UIButton ub : bp1) {
+                g.drawString(bs[i].toString(), 210 + (250 * i), 835);
+                ub.render(g);
+                i++;
+            }
+           // g.setColor(color2);
+        }else{
+            for (int j=0;j<6;j++){
+                g.drawString(bs[i].toString(), 210 + (250 * i), 835);
+                g.drawImage(bowlInactive, 85+(250*j), 865, 250,250);
+                i++;
+            }
         }
+
         g.drawString(gh.getP1().getName(),1085, 600);
-        g.setColor(Color.WHITE);
+        //g.setColor(color1);
         g.drawString(bs[i].toString(),1485, 600);
         t1.render(g);
         i++;
+        if(gh.getActivePlayer().equals(gh.getP2())){
         for(UIButton ub:bp2) {
             g.drawString(bs[i].toString(),1710-(250*(i-7)), 385);
             ub.render(g);
             i++;
         }
-        g.drawString(bs[i].toString(), 385, 600);
-        if(gh.getActivePlayer().equals(gh.getP2())){
-            g.setColor(Color.BLUE);
+           // g.setColor(color2);
+           }else{
+            for (int j=0;j<6;j++){
+                g.drawString(bs[i].toString(),1710-(250*(i-7)), 385);
+                g.drawImage(bowlInactive, 1585-(250*j), 85, 250,250);
+                i++;
+            }
         }
+        g.drawString(bs[i].toString(), 385, 600);
         g.drawString(gh.getP2().getName(),585, 600);
-        g.setColor(Color.WHITE);
+        //g.setColor(color1);
         t2.render(g);
         renderBees(g);
+        renderSeeds(g);
     };
+
+    public void renderSeeds(Painter g){
+        for(Seed s:Game.getInstance().getSeeds()){
+            if(s.isVisible()) {
+                g.drawImage(s.getBm(), (int) s.getX(), (int) s.getY(), 50, 50);
+            }
+        }
+    }
+
+    public void createSeeds(){
+        GameHandler gh=Game.getInstance().getGh();
+        List<Bowl> bowlP1=gh.getBoard().getSemiBoardByPlayer(gh.getP1()).getBowls();
+        List<Bowl> bowlP2=gh.getBoard().getSemiBoardByPlayer(gh.getP2()).getBowls();
+        List<Seed> seeds=new ArrayList<Seed>();
+        for(Bowl b:bowlP1){
+            for(int i=1;i<=b.getSeeds();i++){
+                int j=RandomNumberGenerator.getRandIntBetween(0, 3);
+                seeds.add(new Seed(b.getId()-1,seedImg[j]));
+            }
+        }
+        for(Bowl b:bowlP2){
+            for(int i=1;i<=b.getSeeds();i++){
+                int j=RandomNumberGenerator.getRandIntBetween(0, 3);
+                seeds.add(new Seed(b.getId(),seedImg[j]));
+            }
+        }
+        Game.getInstance().setSeeds(seeds);
+    }
 
     public void renderBees(Painter g){
         float xBee1=Game.getInstance().getxBee1();
@@ -99,9 +161,9 @@ public class PlayState extends State{
         float yBee1=Game.getInstance().getyBee1();
         float yBee2=Game.getInstance().getyBee2();
         bee1.fly(xBee1,yBee1);
-        g.drawImage(Assets.rotate(Assets.bee_green, (float)bee1.getAng()), (int) bee1.getX(), (int) bee1.getY(), 250,250);
+        g.drawImage(Assets.rotate(p1Bee, (float)bee1.getAng()), (int) bee1.getX(), (int) bee1.getY(), 250,250);
         bee2.fly(xBee2,yBee2);
-        g.drawImage(Assets.rotate(Assets.bee_red, (float) bee2.getAng()), (int) bee2.getX(), (int) bee2.getY(), 250, 250);
+        g.drawImage(Assets.rotate(p2Bee, (float) bee2.getAng()), (int) bee2.getX(), (int) bee2.getY(), 250, 250);
 
     }
 

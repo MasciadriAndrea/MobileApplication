@@ -6,20 +6,25 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
     private static Game instance = null;
     private GameHandler gh;
     private Activity gameActivity;
     private AssetManager assets;
     private Bee bee1,bee2;
+    private List<Seed> seeds;
     private Integer xBee1,yBee1,xBee2,yBee2;
-    Integer[] xBowl;
-    Integer[] yBowl;
+    Integer[] xBowl;Integer[] xTray;
+    Integer[] yBowl;Integer[] yTray;
     private Boolean playable;
     private Boolean graphic;
 
     protected Game() {
-        graphic=true;
+        seeds=new ArrayList<Seed>();
+        graphic=false;
         playable=true;
         assets = null;
         this.gh=null;
@@ -30,6 +35,9 @@ public class Game {
         bee2=new Bee(xBee2,yBee2,180);
         xBowl=new Integer[]{0,0,0,0,0,0,0,0,0,0,0,0};
         yBowl=new Integer[]{0,0,0,0,0,0,0,0,0,0,0,0};
+        xTray=new Integer[]{1585,85};
+        yTray=new Integer[]{475,475};
+
         for(int i=0;i<6;i++){
             xBowl[i]=85+(250*i);
             xBowl[i+6]=1585-(250*i);
@@ -37,6 +45,25 @@ public class Game {
             yBowl[i+6]=85;
         }
     }
+
+    public List<Seed> getSeedsByPosition(Integer position,GameHandler gh){
+        List<Seed> nlist=new ArrayList<Seed>();
+        if(gh.equals(this.getGh())) {
+            for (Seed s : seeds) {
+                if (s.getPosition().equals(position)) {
+                    nlist.add(s);
+                    s.makeInvisible();
+                }
+            }
+        }
+            return nlist;
+
+    }
+
+    public List<Seed> getSeeds() {
+        return seeds;
+    }
+
     public Boolean beesInPosition(){
         if((bee1.getX()==getxBee1())&&
            (bee1.getY()==getyBee1())&&
@@ -156,5 +183,17 @@ public class Game {
 
     public Boolean getGraphic() {
         return graphic;
+    }
+
+    public Integer[] getxTray() {
+        return xTray;
+    }
+
+    public void setSeeds(List<Seed> seeds) {
+        this.seeds = seeds;
+    }
+
+    public Integer[] getyTray() {
+        return yTray;
     }
 }

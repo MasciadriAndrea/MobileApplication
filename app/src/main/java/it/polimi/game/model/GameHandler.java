@@ -3,6 +3,7 @@ package it.polimi.game.model;
 import android.Manifest;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -73,11 +74,11 @@ public class GameHandler {
         if(this.equals(Game.getInstance().getGh())){
             Game.getInstance().makeUnPlayable();
             if(activePlayer.equals(p1)){
-                Game.getInstance().setxBee1(1585);
-                Game.getInstance().setyBee1(475);
+                Game.getInstance().setxBee1(Game.getInstance().getxTray()[0]);
+                Game.getInstance().setyBee1(Game.getInstance().getyTray()[0]);
             }else{
-                Game.getInstance().setxBee2(85);
-                Game.getInstance().setyBee2(475);
+                Game.getInstance().setxBee2(Game.getInstance().getxTray()[1]);
+                Game.getInstance().setyBee2(Game.getInstance().getyTray()[1]);
             }}
         while(!Game.getInstance().beesInPosition()){}
     }
@@ -100,6 +101,11 @@ public class GameHandler {
                          if(graphicsOn()){
                             updatePositionBee(selectedBowlId-1);
                         }
+                        int position = currentBowl.getId();
+                        if(activePlayer.equals(p1)){
+                            position--;
+                        }
+                        List<Seed> seedsImg=Game.getInstance().getSeedsByPosition(position,this);
                         //if the bowl is not empty
                         SemiBoard sbAP=this.getBoard().getSemiBoardByPlayer(this.getActivePlayer());
                         SemiBoard sbOP=this.getBoard().getSemiBoardByPlayer(this.getInactivePlayer());
@@ -114,6 +120,11 @@ public class GameHandler {
                                     if(graphicsOn()){
                                         updatePositionBee(bowl.getId()-1);
                                     }
+                                    position = bowl.getId();
+                                    if(activePlayer.equals(p1)){
+                                        position--;
+                                    }
+                                    moveSeed(seedsImg,position);
                                     bowl.incrementSeeds();
                                     seeds--;
                                     pointer=bowl;
@@ -122,6 +133,11 @@ public class GameHandler {
                             if(seeds>0){
                                 if(graphicsOn()){
                                     updatePositionBee();
+                                    position=6;
+                                    if(activePlayer.equals(p2)){
+                                        position=13;
+                                    }
+                                    moveSeed(seedsImg,position);
                                 }
                                 finishedInTA=true;
                                 sbAP.getTray().incrementSeeds();
@@ -133,6 +149,11 @@ public class GameHandler {
                                     if(graphicsOn()){
                                         updatePositionBee(bowl.getId()-1);
                                     }
+                                    position = bowl.getId();
+                                    if(activePlayer.equals(p2)){
+                                        position--;
+                                    }
+                                    moveSeed(seedsImg,position);
                                     bowl.incrementSeeds();
                                     seeds--;
                                     pointer=bowl;
@@ -151,7 +172,8 @@ public class GameHandler {
                                 }
                             }
                         Integer seedsInTrayAfter=sbAp.getTray().getSeeds();//Play again will be computed in different moves
-                        this.getMatchResult().updateBestMove(seedsInTrayAfter-seedsInTrayFirst,this.getActivePlayer());
+                        //TODO here errors!!!
+                        //this.getMatchResult().updateBestMove(seedsInTrayAfter-seedsInTrayFirst,this.getActivePlayer());
 
                         //TODO
 
@@ -175,6 +197,15 @@ public class GameHandler {
                 }
             }
 
+    }
+
+    private void moveSeed(List<Seed> seedsImg,Integer position){
+        if(seedsImg.size()>0) {
+            if (this.equals(Game.getInstance().getGh())) {
+                seedsImg.get(0).updatePosition(position);
+                seedsImg.remove(0);
+            }
+        }
     }
 
     private void initGame(Player p1, Player p2,Boolean isHH,Integer initSeeds){
@@ -258,9 +289,9 @@ public class GameHandler {
         if(t2.getSeeds()+t1.getSeeds()!=36){
             System.out.println("ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR");
         }
-        this.matchResult.storeData(win,t1.getSeeds(),t2.getSeeds());// update all the result in matchResult, player and bestmoves
-        //TODO
-       // System.out.println("uhuuuuuuuuuu   the winner is "+this.getMatchResult().getWinner().getName());
+
+         this.matchResult.storeData(win,t1.getSeeds(),t2.getSeeds());// update all the result in matchResult, player and bestmoves
+
     }
 
     private Integer megabrainSelectBowlId(){
@@ -290,14 +321,30 @@ public class GameHandler {
             updatePositionBee(oC.getId()-1);
         }
         Integer seeds=oC.pullOutSeeds();
+        int position = oC.getId();
+        if(activePlayer.equals(p2)){
+            position--;
+        }
+        List<Seed> seedsImg1=Game.getInstance().getSeedsByPosition(position,this);
         if(graphicsOn()){
-            updatePositionBee(lastPosition.getId()-1);
+            updatePositionBee(lastPosition.getId() - 1);
         }
         seeds=seeds+lastPosition.pullOutSeeds();
+        position = lastPosition.getId();
+        if(activePlayer.equals(p1)){
+            position--;
+        }
+        List<Seed> seedsImg2=Game.getInstance().getSeedsByPosition(position,this);
         if(graphicsOn()){
             updatePositionBee();
         }
         this.getBoard().getTrayByPlayer(this.getActivePlayer()).incrementSeeds(seeds);
+        position = 6;
+        if(activePlayer.equals(p2)){
+            position=13;
+        }
+        moveSeed(seedsImg1,position);
+        moveSeed(seedsImg2,position);
     }
 
     public Player getActivePlayer() {

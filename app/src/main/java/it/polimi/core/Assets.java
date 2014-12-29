@@ -21,6 +21,7 @@ public class Assets {
 	private static SoundPool soundPool;
 	private static MediaPlayer mediaPlayer;
 	public static Bitmap background,welcome,bowl,playUp,playDown,statisticUp,statisticDown,settingsUp,settingsDown,tray,bee_red,bee_green,bee_megabrain,bowl_red,bowl_green;
+    public static Bitmap seed0,seed45,seed90,seed135;
 	// 1. Load Assets, initialize Frames and Animations.
 	public static void load() {
 
@@ -39,6 +40,10 @@ public class Assets {
         bee_red = loadBitmap("bee_red.png", false);
         bee_green = loadBitmap("bee_green.png", false);
         bee_megabrain = loadBitmap("bee_megabrain.png", false);
+        seed0 = loadBitmap("seed_0o.png", false);
+        seed45 = loadBitmap("seed_45o.png", false);
+        seed90 = loadBitmap("seed_90o.png", false);
+        seed135 = loadBitmap("seed_135o.png", false);
     }
 	
 	// 2. Load sounds here

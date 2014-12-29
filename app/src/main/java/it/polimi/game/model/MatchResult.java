@@ -52,8 +52,9 @@ public class MatchResult {
         this.winner.updateWonGameResult();
         this.loser.updateMaxScoreResult(looserSeeds.doubleValue());//TODO this result must be normalized!
         this.winner.updateMaxScoreResult(winnerSeeds.doubleValue());//TODO this result must be normalized!
-        BestMovesHandler.getInstance().insertResult(p1,this.getBestMove(this.p1));//TODO maybe this value should be normalized
-        BestMovesHandler.getInstance().insertResult(p2,this.getBestMove(this.p2));//TODO maybe this value should be normalized
+        //TODO here errors->commented
+        //BestMovesHandler.getInstance().insertResult(p1,this.getBestMove(this.p1));//TODO maybe this value should be normalized
+        //BestMovesHandler.getInstance().insertResult(p2,this.getBestMove(this.p2));//TODO maybe this value should be normalized
         //TODO save this 2 players in DB and also best 10
     }
 
