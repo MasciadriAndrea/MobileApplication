@@ -24,7 +24,7 @@ public class Game {
 
     protected Game() {
         seeds=new ArrayList<Seed>();
-        graphic=false;
+        graphic=true;
         playable=true;
         assets = null;
         this.gh=null;
