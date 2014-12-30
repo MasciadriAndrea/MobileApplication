@@ -20,19 +20,13 @@ import it.polimi.game.model.GameHandler;
 public class Assets {
 	private static SoundPool soundPool;
 	private static MediaPlayer mediaPlayer;
-	public static Bitmap background,welcome,bowl,playUp,playDown,statisticUp,statisticDown,settingsUp,settingsDown,tray,bee_red,bee_green,bee_megabrain,bowl_red,bowl_green;
+	public static Bitmap background,welcome,bowl,tray,bee_red,bee_green,bee_megabrain,bowl_red,bowl_green;
     public static Bitmap seed0,seed45,seed90,seed135;
 	// 1. Load Assets, initialize Frames and Animations.
 	public static void load() {
 
         welcome = loadBitmap("welcome.png", false);
         background = loadBitmap("background.png", false);
-        playUp = loadBitmap("playUp.png", false);
-        playDown = loadBitmap("playDown.png", false);
-        settingsUp = loadBitmap("SettingUp.png", false);
-        settingsDown = loadBitmap("SettingDown.png", false);
-        statisticUp = loadBitmap("statisticUp.png", false);
-        statisticDown = loadBitmap("statisticDown.png", false);
         bowl = loadBitmap("bowl.png", false);
         tray = loadBitmap("tray.png", false);
         bowl_red = loadBitmap("bowl_red.png", false);
