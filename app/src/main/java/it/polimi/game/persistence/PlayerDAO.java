@@ -22,7 +22,7 @@ public class PlayerDAO implements ContractDAO {
 
     synchronized public static PlayerDAO getInstance(Context ctxt)  {
         if (singleton == null) {
-            singleton = new PlayerDAO(ctxt.getApplicationContext());
+            singleton = new PlayerDAO(Game.getInstance().getGameActivity());
             try {
                 singleton.open();
             } catch (SQLException e) {
@@ -160,6 +160,23 @@ public class PlayerDAO implements ContractDAO {
         return listPlayers;
 
     }
+
+
+    public Integer updatePlayer (Player player){
+
+        String strFilter = PLAYER_TABLE_COLUMNS[0]+ " = " + player.getId().toString();
+        ContentValues args = new ContentValues();
+        args.put(PLAYER_TABLE_COLUMNS[2], player.getPlayedGames());
+        args.put(PLAYER_TABLE_COLUMNS[3], player.getWonGames());
+        args.put(PLAYER_TABLE_COLUMNS[4], player.getWonGameResult());
+        args.put(PLAYER_TABLE_COLUMNS[5], player.getMaxScoreResult());
+        args.put(PLAYER_TABLE_COLUMNS[6], player.getLastGamePlayed().getTime());
+
+        Integer nRows = db.update(DatabaseHelper.PLAYER, args, strFilter, null);
+
+        return nRows;
+    }
+
 
     private Player buildPlayer(Cursor cursor) {
 

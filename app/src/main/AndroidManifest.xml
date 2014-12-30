@@ -6,7 +6,7 @@
     android:versionName="1.1" >
 
     <uses-sdk
-        android:minSdkVersion="9"
+        android:minSdkVersion="11"
         android:targetSdkVersion="21" />
 
     <application
@@ -27,6 +27,10 @@
         <activity
             android:name="it.polimi.activities.ChoosePlayerActivity"
             android:label="@string/title_activity_choose_player" >
+        </activity>
+        <activity
+            android:name="it.polimi.activities.StatisticsActivity"
+            android:label="@string/title_activity_statistics" >
         </activity>
         <activity
             android:name="it.polimi.activities.LoadActivity"

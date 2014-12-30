@@ -13,6 +13,7 @@ public class Game {
     private static Game instance = null;
     private GameHandler gh;
     private Activity gameActivity;
+    private Activity menuActivity;
     private AssetManager assets;
     private Bee bee1,bee2;
     private List<Seed> seeds;
@@ -29,6 +30,7 @@ public class Game {
         assets = null;
         this.gh=null;
         gameActivity=null;
+        menuActivity= null;
         xBee1=1585;yBee1=865;
         xBee2=85;yBee2=85;
         bee1=new Bee(xBee1,yBee1,0);

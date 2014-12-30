@@ -19,7 +19,7 @@ import it.polimi.game.model.GameHandler;
 import it.polimi.game.model.Player;
 
 public class MenuActivity extends Activity {
-    private Button b_single,b_multi;
+    private Button b_single,b_multi, b_statistics;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +29,7 @@ public class MenuActivity extends Activity {
         setContentView(R.layout.activity_menu);
         b_single = (Button) findViewById(R.id.button_single);
         b_multi = (Button) findViewById(R.id.button_multi);
+        b_statistics =(Button) findViewById(R.id.button_statistic);
         b_single.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getBaseContext(),ChoosePlayerActivity.class);
@@ -43,6 +44,13 @@ public class MenuActivity extends Activity {
                 Intent i = new Intent(getBaseContext(),ChoosePlayerActivity.class);
                 i.putExtra("player", 0);
                 i.putExtra("isSinglePlayer",false);
+                startActivity(i);
+            }
+        });
+
+        b_statistics.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Intent i = new Intent(getBaseContext(),StatisticsActivity.class);
                 startActivity(i);
             }
         });

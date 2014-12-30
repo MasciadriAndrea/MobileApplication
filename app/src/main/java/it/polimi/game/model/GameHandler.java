@@ -289,7 +289,7 @@ public class GameHandler {
         if(t2.getSeeds()+t1.getSeeds()!=36){
             System.out.println("ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR");
         }
-
+        if(this.equals(Game.getInstance().getGh()))
          this.matchResult.storeData(win,t1.getSeeds(),t2.getSeeds());// update all the result in matchResult, player and bestmoves
 
     }
