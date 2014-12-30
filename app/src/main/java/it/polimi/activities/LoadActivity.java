@@ -28,6 +28,7 @@ public class LoadActivity extends Activity {
         Assets.load();
         Intent i = new Intent(this,MenuActivity.class);
         startActivity(i);
-        this.finish();
+        // Commented not kill this activity used for context
+        //this.finish();
     }
 }

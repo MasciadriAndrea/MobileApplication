@@ -43,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     synchronized static DatabaseHelper getInstance(Context ctxt) {
         if (singleton == null) {
-            singleton = new DatabaseHelper(ctxt.getApplicationContext());
+            singleton = new DatabaseHelper(ctxt);
 
         }
 

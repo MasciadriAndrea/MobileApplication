@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.game.model.BestMoveResult;
+import it.polimi.game.model.Game;
 import it.polimi.game.model.Player;
 
 public class BestMoveResultDAO implements ContractDAO {
@@ -22,7 +23,7 @@ public class BestMoveResultDAO implements ContractDAO {
 
     synchronized public static BestMoveResultDAO getInstance(Context ctxt)  {
         if (singleton == null) {
-            singleton = new BestMoveResultDAO(ctxt.getApplicationContext());
+            singleton = new BestMoveResultDAO(Game.getInstance().getGameActivity());
             try {
                 singleton.open();
             } catch (SQLException e) {
@@ -53,7 +54,7 @@ public class BestMoveResultDAO implements ContractDAO {
     public List<BestMoveResult> getBestMovesResult() {
 
         List<BestMoveResult> listBestMoves = new ArrayList<BestMoveResult>();
-        Cursor cursor = db.query(DatabaseHelper.BEST_MOVE_RESULT,null,null,null,null,null,dbHelper.BEST_MOVE_RESULT_FIELDS[2]);
+        Cursor cursor = db.query(DatabaseHelper.BEST_MOVE_RESULT,null,null,null,null,null,dbHelper.BEST_MOVE_RESULT_FIELDS[2]+" desc");
 
         int i=0;
         while (cursor.moveToNext()) {

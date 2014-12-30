@@ -8,5 +8,7 @@
     <string name="title_activity_menu">MenuActivity</string>
     <string name="title_activity_choose_player">ChoosePlayerActivity</string>
     <string name="title_activity_load">LoadActivity</string>
+    <string name="title_activity_statistics">StatisticsActivity</string>
+
 
 </resources>

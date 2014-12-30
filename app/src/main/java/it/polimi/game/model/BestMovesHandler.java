@@ -35,25 +35,34 @@ public class BestMovesHandler {
 
     public void insertResult(Player pl,Integer nSeedCollected){
         Integer result=nSeedCollected;//TODO this result maybe should be normalized!
-        int pos=0;
-        int where=10;
-        Boolean found=false;
-        for(BestMoveResult bmr:this.tenBest){
-            if((bmr.getResult()<result)&&(!found)){
-                found=true;
-                where=pos;
+        //1 add in right position
+        Boolean find=false;
+        Integer position=0;
+        Integer insertPosition=10;
+        for(BestMoveResult bm:tenBest) {
+            if((bm.getResult()<result)&&(!find)) {
+                find=true;
+                insertPosition=position;
             }
-            pos++;
+            position++;
         }
-        if(where<11){
-            this.tenBest.add(where,new BestMoveResult(pl,result));
+        if ((position < 10)&&(!find)) {
+            insertPosition = position;
         }
-        //TODO save/update in the db the first 10 element
-        //if added new one in top ten , add it in db and delete the previous 10th
-        if ((found)&&(where<11)){
-            bestMoveResultDAO.addBestMoveResult(new BestMoveResult(pl,result));
-            boolean b = bestMoveResultDAO.deleteBestMoveResult(tenBest.get(10));
-            tenBest = bestMoveResultDAO.getBestMovesResult();
+        if((insertPosition<10)||(position<10)){
+            BestMoveResult bnew=new BestMoveResult(pl,result);
+            tenBest.add(insertPosition,bnew);
+            BestMoveResultDAO.getInstance(Game.getInstance().getGameActivity()).addBestMoveResult(new BestMoveResult(pl,result));
+            //2 truncate tenBest (size max=10)
+            if(tenBest.size()>10) {
+                BestMoveResult eleventh=tenBest.get(10);
+                BestMoveResultDAO.getInstance(Game.getInstance().getGameActivity()).deleteBestMoveResult(eleventh);
+                tenBest.remove(10);
+            }
         }
+
+
+        tenBest = bestMoveResultDAO.getBestMovesResult();
+
     }
 }

@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import it.polimi.game.persistence.PlayerDAO;
+
 public class MatchResult {
     private Player winner;
     private Player loser;
@@ -16,7 +18,11 @@ public class MatchResult {
     private Date data;
     private Player p1,p2;
 
+    private PlayerDAO playerDAO;
+
     public MatchResult(Integer seedsPerBowl,Player p1, Player p2) {
+
+        playerDAO = PlayerDAO.getInstance(Game.getInstance().getGameActivity());
         this.seedsPerBowl = seedsPerBowl;
         this.winner=null;
         this.loser=null;
@@ -52,9 +58,15 @@ public class MatchResult {
         this.winner.updateWonGameResult();
         this.loser.updateMaxScoreResult(looserSeeds.doubleValue());//TODO this result must be normalized!
         this.winner.updateMaxScoreResult(winnerSeeds.doubleValue());//TODO this result must be normalized!
+
+        //Update players
+        playerDAO.updatePlayer(winner);
+        playerDAO.updatePlayer(loser);
+        PlayerHandler.getInstance().updateList();
+
         //TODO here errors->commented
-        //BestMovesHandler.getInstance().insertResult(p1,this.getBestMove(this.p1));//TODO maybe this value should be normalized
-        //BestMovesHandler.getInstance().insertResult(p2,this.getBestMove(this.p2));//TODO maybe this value should be normalized
+        BestMovesHandler.getInstance().insertResult(p1,this.getBestMove(this.p1));//TODO maybe this value should be normalized
+        BestMovesHandler.getInstance().insertResult(p2,this.getBestMove(this.p2));//TODO maybe this value should be normalized
         //TODO save this 2 players in DB and also best 10
     }
 
