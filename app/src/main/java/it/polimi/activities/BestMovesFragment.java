@@ -1,14 +1,10 @@
 package it.polimi.activities;
 
-import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,15 +16,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import it.polimi.game.model.BestMoveResult;
+import it.polimi.game.model.BestMovesHandler;
 import it.polimi.game.model.Player;
 import it.polimi.game.model.PlayerHandler;
+import it.polimi.game.persistence.BestMoveResultDAO;
 
 /**
- * Created by Paolo on 29/12/2014.
+ * Created by Paolo on 31/12/2014.
  */
-public class WonGamesFragment extends Fragment {
+public class BestMovesFragment extends Fragment{
 
-    private PlayerHandler playerHandler;
+    private BestMovesHandler bestMovesHandler;
     private ListView lv;
     public List<ListItem> items ;
 
@@ -45,19 +44,17 @@ public class WonGamesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         //TODO order ListItems list
-        playerHandler = PlayerHandler.getInstance();
-        List<Player> listPlayers = playerHandler.getPlayers();
-        Collections.sort(listPlayers, new PlayerComparator());
-
+        bestMovesHandler = BestMovesHandler.getInstance();
+        List<BestMoveResult> listBestMoves = bestMovesHandler.getTenBest();
+        Collections.sort(listBestMoves, new BestMovesComparator());
 
         this.items = new ArrayList<ListItem>();
-        for (Player player : listPlayers){
-            if (player.getPlayedGames() != 0){
-                Integer wonPerc = ( player.getWonGames()*100/player.getPlayedGames());
-                items.add(new ListItem(player.getName(),wonPerc));
-            }
-
+        for (BestMoveResult bestMoveResult : listBestMoves){
+            Integer result = bestMoveResult.getResult();
+            String playerName = bestMoveResult.getPlayer().getName();
+            items.add(new ListItem(playerName,result));
         }
+        //StableArrayAdapter adapter = new StableArrayAdapter(this.getActivity(),android.R.layout.simple_list_item_1,names);
         lv.setAdapter(new StableArrayAdapter());
     }
 
@@ -102,15 +99,15 @@ public class WonGamesFragment extends Fragment {
             return items.size();
         }
 
+
     }
 
-    private class PlayerComparator implements Comparator<Player> {
+    private class BestMovesComparator implements Comparator<BestMoveResult> {
 
         @Override
-        public int compare(Player p1, Player p2) {
-            Integer p1perc = p1.getWonGames() * 100/p1.getPlayedGames();
-            Integer p2perc = p2.getWonGames()*100/p2.getPlayedGames();
-            return  p2perc.compareTo(p1perc);
+        public int compare(BestMoveResult b1, BestMoveResult b2) {
+            return b2.getResult().compareTo(b1.getResult());
         }
     }
+
 }

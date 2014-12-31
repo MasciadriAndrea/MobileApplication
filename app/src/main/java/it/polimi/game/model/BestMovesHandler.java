@@ -33,6 +33,10 @@ public class BestMovesHandler {
         //TODO obtain this from DB --- ok
     }
 
+    public List<BestMoveResult> getTenBest(){
+        return this.tenBest;
+    }
+
     public void insertResult(Player pl,Integer nSeedCollected){
         Integer result=nSeedCollected;//TODO this result maybe should be normalized!
         //1 add in right position
@@ -60,7 +64,6 @@ public class BestMovesHandler {
                 tenBest.remove(10);
             }
         }
-
 
         tenBest = bestMoveResultDAO.getBestMovesResult();
 

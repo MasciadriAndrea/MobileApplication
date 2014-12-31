@@ -23,10 +23,10 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
                 return new WonGamesFragment();
             case 1:
                 // Games fragment activity
-                return new WonGamesFragment();
+                return new BestScoresFragment();
             case 2:
                 // Movies fragment activity
-                return new WonGamesFragment();
+                return new BestMovesFragment();
         }
 
         return null;

@@ -315,6 +315,8 @@ public class GameHandler {
         return false;
     }
 
+
+    //TODO check this method, logic to set possible best move for stealing player is missing
     private void stealSeeds(Bowl lastPosition){
         Bowl oC=lastPosition.getOppositeBowl();
         if(graphicsOn()){
