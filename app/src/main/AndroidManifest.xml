@@ -13,6 +13,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="sensorLandscape"
         android:theme="@style/AppTheme" >
         <activity
             android:name="it.polimi.core.GameMainActivity"
@@ -22,22 +23,28 @@
         </activity>
         <activity
             android:name="it.polimi.activities.MenuActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             android:label="@string/title_activity_menu" >
         </activity>
         <activity
             android:name="it.polimi.activities.ChoosePlayerActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             android:label="@string/title_activity_choose_player" >
         </activity>
         <activity
             android:name="it.polimi.activities.StatisticsActivity"
+            android:screenOrientation="sensorLandscape"
             android:label="@string/title_activity_statistics" >
         </activity>
         <activity
             android:name="it.polimi.activities.LoadActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             android:label="@string/title_activity_load" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

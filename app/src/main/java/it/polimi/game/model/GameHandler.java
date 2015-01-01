@@ -167,7 +167,10 @@ public class GameHandler {
                                 //steal seeds
                                 this.stealSeeds(pointer);
                                 //pay attention if now the game is finished!
-                                if(this.zeroSeeds(this.getActivePlayer())){
+                                if(this.zeroSeeds(this.getP1())){
+                                    gameStatus=this.ISGAMEFINISHED;
+                                }
+                                if(this.zeroSeeds(this.getP2())){
                                     gameStatus=this.ISGAMEFINISHED;
                                 }
                             }

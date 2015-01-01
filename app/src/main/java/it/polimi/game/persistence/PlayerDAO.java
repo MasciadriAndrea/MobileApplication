@@ -149,7 +149,7 @@ public class PlayerDAO implements ContractDAO {
     public List<Player> getAllPlayers(){
 
         List<Player> listPlayers = new ArrayList<Player>();
-        Cursor cursor = db.query(DatabaseHelper.PLAYER,null,null,null,null,null,dbHelper.PLAYER_FIELDS[6]);
+        Cursor cursor = db.query(DatabaseHelper.PLAYER,null,null,null,null,null,dbHelper.PLAYER_FIELDS[6]+" DESC");
 
         int i=0;
         while (cursor.moveToNext()) {
