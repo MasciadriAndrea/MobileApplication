@@ -172,8 +172,7 @@ public class GameHandler {
                                 }
                             }
                         Integer seedsInTrayAfter=sbAp.getTray().getSeeds();//Play again will be computed in different moves
-                        //TODO here errors!!!
-                        //this.getMatchResult().updateBestMove(seedsInTrayAfter-seedsInTrayFirst,this.getActivePlayer());
+                        this.getMatchResult().updateBestMove(seedsInTrayAfter-seedsInTrayFirst,this.getActivePlayer());
 
                         //TODO
 
