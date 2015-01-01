@@ -112,10 +112,10 @@ public class GameHandler {
                         Integer seedsInTrayFirst=sbAp.getTray().getSeeds();
                         Integer seeds = currentBowl.pullOutSeeds();
                         Bowl pointer = currentBowl;
-                        Integer start=sbAP.getBowls().indexOf(currentBowl);
+                        Integer start=sbAP.getBowls().indexOf(currentBowl)+1;
                         Boolean finishedInTA=false;
                         while(seeds>0){
-                            for(Bowl bowl:sbAP.getBowls().subList(start+1,sbAP.getBowls().size())){
+                            for(Bowl bowl:sbAP.getBowls().subList(start,sbAP.getBowls().size())){
                                 if(seeds>0){
                                     if(graphicsOn()){
                                         updatePositionBee(bowl.getId()-1);
@@ -159,7 +159,7 @@ public class GameHandler {
                                     pointer=bowl;
                                 }
                             }
-                            start=1;
+                            start=0;
                         }
 
                         Integer gameStatus = this.getGameStatus(pointer,finishedInTA);

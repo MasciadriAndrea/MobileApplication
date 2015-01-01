@@ -30,7 +30,7 @@ public class Bee {
     public void fly(float x, float y){
         float stepX;
         float stepY;
-        int vel=20;
+        int vel=40;
             if(getX()>x){
                 if(getX()-x<vel){
                     stepX= x-getX();
