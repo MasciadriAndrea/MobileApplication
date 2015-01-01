@@ -108,8 +108,17 @@ public class WonGamesFragment extends Fragment {
 
         @Override
         public int compare(Player p1, Player p2) {
-            Integer p1perc = p1.getWonGames() * 100/p1.getPlayedGames();
-            Integer p2perc = p2.getWonGames()*100/p2.getPlayedGames();
+            Integer p1perc,p2perc;
+            if(!p1.getPlayedGames().equals(0)){
+                p1perc = p1.getWonGames() * 100/p1.getPlayedGames();
+            }else{
+                p1perc=0;
+            }
+            if(!p2.getPlayedGames().equals(0)) {
+                p2perc = p2.getWonGames() * 100 / p2.getPlayedGames();
+            }else{
+                p2perc=0;
+            }
             return  p2perc.compareTo(p1perc);
         }
     }

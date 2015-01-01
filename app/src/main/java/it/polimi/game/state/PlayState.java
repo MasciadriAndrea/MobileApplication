@@ -26,12 +26,10 @@ import it.polimi.game.model.Tray;
 public class PlayState extends State{
     private List<UIButton> bp1;
     private List<UIButton> bp2;
-    private UIButton t1,t2;
     private Bitmap p1Bee,p2Bee,bowlP1,bowlP2,bowlInactive;
     Bee bee1,bee2;
     private GameHandler gh;
     private static int color1=Color.rgb(33,0,0);
-    private static int color2=Color.BLUE;
     private Bitmap[] seedImg;
 
     public void init(){
@@ -53,8 +51,6 @@ public class PlayState extends State{
         if(Game.getInstance().getGh().getP1().getId().equals(1)){p1Bee=Assets.bee_megabrain;}
         p2Bee=Assets.bee_red;
         if(Game.getInstance().getGh().getP2().getId().equals(1)){p2Bee=Assets.bee_megabrain;}
-        t1=new UIButton(1585, 475, 1835, 725, Assets.tray, Assets.tray);
-        t2=new UIButton(85, 475, 335, 725, Assets.tray, Assets.tray);
         createSeeds();
     };
 
@@ -91,7 +87,6 @@ public class PlayState extends State{
                 ub.render(g);
                 i++;
             }
-           // g.setColor(color2);
         }else{
             for (int j=0;j<6;j++){
                 g.drawString(bs[i].toString(), 210 + (250 * i), 835);
@@ -101,18 +96,16 @@ public class PlayState extends State{
         }
 
         g.drawString(gh.getP1().getName(),1085, 600);
-        //g.setColor(color1);
         g.drawString(bs[i].toString(),1485, 600);
-        t1.render(g);
+        g.drawImage(Assets.tray, 1585,475, 250,250);//t1
         i++;
         if(gh.getActivePlayer().equals(gh.getP2())){
-        for(UIButton ub:bp2) {
-            g.drawString(bs[i].toString(),1710-(250*(i-7)), 385);
-            ub.render(g);
-            i++;
-        }
-           // g.setColor(color2);
-           }else{
+            for(UIButton ub:bp2) {
+                g.drawString(bs[i].toString(),1710-(250*(i-7)), 385);
+                ub.render(g);
+                i++;
+            }
+          }else{
             for (int j=0;j<6;j++){
                 g.drawString(bs[i].toString(),1710-(250*(i-7)), 385);
                 g.drawImage(bowlInactive, 1585-(250*j), 85, 250,250);
@@ -121,10 +114,9 @@ public class PlayState extends State{
         }
         g.drawString(bs[i].toString(), 385, 600);
         g.drawString(gh.getP2().getName(),585, 600);
-        //g.setColor(color1);
-        t2.render(g);
-        renderBees(g);
+        g.drawImage(Assets.tray, 85,475, 250,250);//t2
         renderSeeds(g);
+        renderBees(g);
     };
 
     public void renderSeeds(Painter g){
@@ -170,10 +162,16 @@ public class PlayState extends State{
     public boolean onTouch(MotionEvent e, int scaledX, int scaledY){
         if (e.getAction() == MotionEvent.ACTION_DOWN) {
            for(UIButton u:bp1) {
-                u.onTouchDown(scaledX, scaledY);
+              // if(Game.getInstance().getGh().getActivePlayer().equals(Game.getInstance().getGh().getP1())){
+               if(Game.getInstance().isPlayable()){
+                    u.onTouchDown(scaledX, scaledY);
+               }
             }
             for(UIButton ub:bp2) {
-                ub.onTouchDown(scaledX, scaledY);
+                //if(Game.getInstance().getGh().getActivePlayer().equals(Game.getInstance().getGh().getP2())){
+                if(Game.getInstance().isPlayable()){
+                    ub.onTouchDown(scaledX, scaledY);
+                }
             }
         }
         if (e.getAction() == MotionEvent.ACTION_UP) {

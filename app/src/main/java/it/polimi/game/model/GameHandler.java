@@ -173,12 +173,6 @@ public class GameHandler {
                             }
                         Integer seedsInTrayAfter=sbAp.getTray().getSeeds();//Play again will be computed in different moves
                         this.getMatchResult().updateBestMove(seedsInTrayAfter-seedsInTrayFirst,this.getActivePlayer());
-
-                        //TODO
-
-                        //Log.v("GameHandler: ","seeds earned in this move:"+(seedsInTrayAfter-seedsInTrayFirst));
-                        //Log.v("GameHandler: ","best move of the player:"+this.getMatchResult().getBestMove(this.getActivePlayer()));
-                        //Log.v("Play turn","turn result:"+gameStatus.toString());
                         if (!gameStatus.equals(this.ISGAMEFINISHED)) {
                             //if the game is not finished
                             Game.getInstance().makePlayable();
