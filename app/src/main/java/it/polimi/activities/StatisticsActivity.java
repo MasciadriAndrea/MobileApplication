@@ -9,6 +9,8 @@ import android.support.v4.view.ViewPager;
 
 import com.polimi.core.R;
 
+import it.polimi.core.Assets;
+
 public class StatisticsActivity extends FragmentActivity implements
         ActionBar.TabListener {
 
@@ -74,6 +76,18 @@ public class StatisticsActivity extends FragmentActivity implements
 
     @Override
     public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Assets.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Assets.onResume();
     }
 }
 

@@ -22,6 +22,8 @@ public class Assets {
 	private static MediaPlayer mediaPlayer;
 	public static Bitmap background,welcome,bowl,tray,bee_red,bee_green,bee_megabrain,bowl_red,bowl_green;
     public static Bitmap seed0,seed45,seed90,seed135;
+    public static int winID, stealID, seedID;
+
 	// 1. Load Assets, initialize Frames and Animations.
 	public static void load() {
 
@@ -38,16 +40,23 @@ public class Assets {
         seed45 = loadBitmap("seed_45o.png", false);
         seed90 = loadBitmap("seed_90o.png", false);
         seed135 = loadBitmap("seed_135o.png", false);
+
     }
 	
 	// 2. Load sounds here
 	private static void loadSounds() {
-		
+        winID = loadSound("clap.wav");
+        seedID = loadSound("fall.wav");
+        stealID = loadSound("laugh.wav");
 	}
 
 	public static void onResume() {
-		loadSounds();
+        loadSounds();
+        if(Game.getInstance().getMusic()){
+            if(mediaPlayer==null){
+                playMusic("music.wav",true);}}
 		// May be a good place to play music.
+
 	}
 	
 	/*
@@ -90,8 +99,7 @@ public class Assets {
 			soundPool = new SoundPool(25, AudioManager.STREAM_MUSIC, 0);
 		}
 		try {
-			soundID = soundPool.load(GameMainActivity.assets.openFd(filename),
-					1);
+			soundID = soundPool.load(Game.getInstance().getAssets().openFd(filename),1);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -100,7 +108,9 @@ public class Assets {
 
 	public static void playSound(int soundID) {
 		if (soundPool != null) {
-			soundPool.play(soundID, 1, 1, 1, 0, 1);
+            if(Game.getInstance().getSound()){
+			    soundPool.play(soundID, 1, 1, 1, 0, 1);
+            }
 		}
 	}
 
@@ -109,7 +119,7 @@ public class Assets {
 			mediaPlayer = new MediaPlayer();
 		}
 		try {
-			AssetFileDescriptor afd = GameMainActivity.assets.openFd(filename);
+			AssetFileDescriptor afd = Game.getInstance().getAssets().openFd(filename);
 			mediaPlayer.setDataSource(afd.getFileDescriptor(),
 					afd.getStartOffset(), afd.getLength());
 			mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);

@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import com.polimi.core.R;
 
+import it.polimi.core.Assets;
 import it.polimi.core.GameMainActivity;
 import it.polimi.game.model.Game;
 import it.polimi.game.model.GameHandler;
@@ -65,5 +66,18 @@ public class MenuActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+    }
+
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Assets.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Assets.onResume();
     }
 }

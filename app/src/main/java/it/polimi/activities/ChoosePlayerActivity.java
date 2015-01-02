@@ -181,7 +181,17 @@ public class ChoosePlayerActivity extends Activity {
         this.finish();
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        Assets.onPause();
+    }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        Assets.onResume();
+    }
 
 
 }

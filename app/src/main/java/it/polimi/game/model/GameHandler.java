@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import it.polimi.core.Assets;
 import it.polimi.game.model.megabrain.LogicHandler;
 import it.polimi.game.model.megabrain.Turn;
 import it.polimi.game.persistence.PlayerDAO;
@@ -127,6 +128,7 @@ public class GameHandler {
                                         position--;
                                     }
                                     moveSeed(seedsImg,position);
+                                    playSound(Assets.seedID);
                                     bowl.incrementSeeds();
                                     seeds--;
                                     pointer=bowl;
@@ -140,6 +142,7 @@ public class GameHandler {
                                         position=13;
                                     }
                                     moveSeed(seedsImg,position);
+                                    playSound(Assets.seedID);
                                 }
                                 finishedInTA=true;
                                 sbAP.getTray().incrementSeeds();
@@ -156,6 +159,7 @@ public class GameHandler {
                                         position--;
                                     }
                                     moveSeed(seedsImg,position);
+                                    playSound(Assets.seedID);
                                     bowl.incrementSeeds();
                                     seeds--;
                                     pointer=bowl;
@@ -289,7 +293,13 @@ public class GameHandler {
         }
         if(this.equals(Game.getInstance().getGh()))
          this.matchResult.storeData(win,t1.getSeeds(),t2.getSeeds());// update all the result in matchResult, player and bestmoves
+        playSound(Assets.winID);
+    }
 
+    private void playSound(int sound){
+        if(this.equals(Game.getInstance().getGh())){
+            Assets.playSound(sound);
+        }
     }
 
     private Integer megabrainSelectBowlId(){
@@ -321,6 +331,7 @@ public class GameHandler {
             updatePositionBee(oC.getId()-1);
         }
         Integer seeds=oC.pullOutSeeds();
+        playSound(Assets.stealID);
         int position = oC.getId();
         if(activePlayer.equals(p2)){
             position--;
@@ -344,6 +355,7 @@ public class GameHandler {
             position=13;
         }
         moveSeed(seedsImg1,position);
+        playSound(Assets.seedID);
         moveSeed(seedsImg2,position);
     }
 

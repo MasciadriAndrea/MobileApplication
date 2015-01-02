@@ -16,6 +16,7 @@ import android.widget.ToggleButton;
 
 import com.polimi.core.R;
 
+import it.polimi.core.Assets;
 import it.polimi.game.model.Game;
 import it.polimi.game.model.SettingsHandler;
 
@@ -45,6 +46,11 @@ public class SettingsActivity extends Activity {
 
     public void onSave(View arg){
         SettingsHandler.getInstance().saveStatistic(musicB.isChecked(),soundB.isChecked(),animationsB.isChecked(),np.getValue());
+        if(!musicB.isChecked()){
+            Assets.onPause();
+        }else{
+            Assets.onResume();
+        }
         this.finish();
     }
 
@@ -65,5 +71,17 @@ public class SettingsActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Assets.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Assets.onResume();
     }
 }
