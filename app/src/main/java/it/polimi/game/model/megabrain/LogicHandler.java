@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import it.polimi.game.model.Bowl;
+import it.polimi.game.model.Game;
 import it.polimi.game.model.GameHandler;
 import it.polimi.game.model.Player;
 
@@ -16,6 +17,7 @@ import it.polimi.game.model.Player;
 public class LogicHandler {
     private static LogicHandler instance;
     private Integer id;
+    private Integer maxScoreP;
 
     public Integer getId(){
         this.id++;
@@ -31,6 +33,7 @@ public class LogicHandler {
 
     protected LogicHandler() {
         this.id=0;
+        this.maxScoreP= Game.getInstance().getnSeeds()*12;
     }
 
     public static void main(String[] args) throws IOException {
@@ -116,9 +119,9 @@ public class LogicHandler {
         }
         root.setChildren(children);
         this.recursiveCutChildren(root);
-        int maxScore=-36;
+        int maxScore=-maxScoreP;
         int position= 0;
-        Integer[] score={-36,-36,-36,-36,-36,-36};
+        Integer[] score={-maxScoreP,-maxScoreP,-maxScoreP,-maxScoreP,-maxScoreP,-maxScoreP};
         for(Integer i=0;i<6;i++){
             score[i]=recursiveGetMaxScore(root.getChildren()[i]);
             //Log.v("LogicHandler","position "+i.toString()+" has maximum score over one leaf equal to "+score[i].toString());
@@ -127,7 +130,7 @@ public class LogicHandler {
                 position = i;
             }
         }
-        if(maxScore==-36){
+        if(maxScore==-maxScoreP){
             Integer start;
             if (activePlayer.equals(p1)) {
                 start=0;
@@ -153,10 +156,9 @@ public class LogicHandler {
                 }
             }
             if(hasChild){
-                //TODO check
-                Integer[] score={36,36,36,36,36,36};
+                Integer[] score={maxScoreP,maxScoreP,maxScoreP,maxScoreP,maxScoreP,maxScoreP};
                 if(!node.getActualPlayer().getId().equals(1)){//if it is not Megabrain
-                    int minScore=36;
+                    int minScore=maxScoreP;
                     int position= 0;
                     for(Integer i=0;i<6;i++){
                        score[i]=recursiveGetMinScore(node);
@@ -181,8 +183,7 @@ public class LogicHandler {
     }
 
     public Integer recursiveGetMaxScore(Turn node){
-        //TODO change this number
-        Integer maxScore=-36;
+        Integer maxScore=-maxScoreP;
         Integer score;
         Boolean isLeaf=false;
         if(node!=null){
@@ -191,7 +192,7 @@ public class LogicHandler {
                     score=recursiveGetMaxScore(node.getChildren()[i]);
                     isLeaf=true;
                 }else{
-                    score=-36;
+                    score=-maxScoreP;
                 }
                 if(score>maxScore){
                     maxScore=score;
@@ -206,8 +207,7 @@ public class LogicHandler {
     }
 
     public Integer recursiveGetMinScore(Turn node){
-        //TODO change this number
-        Integer minScore=36;
+        Integer minScore=maxScoreP;
         Integer score;
         Boolean isLeaf=false;
         if(node!=null){
@@ -216,7 +216,7 @@ public class LogicHandler {
                     isLeaf=true;
                     score=recursiveGetMinScore(node.getChildren()[i]);
                 }else{
-                    score=36;
+                    score=maxScoreP;
                 }
                 if(score<minScore){
                     minScore=score;

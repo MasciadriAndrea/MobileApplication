@@ -26,10 +26,11 @@ public class GameHandler {
     private static Integer ISGAMEFINISHED=3;
     private static Integer ISMYTURNAGAIN=2;
     private static Integer PERFORMSTEAL=1;
-    private static Integer nSeeds=3;
+    private Integer nSeeds;
 
     public GameHandler(Player p1){
        //constructor for Human vs Megabrain mode
+        nSeeds=Game.getInstance().getnSeeds();
        Player p2=PlayerHandler.getInstance().getPlayerById(1);
        this.initGame(p1,p2,false,nSeeds);
        this.setBoard(new Board(p1,p2));
@@ -47,6 +48,7 @@ public class GameHandler {
 
     public GameHandler(Player p1, Player p2) {
         //constructor for H vs H mode
+        nSeeds=Game.getInstance().getnSeeds();
         this.initGame(p1, p2, true,nSeeds);
         this.setBoard(new Board(p1, p2));
     }
@@ -282,7 +284,7 @@ public class GameHandler {
             }
         }
         //TODO
-        if(t2.getSeeds()+t1.getSeeds()!=36){
+        if(t2.getSeeds()+t1.getSeeds()!=(Game.getInstance().getnSeeds()*12)){
             System.out.println("ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR");
         }
         if(this.equals(Game.getInstance().getGh()))

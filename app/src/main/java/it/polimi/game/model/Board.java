@@ -8,8 +8,6 @@ public class Board {
     //private List<Container> containers;
     private List<SemiBoard> playerElements;
 
-    private static Integer nIni=3;
-
     public Board(Player p1, Player p2) {
         this.buildBoard(p1,p2);
     }
@@ -56,6 +54,7 @@ public class Board {
     }
 
     private void buildBoard(Player p1, Player p2){
+        Integer nIni=Game.getInstance().getnSeeds();
         int[] initialBoardDefault={nIni,nIni,nIni,nIni,nIni,nIni,0};
         this.buildBoard(initialBoardDefault,initialBoardDefault, p1, p2);
     }

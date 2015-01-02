@@ -21,11 +21,14 @@ public class Game {
     Integer[] xBowl;Integer[] xTray;
     Integer[] yBowl;Integer[] yTray;
     private Boolean playable;
+
     private Boolean graphic;
+    private Boolean sound;
+    private Boolean music;
+    private Integer nSeeds;
 
     protected Game() {
         seeds=new ArrayList<Seed>();
-        graphic=true;
         playable=true;
         assets = null;
         this.gh=null;
@@ -197,5 +200,40 @@ public class Game {
 
     public Integer[] getyTray() {
         return yTray;
+    }
+
+    public void setGraphic(Boolean graphic) {
+        this.graphic = graphic;
+    }
+
+    public Boolean getSound() {
+        return sound;
+    }
+
+    public void setSound(Boolean sound) {
+        this.sound = sound;
+    }
+
+    public Boolean getMusic() {
+        return music;
+    }
+
+    public void setMusic(Boolean music) {
+        this.music = music;
+    }
+
+    public Integer getnSeeds() {
+        return nSeeds;
+    }
+
+    public void setnSeeds(Integer nSeeds) {
+        this.nSeeds = nSeeds;
+    }
+
+   public void saveStatistic(Boolean music,Boolean sound,Boolean animations,Integer nseeds){
+        this.setGraphic(animations);
+        this.setMusic(music);
+        this.setnSeeds(nseeds);
+        this.setSound(sound);
     }
 }
