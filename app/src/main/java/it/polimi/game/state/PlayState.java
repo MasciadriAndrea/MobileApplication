@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.activities.MenuActivity;
+import it.polimi.activities.PauseActivity;
 import it.polimi.core.Assets;
 import it.polimi.framework.util.Painter;
 import it.polimi.core.GameMainActivity;
@@ -208,7 +209,7 @@ public class PlayState extends State{
                 //pauseBtn.cancel();
                 //TODO open a dialog instead lunch activity
                 //TODO Menage game pause and resume
-                Intent intent = new Intent(Game.getInstance().getGameActivity(), MenuActivity.class);
+                Intent intent = new Intent(Game.getInstance().getGameActivity(), PauseActivity.class);
                 Game.getInstance().getGameActivity().startActivity(intent);
 
 

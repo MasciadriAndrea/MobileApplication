@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,7 +19,6 @@ import com.polimi.core.R;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -63,7 +59,7 @@ public class ChoosePlayerActivity extends Activity {
 
         username=(EditText) findViewById(R.id.editText);
         lv=(ListView) findViewById(R.id.listView);
-        select=(Button) findViewById(R.id.button);
+        select=(Button) findViewById(R.id.resumeBtn);
 
         List<Player> listPlayers = PlayerHandler.getInstance().getPlayers();
         List<String> listNames = new ArrayList<String>();

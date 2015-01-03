@@ -54,6 +54,11 @@
             android:label="@string/title_activity_settings"
             android:screenOrientation="sensorLandscape" >>
         </activity>
+        <activity
+            android:name="it.polimi.activities.PauseActivity"
+            android:label="@string/title_activity_pause"
+            android:screenOrientation="sensorLandscape" >>
+        </activity>
     </application>
 
 </manifest>
