@@ -1,11 +1,8 @@
 package it.polimi.game.model;
-
-import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
 public class Board {
-    //private List<Container> containers;
     private List<SemiBoard> playerElements;
 
     public Board(Player p1, Player p2) {
@@ -38,17 +35,6 @@ public class Board {
         return res;
     }
 
-    /*public Container getContainerById(Integer idContainer){
-        Iterator<Container> ci=this.getContainers().iterator();
-        while (ci.hasNext()){
-            Container c=ci.next();
-            if(c.getId().equals(idContainer)){
-                return c;
-            }
-        }
-        return null;
-    }*/
-
     public Tray getTrayByPlayer(Player player){
         return this.getSemiBoardByPlayer(player).getTray();
     }
@@ -75,7 +61,6 @@ public class Board {
         this.playerElements=new ArrayList<SemiBoard>();
         playerElements.add(new SemiBoard(bowlsP1,t1,p1));
         playerElements.add(new SemiBoard(bowlsP2,t2,p2));
-
     }
 
 }

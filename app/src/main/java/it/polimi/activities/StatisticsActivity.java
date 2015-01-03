@@ -6,6 +6,8 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.polimi.core.R;
 
@@ -25,14 +27,14 @@ public class StatisticsActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
-        // Initilization
         viewPager = (ViewPager) findViewById(R.id.pager);
         actionBar = getActionBar();
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
         viewPager.setAdapter(mAdapter);
-        //TODO Requires API 14 as minimum
-        //actionBar.setHomeButtonEnabled(false);
+        //Requires API 14 as minimum
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Adding Tabs
@@ -48,8 +50,7 @@ public class StatisticsActivity extends FragmentActivity implements
 
             @Override
             public void onPageSelected(int position) {
-                // on changing the page
-                // make respected tab selected
+                // on changing the page make respected tab selected
                 actionBar.setSelectedNavigationItem(position);
             }
 
@@ -69,8 +70,7 @@ public class StatisticsActivity extends FragmentActivity implements
 
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
-        // on tab selected
-        // show respected fragment view
+        // on tab selected show respected fragment view
         viewPager.setCurrentItem(tab.getPosition());
     }
 

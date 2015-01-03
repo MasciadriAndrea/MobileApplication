@@ -22,9 +22,6 @@ import it.polimi.game.model.Player;
 import it.polimi.game.model.PlayerHandler;
 import it.polimi.game.persistence.BestMoveResultDAO;
 
-/**
- * Created by Paolo on 31/12/2014.
- */
 public class BestMovesFragment extends Fragment{
 
     private BestMovesHandler bestMovesHandler;
@@ -42,8 +39,6 @@ public class BestMovesFragment extends Fragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        //TODO order ListItems list
         bestMovesHandler = BestMovesHandler.getInstance();
         List<BestMoveResult> listBestMoves = bestMovesHandler.getTenBest();
         Collections.sort(listBestMoves, new BestMovesComparator());
@@ -54,7 +49,6 @@ public class BestMovesFragment extends Fragment{
             String playerName = bestMoveResult.getPlayer().getName();
             items.add(new ListItem(playerName,result));
         }
-        //StableArrayAdapter adapter = new StableArrayAdapter(this.getActivity(),android.R.layout.simple_list_item_1,names);
         lv.setAdapter(new StableArrayAdapter());
     }
 

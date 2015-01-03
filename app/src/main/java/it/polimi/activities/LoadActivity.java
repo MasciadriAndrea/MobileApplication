@@ -10,6 +10,7 @@ import com.polimi.core.R;
 
 import it.polimi.core.Assets;
 import it.polimi.game.model.Game;
+import it.polimi.game.model.PlayerHandler;
 import it.polimi.game.model.SettingsHandler;
 
 public class LoadActivity extends Activity {
@@ -22,11 +23,12 @@ public class LoadActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_load);
         Game.getInstance().setAssets(getAssets());
-        Game.getInstance().setGameActivity(this);
-        SettingsHandler.getInstance().statisticInitialization();
+        Game.getInstance().setLoadActivity(this);
+        SettingsHandler.getInstance().settingsInitialization();
         Assets.load();
         Intent i = new Intent(this,MenuActivity.class);
         startActivity(i);
+        PlayerHandler.getInstance();
         // Commented not kill this activity used for context
         //this.finish();
     }

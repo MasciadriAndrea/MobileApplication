@@ -23,9 +23,6 @@ import java.util.List;
 import it.polimi.game.model.Player;
 import it.polimi.game.model.PlayerHandler;
 
-/**
- * Created by Paolo on 29/12/2014.
- */
 public class WonGamesFragment extends Fragment {
 
     private PlayerHandler playerHandler;
@@ -44,11 +41,9 @@ public class WonGamesFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //TODO order ListItems list
         playerHandler = PlayerHandler.getInstance();
         List<Player> listPlayers = playerHandler.getPlayers();
         Collections.sort(listPlayers, new PlayerComparator());
-
 
         this.items = new ArrayList<ListItem>();
         for (Player player : listPlayers){

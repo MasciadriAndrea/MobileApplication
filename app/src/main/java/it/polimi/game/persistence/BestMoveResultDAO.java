@@ -11,7 +11,6 @@ import java.util.List;
 
 import it.polimi.game.model.BestMoveResult;
 import it.polimi.game.model.Game;
-import it.polimi.game.model.Player;
 
 public class BestMoveResultDAO implements ContractDAO {
 
@@ -21,9 +20,9 @@ public class BestMoveResultDAO implements ContractDAO {
     private static PlayerDAO playerDAO ;
     private static String[] BEST_MOVE_RESULT_COLUMNS;
 
-    synchronized public static BestMoveResultDAO getInstance(Context ctxt)  {
+    synchronized public static BestMoveResultDAO getInstance()  {
         if (singleton == null) {
-            singleton = new BestMoveResultDAO(Game.getInstance().getGameActivity());
+            singleton = new BestMoveResultDAO(Game.getInstance().getLoadActivity());
             try {
                 singleton.open();
             } catch (SQLException e) {
@@ -35,7 +34,7 @@ public class BestMoveResultDAO implements ContractDAO {
 
     private BestMoveResultDAO(Context context){
         dbHelper = DatabaseHelper.getInstance(context);
-        playerDAO = PlayerDAO.getInstance(context);
+        playerDAO = PlayerDAO.getInstance();
 
         BEST_MOVE_RESULT_COLUMNS = dbHelper.BEST_MOVE_RESULT_FIELDS;
     }
@@ -67,9 +66,7 @@ public class BestMoveResultDAO implements ContractDAO {
 
     private BestMoveResult buildBestMoveResult(Cursor cursor) {
 
-        BestMoveResult bestMoveResult = new BestMoveResult(cursor.getInt(0),playerDAO.getPlayerById(cursor.getInt(1)),cursor.getInt(2));
-
-        return bestMoveResult;
+        return new BestMoveResult(cursor.getInt(0),playerDAO.getPlayerById(cursor.getInt(1)),cursor.getInt(2));
     }
 
     public long addBestMoveResult(BestMoveResult bestMoveResult) {
@@ -79,9 +76,7 @@ public class BestMoveResultDAO implements ContractDAO {
         values.put(BEST_MOVE_RESULT_COLUMNS[1], bestMoveResult.getPlayer().getId());
         values.put(BEST_MOVE_RESULT_COLUMNS[2], bestMoveResult.getResult());
 
-        long bestMoveResultId = db.insert(DatabaseHelper.BEST_MOVE_RESULT,null,values);
-
-        return bestMoveResultId;
+        return db.insert(DatabaseHelper.BEST_MOVE_RESULT,null,values);
     }
 
     public boolean deleteBestMoveResult(BestMoveResult bestMoveResult) {

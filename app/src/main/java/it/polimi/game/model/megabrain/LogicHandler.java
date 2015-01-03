@@ -1,9 +1,6 @@
 package it.polimi.game.model.megabrain;
 
-import android.util.Log;
-
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import it.polimi.game.model.Bowl;
@@ -11,9 +8,6 @@ import it.polimi.game.model.Game;
 import it.polimi.game.model.GameHandler;
 import it.polimi.game.model.Player;
 
-/**
- * Created by Andrea and Anna on 20/12/2014.
- */
 public class LogicHandler {
     private static LogicHandler instance;
     private Integer id;

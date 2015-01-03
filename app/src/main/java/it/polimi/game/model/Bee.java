@@ -1,7 +1,5 @@
 package it.polimi.game.model;
 
-import android.util.Log;
-
 public class Bee {
     private float x, y;
     private float xHome, yHome;

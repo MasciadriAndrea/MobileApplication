@@ -1,11 +1,11 @@
 package it.polimi.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ToggleButton;
 
@@ -14,11 +14,11 @@ import com.polimi.core.R;
 import it.polimi.core.Assets;
 import it.polimi.core.GameMainActivity;
 import it.polimi.game.model.Game;
+import it.polimi.game.model.GameHandler;
+import it.polimi.game.model.Player;
 import it.polimi.game.model.SettingsHandler;
 
-/**
- * Created by Paolo on 03/01/2015.
- */
+
 public class PauseActivity extends Activity {
 
     private ToggleButton musicB,soundB;
@@ -28,13 +28,16 @@ public class PauseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_pause);
         musicB = (ToggleButton) findViewById(R.id.musicToggleButton);
         musicB.setChecked(Game.getInstance().getMusic());
         musicB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Game.getInstance().saveStatistic(musicB.isChecked(),Game.getInstance().getSound(),Game.getInstance().getGraphic(),
-                        Game.getInstance().getnSeeds());
+               SettingsHandler.getInstance().saveSettings(musicB.isChecked(), Game.getInstance().getSound(), Game.getInstance().getGraphic(),
+                       Game.getInstance().getnSeeds());
 
             }
         });
@@ -43,39 +46,41 @@ public class PauseActivity extends Activity {
         soundB.setChecked(Game.getInstance().getSound());
         soundB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Game.getInstance().saveStatistic(Game.getInstance().getMusic(),soundB.isChecked(),Game.getInstance().getGraphic(),
+                SettingsHandler.getInstance().saveSettings(Game.getInstance().getMusic(), soundB.isChecked(), Game.getInstance().getGraphic(),
                         Game.getInstance().getnSeeds());
 
             }
         });
 
         quit = (Button)findViewById(R.id.quitBtn);
-        quit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //TODO look that if we use getBaseContext the multiplayer activity will start why?
-                Context ctx = Game.getInstance().getGameActivity();
-                Intent i = new Intent(ctx,MenuActivity.class);
-                startActivity(i);
-            }
-        });
-
         resume = (Button)findViewById(R.id.resumeBtn);
-        resume.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(),GameMainActivity.class);
-                startActivity(i);
-            }
-        });
-
         restart = (Button)findViewById(R.id.restartBtn);
-        quit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //TODO we need to finishGameMainActivity and recreate it
-                Intent i = new Intent(getBaseContext(),MenuActivity.class);
-                startActivity(i);
-            }
-        });
+    }
 
+    public void onRestartBtn(View arg){
+        Player p1=Game.getInstance().getGh().getP1();
+        Player p2=Game.getInstance().getGh().getP2();
+        Game.getInstance().getGameActivity().finish();
+        if(p2.getId().equals(1)){
+            //game human vs megabrain
+            Game.getInstance().setGh(new GameHandler(p1));
+        }else{
+            //game human vs human
+            Game.getInstance().setGh(new GameHandler(p1,p2));
+        }
+        Intent i = new Intent(Game.getInstance().getMenuActivity(),GameMainActivity.class);
+        startActivity(i);
+        this.finish();
+    }
+
+    public void onQuitBtn(View arg){
+        Game.getInstance().getGameActivity().finish();
+        Game.getInstance().setGameActivity(null);
+        this.finish();
+    }
+
+    public void onResumeBtn(View arg){
+        this.finish();
     }
 
     @Override

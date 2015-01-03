@@ -40,7 +40,6 @@ public class ScoreState extends State {
     public boolean onTouch(MotionEvent e, int scaledX, int scaledY) {
         if (e.getAction() == MotionEvent.ACTION_UP) {
             Game.getInstance().getGameActivity().finish();
-            Log.v("GameMainActivity->scoreState", "game finished -> destroy gameMainActivity");
         }
         return true;
     }

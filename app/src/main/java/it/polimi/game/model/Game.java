@@ -13,6 +13,7 @@ public class Game {
     private static Game instance = null;
     private GameHandler gh;
     private Activity gameActivity;
+    private Activity loadActivity;
     private Activity menuActivity;
     private AssetManager assets;
     private Bee bee1,bee2;
@@ -21,7 +22,6 @@ public class Game {
     Integer[] xBowl;Integer[] xTray;
     Integer[] yBowl;Integer[] yTray;
     private Boolean playable;
-
     private Boolean graphic;
     private Boolean sound;
     private Boolean music;
@@ -230,7 +230,23 @@ public class Game {
         this.nSeeds = nSeeds;
     }
 
-   public void saveStatistic(Boolean music,Boolean sound,Boolean animations,Integer nseeds){
+    public Activity getMenuActivity() {
+        return menuActivity;
+    }
+
+    public void setMenuActivity(Activity menuActivity) {
+        this.menuActivity = menuActivity;
+    }
+
+    public Activity getLoadActivity() {
+        return loadActivity;
+    }
+
+    public void setLoadActivity(Activity loadActivity) {
+        this.loadActivity = loadActivity;
+    }
+
+    public void saveSettings(Boolean music, Boolean sound, Boolean animations, Integer nseeds){
         this.setGraphic(animations);
         this.setMusic(music);
         this.setnSeeds(nseeds);

@@ -1,9 +1,6 @@
 package it.polimi.game.model;
 
 import android.util.Log;
-import android.widget.Button;
-import android.widget.NumberPicker;
-import android.widget.ToggleButton;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,9 +25,9 @@ public class SettingsHandler {
         return instance;
     }
 
-    public void statisticInitialization(){
+    public void settingsInitialization(){
         try {
-            File fXmlFile =new File(Game.getInstance().getGameActivity().getFilesDir(), "/setting.xml");
+            File fXmlFile =new File(Game.getInstance().getLoadActivity().getFilesDir(), "/setting.xml");
             if(fXmlFile.exists()){
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -47,15 +44,14 @@ public class SettingsHandler {
                         if(ss.equals("true")){sound=true;}else{sound=false;}
                         if(ms.equals("true")){music=true;}else{music=false;}
                         if(as.equals("true")){animations=true;}else{animations=false;}
-                        Game.getInstance().saveStatistic(music,sound,animations,nseeds);
+                        Game.getInstance().saveSettings(music, sound, animations, nseeds);
                 }
 
             else{
-                Log.v("sett","Configuration file doesn't exist");
                 this.createConfigFile();
             }
         } catch (IOException e) {
-            Log.v("s","no file detected");
+
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -65,18 +61,18 @@ public class SettingsHandler {
     }
 
     protected void createConfigFile(){
-        saveStatistic(true,true,true,1);
+        saveSettings(true, true, true, 3);
     }
 
-    public void saveStatistic(Boolean music,Boolean sound,Boolean animations,Integer nseeds){
-        Game.getInstance().saveStatistic(music,sound,animations,nseeds);
+    public void saveSettings(Boolean music, Boolean sound, Boolean animations, Integer nseeds){
+        Game.getInstance().saveSettings(music, sound, animations, nseeds);
         try {
-            File file = new File(Game.getInstance().getGameActivity().getFilesDir(), "/setting.xml");
+            File file = new File(Game.getInstance().getLoadActivity().getFilesDir(), "/setting.xml");
             FileWriter fw = new FileWriter(file);
             fw.write("<settings><music>"+music.toString()+"</music><sound>"+sound.toString()+"</sound><animations>"+animations.toString()+"</animations><nseeds>"+nseeds.toString()+"</nseeds></settings>");
             fw.flush();
             fw.close();
-            this.statisticInitialization();
+            this.settingsInitialization();
         }
         catch(IOException e) {
             e.printStackTrace();

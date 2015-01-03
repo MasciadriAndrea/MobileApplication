@@ -20,9 +20,9 @@ public class PlayerDAO implements ContractDAO {
     private static PlayerDAO singleton = null;
     private static String[] PLAYER_TABLE_COLUMNS;
 
-    synchronized public static PlayerDAO getInstance(Context ctxt)  {
+    synchronized public static PlayerDAO getInstance()  {
         if (singleton == null) {
-            singleton = new PlayerDAO(Game.getInstance().getGameActivity());
+            singleton = new PlayerDAO(Game.getInstance().getLoadActivity());
             try {
                 singleton.open();
             } catch (SQLException e) {

@@ -50,7 +50,6 @@ public class GameView extends SurfaceView implements Runnable {
 			@Override
 			public void surfaceChanged(SurfaceHolder holder, int format,
 					int width, int height) {
-				// TODO Auto-generated method stub
 			}
 
 			@Override
@@ -125,12 +124,10 @@ public class GameView extends SurfaceView implements Runnable {
 	}
 
 	public void onResume() {
-		// TODO Auto-generated method stub
 	}
 
 	public void onPause() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

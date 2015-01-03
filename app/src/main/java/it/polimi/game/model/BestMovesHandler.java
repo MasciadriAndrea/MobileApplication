@@ -21,8 +21,7 @@ public class BestMovesHandler {
     }
 
     private BestMovesHandler() {
-        // TODO check if right context of initialization
-        bestMoveResultDAO = BestMoveResultDAO.getInstance(Game.getInstance().getGameActivity());
+        bestMoveResultDAO = BestMoveResultDAO.getInstance();
         try {
             bestMoveResultDAO.open();
         } catch (SQLException e) {
@@ -30,7 +29,6 @@ public class BestMovesHandler {
         }
         this.tenBest = new ArrayList<BestMoveResult>();
         this.tenBest = bestMoveResultDAO.getBestMovesResult();
-        //TODO obtain this from DB --- ok
     }
 
     public List<BestMoveResult> getTenBest(){
@@ -38,7 +36,8 @@ public class BestMovesHandler {
     }
 
     public void insertResult(Player pl,Integer nSeedCollected){
-        Integer result=nSeedCollected;//TODO this result maybe should be normalized!
+        Integer result=nSeedCollected;
+        //TODO this result maybe should be normalized!
         //1 add in right position
         Boolean find=false;
         Integer position=0;
@@ -56,11 +55,11 @@ public class BestMovesHandler {
         if((insertPosition<10)||(position<10)){
             BestMoveResult bnew=new BestMoveResult(pl,result);
             tenBest.add(insertPosition,bnew);
-            BestMoveResultDAO.getInstance(Game.getInstance().getGameActivity()).addBestMoveResult(new BestMoveResult(pl,result));
+            BestMoveResultDAO.getInstance().addBestMoveResult(new BestMoveResult(pl,result));
             //2 truncate tenBest (size max=10)
             if(tenBest.size()>10) {
                 BestMoveResult eleventh=tenBest.get(10);
-                BestMoveResultDAO.getInstance(Game.getInstance().getGameActivity()).deleteBestMoveResult(eleventh);
+                BestMoveResultDAO.getInstance().deleteBestMoveResult(eleventh);
                 tenBest.remove(10);
             }
         }

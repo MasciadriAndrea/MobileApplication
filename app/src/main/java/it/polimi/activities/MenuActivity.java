@@ -27,6 +27,7 @@ public class MenuActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Game.getInstance().setMenuActivity(this);
         setContentView(R.layout.activity_menu);
         b_single = (Button) findViewById(R.id.button_single);
         b_multi = (Button) findViewById(R.id.button_multi);

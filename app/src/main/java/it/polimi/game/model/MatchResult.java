@@ -22,7 +22,7 @@ public class MatchResult {
 
     public MatchResult(Integer seedsPerBowl,Player p1, Player p2) {
 
-        playerDAO = PlayerDAO.getInstance(Game.getInstance().getGameActivity());
+        playerDAO = PlayerDAO.getInstance();
         this.seedsPerBowl = seedsPerBowl;
         this.winner=null;
         this.loser=null;
@@ -32,7 +32,6 @@ public class MatchResult {
         this.bestMoveP2=0;
         this.p1=p1;
         this.p2=p2;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendar = new GregorianCalendar();
         this.data=calendar.getTime();
     }
@@ -64,10 +63,8 @@ public class MatchResult {
         playerDAO.updatePlayer(loser);
         PlayerHandler.getInstance().updateList();
 
-        //TODO here errors->commented
         BestMovesHandler.getInstance().insertResult(p1,this.getBestMove(this.p1));//TODO maybe this value should be normalized
         BestMovesHandler.getInstance().insertResult(p2,this.getBestMove(this.p2));//TODO maybe this value should be normalized
-        //TODO save this 2 players in DB and also best 10
     }
 
     public Integer getBestMove(Player p){

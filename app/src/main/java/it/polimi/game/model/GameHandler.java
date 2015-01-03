@@ -32,7 +32,7 @@ public class GameHandler {
     public GameHandler(Player p1){
        //constructor for Human vs Megabrain mode
         nSeeds=Game.getInstance().getnSeeds();
-       Player p2=PlayerHandler.getInstance().getPlayerById(1);
+       Player p2=PlayerHandler.getInstance().getPlayerById(MEGABRAIN);
        this.initGame(p1,p2,false,nSeeds);
        this.setBoard(new Board(p1,p2));
        if(this.activePlayer.equals(p2)){
@@ -258,22 +258,22 @@ public class GameHandler {
         List<Bowl> bowlsP2=this.getBoard().getSemiBoardByPlayer(getP2()).getBowls();
         Integer seeds1=0;
         Integer seeds2=0;
-        String str="inside finishGame -> ";
+        //String str="inside finishGame -> ";
         for(Bowl bowl:bowlsP1){
             seeds1=seeds1+bowl.pullOutSeeds();
-            str+=bowl.getSeeds().toString()+"-";
+            //str+=bowl.getSeeds().toString()+"-";
         }
         Tray t1=this.getBoard().getSemiBoardByPlayer(this.getP1()).getTray();
-        str+=t1.getSeeds().toString()+"-";
+        //str+=t1.getSeeds().toString()+"-";
         t1.incrementSeeds(seeds1);
         for(Bowl bowl:bowlsP2){
             seeds2=seeds2+bowl.pullOutSeeds();
-            str+=bowl.getSeeds().toString()+"-";
+            //str+=bowl.getSeeds().toString()+"-";
         }
         Tray t2=this.getBoard().getSemiBoardByPlayer(this.getP2()).getTray();
         t2.incrementSeeds(seeds2);
-        str+=t2.getSeeds().toString()+"-";
-        //TODO
+        //str+=t2.getSeeds().toString()+"-";
+        //TODO here there is a debugging string
         //System.out.println(str);
         this.setIsGameFinished(true);
 
@@ -287,13 +287,13 @@ public class GameHandler {
                 win=this.TIE;
             }
         }
-        //TODO
         if(t2.getSeeds()+t1.getSeeds()!=(Game.getInstance().getnSeeds()*12)){
-            System.out.println("ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR");
+            System.out.println("!!!!ERROR: total amount of seeds different from expected!!!!!!!!!!!!");
         }
         if(this.equals(Game.getInstance().getGh()))
-         this.matchResult.storeData(win,t1.getSeeds(),t2.getSeeds());// update all the result in matchResult, player and bestmoves
-        playSound(Assets.winID);
+         this.matchResult.storeData(win,t1.getSeeds(),t2.getSeeds());
+         // update all the result in matchResult, player and bestmoves
+         playSound(Assets.winID);
     }
 
     private void playSound(int sound){
@@ -303,11 +303,10 @@ public class GameHandler {
     }
 
     private Integer megabrainSelectBowlId(){
-        //TODO just for MEGABRAIN
-
         Integer sbp= LogicHandler.getInstance().megabrainSelectBowlPosition(this.getBoard().getBoardStatus(),this.getActivePlayer(),this.p1,this.p2,nSeeds,5);
         Integer[] moves = {};
-        if (activePlayer.equals(p1)) {//if megabrain (activePlayer) is p1
+        if (activePlayer.equals(p1)) {
+        //if megabrain (activePlayer) is p1
             moves = new Integer[]{1, 2, 3, 4, 5, 6};
         } else {
             moves = new Integer[]{7, 8, 9, 10, 11, 12};
@@ -317,14 +316,12 @@ public class GameHandler {
     }
 
     private Boolean isMegabrainTurn(){
-        if((!this.getIsHH())&&(this.getActivePlayer().getId().equals(1))){
+        if((!this.getIsHH())&&(this.getActivePlayer().getId().equals(MEGABRAIN))){
             return true;
         }
         return false;
     }
 
-
-    //TODO check this method, logic to set possible best move for stealing player is missing
     private void stealSeeds(Bowl lastPosition){
         Bowl oC=lastPosition.getOppositeBowl();
         if(graphicsOn()){

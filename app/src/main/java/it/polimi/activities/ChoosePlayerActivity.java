@@ -50,7 +50,7 @@ public class ChoosePlayerActivity extends Activity {
         Intent i=getIntent();
         playerId=i.getIntExtra("player",0);
         isSinglePlayer=i.getBooleanExtra("isSinglePlayer",false);
-        playerDAO = PlayerDAO.getInstance(this);
+        playerDAO = PlayerDAO.getInstance();
         try {
             playerDAO.open();
         } catch (SQLException e) {
@@ -96,12 +96,10 @@ public class ChoosePlayerActivity extends Activity {
                 oldOne=true;
                 isValid=true;
                 selectedPlayer=p;
-                Log.v("choosePlayerActivity","found player "+ selectedPlayer.getName());
             }
         }
         if((!txtStr.equals(""))&&(!oldOne)){
             selectedPlayer=playerDAO.addPlayer(txtStr);
-            Log.v("choosePlayerActivity","found player "+ selectedPlayer.getName());
             PlayerHandler.getInstance().updateList();
             isValid=true;
         }
@@ -132,15 +130,14 @@ public class ChoosePlayerActivity extends Activity {
                     finish();
                 }
             }
+        }else{
+            //TODO
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Insert a name!").setTitle("Bzzz");
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
         select.clearFocus();
-        //TODO
-        // 1. Instantiate an AlertDialog.Builder with its constructor
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        // 2. Chain together various setter methods to set the dialog characteristics
-        builder.setMessage("Insert a name!").setTitle("Bzzz");
-        AlertDialog dialog = builder.create();
     }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
@@ -151,7 +148,6 @@ public class ChoosePlayerActivity extends Activity {
                                   List<String> objects, List<Player> listPlayers) {
             super(context, textViewResourceId, objects);
             for (int i = 0; i < objects.size(); ++i) {
-                //here instead i put the id of the player
                 mIdMap.put(objects.get(i),listPlayers.get(i).getId() );
             }
         }

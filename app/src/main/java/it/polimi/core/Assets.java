@@ -54,13 +54,11 @@ public class Assets {
         loadSounds();
         if(Game.getInstance().getMusic()){
             if(mediaPlayer==null){
-                playMusic("music.wav",true);}}
-		// May be a good place to play music.
+                playMusic("music.wav",true);
+            }
+        }
 	}
-	
-	/*
-	 * The Following Methods do NOT need to be changed.
-	 */
+
 
 	public static void onPause() {
 		if (soundPool != null) {

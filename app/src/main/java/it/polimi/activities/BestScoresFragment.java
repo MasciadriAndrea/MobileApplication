@@ -44,13 +44,12 @@ public class BestScoresFragment extends Fragment {
         this.items = new ArrayList<ListItem>();
         ArrayList<String> names = new ArrayList<String>();
         for (Player player : listPlayers){
-            //TODO Exclude megabrain's statistics
+            //TODO here we can exclude megabrain's statistics
                 Double maxScore = player.getMaxScoreResult();
                 names.add(player.getName());
                 items.add(new ListItem(player.getName(),maxScore.intValue()));
 
         }
-        //StableArrayAdapter adapter = new StableArrayAdapter(this.getActivity(),android.R.layout.simple_list_item_1,names);
         lv.setAdapter(new StableArrayAdapter());
     }
 

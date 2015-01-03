@@ -78,7 +78,7 @@ public class PlayState extends State{
 
     private void checkPlayability() {
         if(bee2.atHome()&&bee1.atHome()){
-            //playable=true;
+            Game.getInstance().makePlayable();
         }
     }
 
@@ -193,7 +193,6 @@ public class PlayState extends State{
                 if ((ub.isPressed(scaledX, scaledY))&&(Game.getInstance().isPlayable())&&(!Game.getInstance().getGh().getP1().getId().equals(1))) {
                     ub.cancel();
                     Game.getInstance().getGh().playTurn(i);
-                    Log.v("play state","selected bowl id ->"+i);
                 }
             }
             for(UIButton ub:bp2) {
@@ -201,18 +200,13 @@ public class PlayState extends State{
                 if ((ub.isPressed(scaledX, scaledY))&&(Game.getInstance().isPlayable())&&(!Game.getInstance().getGh().getP1().getId().equals(1))) {
                     ub.cancel();
                     Game.getInstance().getGh().playTurn(i);
-                    Log.v("play state","selected bowl id ->"+i);
                 }
             }
 
             if (pauseBtn.isPressed(scaledX,scaledY)){
-                //pauseBtn.cancel();
-                //TODO open a dialog instead lunch activity
-                //TODO Menage game pause and resume
+                pauseBtn.cancel();
                 Intent intent = new Intent(Game.getInstance().getGameActivity(), PauseActivity.class);
                 Game.getInstance().getGameActivity().startActivity(intent);
-
-
             }
                for(UIButton u:bp1) {
                     u.cancel();

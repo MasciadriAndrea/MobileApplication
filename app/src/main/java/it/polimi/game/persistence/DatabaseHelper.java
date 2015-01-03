@@ -36,7 +36,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         DATABASE_CREATE_BEST_MOVE_RESULT ="create table "+ BEST_MOVE_RESULT +" ("+ BEST_MOVE_RESULT_FIELDS[0]+" integer primary key autoincrement,"
                 + BEST_MOVE_RESULT_FIELDS[1]+" integer,"
                 + BEST_MOVE_RESULT_FIELDS[2]+" integer not null, FOREIGN KEY ("+BEST_MOVE_RESULT_FIELDS[1]+") REFERENCES "+ PLAYER +" ("+ PLAYER_FIELDS[0] +"));";
-        ;
         DATABASE_UPGRADING = "DROP TABLE IF EXISTS " + PLAYER + ";" +
                 "DROP TABLE IF EXISTS " + BEST_MOVE_RESULT +";";
     }
@@ -63,5 +62,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    // For Database operations Lunch a Thread
 }
