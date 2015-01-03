@@ -35,8 +35,8 @@
         </activity>
         <activity
             android:name="it.polimi.activities.StatisticsActivity"
-            android:screenOrientation="sensorLandscape"
-            android:label="@string/title_activity_statistics" >
+            android:label="@string/title_activity_statistics"
+            android:screenOrientation="sensorLandscape" >
         </activity>
         <activity
             android:name="it.polimi.activities.LoadActivity"
@@ -45,8 +45,14 @@
             android:label="@string/title_activity_load" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="it.polimi.activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="sensorLandscape" >>
         </activity>
     </application>
 

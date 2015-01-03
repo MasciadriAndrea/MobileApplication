@@ -85,6 +85,8 @@ public class ChoosePlayerActivity extends Activity {
                 username.setText(itemSelected);
             };
         });
+        select.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     public void onClickB(View arg0){
@@ -179,7 +181,17 @@ public class ChoosePlayerActivity extends Activity {
         this.finish();
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        Assets.onPause();
+    }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        Assets.onResume();
+    }
 
 
 }

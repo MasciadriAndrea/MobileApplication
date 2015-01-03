@@ -13,13 +13,14 @@ import android.widget.Button;
 
 import com.polimi.core.R;
 
+import it.polimi.core.Assets;
 import it.polimi.core.GameMainActivity;
 import it.polimi.game.model.Game;
 import it.polimi.game.model.GameHandler;
 import it.polimi.game.model.Player;
 
 public class MenuActivity extends Activity {
-    private Button b_single,b_multi, b_statistics;
+    private Button b_single,b_multi, b_statistics,b_settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,7 @@ public class MenuActivity extends Activity {
         b_single = (Button) findViewById(R.id.button_single);
         b_multi = (Button) findViewById(R.id.button_multi);
         b_statistics =(Button) findViewById(R.id.button_statistic);
+        b_settings =(Button) findViewById(R.id.button_setting);
         b_single.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getBaseContext(),ChoosePlayerActivity.class);
@@ -54,9 +56,28 @@ public class MenuActivity extends Activity {
                 startActivity(i);
             }
         });
+        b_settings.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Intent i = new Intent(getBaseContext(),SettingsActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
+    }
+
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Assets.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Assets.onResume();
     }
 }

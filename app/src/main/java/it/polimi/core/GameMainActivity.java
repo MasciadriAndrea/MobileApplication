@@ -45,6 +45,5 @@ public class GameMainActivity extends Activity {
         this.finish();
         Log.v("GameMainActivity","destroy gameMainActivity");
     }
-	
-	// Write methods to allow access to prefs from other states.
+
 }

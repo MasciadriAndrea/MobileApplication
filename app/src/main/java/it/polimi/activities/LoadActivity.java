@@ -2,10 +2,7 @@ package it.polimi.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -13,6 +10,7 @@ import com.polimi.core.R;
 
 import it.polimi.core.Assets;
 import it.polimi.game.model.Game;
+import it.polimi.game.model.SettingsHandler;
 
 public class LoadActivity extends Activity {
 
@@ -25,6 +23,7 @@ public class LoadActivity extends Activity {
         setContentView(R.layout.activity_load);
         Game.getInstance().setAssets(getAssets());
         Game.getInstance().setGameActivity(this);
+        SettingsHandler.getInstance().statisticInitialization();
         Assets.load();
         Intent i = new Intent(this,MenuActivity.class);
         startActivity(i);

@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="it.polimi.activities.SettingsActivity"
+    android:id="@+id/set"
+    android:background="@drawable/background">
+
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New ToggleButton"
+        android:id="@+id/musicb"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="116dp" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New ToggleButton"
+        android:id="@+id/soundb"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/musicb"
+        android:layout_alignStart="@+id/musicb" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New ToggleButton"
+        android:id="@+id/animationsb"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/musicb"
+        android:layout_alignStart="@+id/musicb" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Music"
+        android:id="@+id/textView"
+        android:layout_toStartOf="@+id/animationsb"
+        android:layout_alignBottom="@+id/musicb"
+        android:layout_toLeftOf="@+id/animationsb" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Sound"
+        android:id="@+id/textView4"
+        android:layout_toStartOf="@+id/soundb"
+        android:layout_alignBottom="@+id/soundb"
+        android:layout_toLeftOf="@+id/soundb" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Animations"
+        android:id="@+id/textView5"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/animationsb"
+        android:layout_toStartOf="@+id/animationsb" />
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/np"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/musicb"
+        android:layout_toEndOf="@+id/musicb"
+        android:layout_marginLeft="293dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Number of seeds"
+        android:id="@+id/textView6"
+        android:layout_marginRight="93dp"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/np"
+        android:layout_alignEnd="@+id/np" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/saveb"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_alignLeft="@+id/textView6"
+        android:layout_alignStart="@+id/textView6"
+        android:onClick="onSave"/>
+</RelativeLayout>
