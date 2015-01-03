@@ -1,5 +1,7 @@
 package it.polimi.game.state;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -10,6 +12,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.activities.MenuActivity;
 import it.polimi.core.Assets;
 import it.polimi.framework.util.Painter;
 import it.polimi.core.GameMainActivity;
@@ -24,6 +27,7 @@ import it.polimi.game.model.Seed;
 import it.polimi.game.model.Tray;
 
 public class PlayState extends State{
+    private UIButton pauseBtn;
     private List<UIButton> bp1;
     private List<UIButton> bp2;
     private Bitmap p1Bee,p2Bee,bowlP1,bowlP2,bowlInactive;
@@ -52,6 +56,8 @@ public class PlayState extends State{
         p2Bee=Assets.bee_red;
         if(Game.getInstance().getGh().getP2().getId().equals(1)){p2Bee=Assets.bee_megabrain;}
         createSeeds();
+
+        pauseBtn = new UIButton(900,540,1020,660,Assets.menu,Assets.menu);
     };
 
     public void update(float delta){
@@ -79,6 +85,10 @@ public class PlayState extends State{
         g.drawImage(Assets.background, 0, 0);
         g.setColor(color1);
         g.setFont(Typeface.DEFAULT_BOLD, 50);
+
+        //render pauseBtn
+        pauseBtn.render(g);
+
         Integer[] bs=gh.getBoard().getBoardStatus();
         int i=0;
         if(gh.getActivePlayer().equals(gh.getP1())){
@@ -173,6 +183,7 @@ public class PlayState extends State{
                     ub.onTouchDown(scaledX, scaledY);
                 }
             }
+            pauseBtn.onTouchDown(scaledX,scaledY);
         }
         if (e.getAction() == MotionEvent.ACTION_UP) {
             int i=0;
@@ -191,6 +202,16 @@ public class PlayState extends State{
                     Game.getInstance().getGh().playTurn(i);
                     Log.v("play state","selected bowl id ->"+i);
                 }
+            }
+
+            if (pauseBtn.isPressed(scaledX,scaledY)){
+                //pauseBtn.cancel();
+                //TODO open a dialog instead lunch activity
+                //TODO Menage game pause and resume
+                Intent intent = new Intent(Game.getInstance().getGameActivity(), MenuActivity.class);
+                Game.getInstance().getGameActivity().startActivity(intent);
+
+
             }
                for(UIButton u:bp1) {
                     u.cancel();

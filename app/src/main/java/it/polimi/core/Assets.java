@@ -20,7 +20,7 @@ import it.polimi.game.model.GameHandler;
 public class Assets {
 	private static SoundPool soundPool;
 	private static MediaPlayer mediaPlayer;
-	public static Bitmap background,welcome,bowl,tray,bee_red,bee_green,bee_megabrain,bowl_red,bowl_green;
+	public static Bitmap background,welcome,bowl,tray,bee_red,bee_green,bee_megabrain,bowl_red,bowl_green, menu;
     public static Bitmap seed0,seed45,seed90,seed135;
 	// 1. Load Assets, initialize Frames and Animations.
 	public static void load() {
@@ -38,6 +38,7 @@ public class Assets {
         seed45 = loadBitmap("seed_45o.png", false);
         seed90 = loadBitmap("seed_90o.png", false);
         seed135 = loadBitmap("seed_135o.png", false);
+        menu = loadBitmap("menu.png", false);
     }
 	
 	// 2. Load sounds here
