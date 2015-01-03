@@ -46,4 +46,11 @@ public class GameMainActivity extends Activity {
         Game.getInstance().setGameActivity(null);
     }
 
+    public static GameView getsGame() {
+        return sGame;
+    }
+
+    public static void setsGame(GameView sGame) {
+        GameMainActivity.sGame = sGame;
+    }
 }

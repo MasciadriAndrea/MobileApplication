@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.polimi.core.GameMainActivity;
 
 public class Game {
     private static Game instance = null;
@@ -78,11 +81,17 @@ public class Game {
         } return false;
     }
     public void makePlayable(){
+        Log.v("Game","Playable");
         this.playable=true;
+        GameMainActivity gma=(GameMainActivity) Game.getInstance().getGameActivity();
+        gma.getsGame().setClickable(true);
     }
 
     public void makeUnPlayable(){
+        Log.v("Game","makeUnPlayable");
         this.playable=false;
+        GameMainActivity gma=(GameMainActivity) Game.getInstance().getGameActivity();
+        gma.getsGame().setClickable(false);
     }
 
     public Boolean isPlayable(){

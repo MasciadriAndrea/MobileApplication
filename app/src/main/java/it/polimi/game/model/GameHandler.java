@@ -2,12 +2,14 @@ package it.polimi.game.model;
 
 import android.Manifest;
 import android.util.Log;
+import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import it.polimi.core.Assets;
+import it.polimi.core.GameMainActivity;
 import it.polimi.game.model.megabrain.LogicHandler;
 import it.polimi.game.model.megabrain.Turn;
 import it.polimi.game.persistence.PlayerDAO;
@@ -62,7 +64,7 @@ public class GameHandler {
 
     public void updatePositionBee(Integer bowlId){
         if(this.equals(Game.getInstance().getGh())){
-            Game.getInstance().makeUnPlayable();
+
             if(activePlayer.equals(p1)){
                 Game.getInstance().setxBee1(Game.getInstance().getxBowl()[bowlId]);
                 Game.getInstance().setyBee1(Game.getInstance().getyBowl()[bowlId]);
@@ -75,7 +77,7 @@ public class GameHandler {
 
     public void updatePositionBee(){
         if(this.equals(Game.getInstance().getGh())){
-            Game.getInstance().makeUnPlayable();
+
             if(activePlayer.equals(p1)){
                 Game.getInstance().setxBee1(Game.getInstance().getxTray()[0]);
                 Game.getInstance().setyBee1(Game.getInstance().getyTray()[0]);
@@ -100,6 +102,9 @@ public class GameHandler {
             if(currentBowl!= null){
               //if the selected Bowl is own by activePlayer
                     if (currentBowl.getSeeds() > 0) {
+                        if(this.equals(Game.getInstance().getGh())){
+                            Game.getInstance().makeUnPlayable();
+                        }
                         //update position bee
                          if(graphicsOn()){
                             updatePositionBee(selectedBowlId-1);
@@ -181,10 +186,14 @@ public class GameHandler {
                                 }
                             }
                         Integer seedsInTrayAfter=sbAp.getTray().getSeeds();//Play again will be computed in different moves
-                        this.getMatchResult().updateBestMove(seedsInTrayAfter-seedsInTrayFirst,this.getActivePlayer());
+                        if(this.equals(Game.getInstance().getGh())){
+                            this.getMatchResult().updateBestMove(seedsInTrayAfter-seedsInTrayFirst,this.getActivePlayer());
+                        }
                         if (!gameStatus.equals(this.ISGAMEFINISHED)) {
                             //if the game is not finished
-                            Game.getInstance().makePlayable();
+                            if(this.equals(Game.getInstance().getGh())){
+                                Game.getInstance().makePlayable();
+                            }
                             if (!gameStatus.equals(this.ISMYTURNAGAIN)){
                                 this.switchPlayer();
 
@@ -290,8 +299,9 @@ public class GameHandler {
         if(t2.getSeeds()+t1.getSeeds()!=(Game.getInstance().getnSeeds()*12)){
             System.out.println("!!!!ERROR: total amount of seeds different from expected!!!!!!!!!!!!");
         }
-        if(this.equals(Game.getInstance().getGh()))
-         this.matchResult.storeData(win,t1.getSeeds(),t2.getSeeds());
+        if(this.equals(Game.getInstance().getGh())) {
+            this.matchResult.storeData(win, t1.getSeeds(), t2.getSeeds());
+        }
          // update all the result in matchResult, player and bestmoves
          playSound(Assets.winID);
     }

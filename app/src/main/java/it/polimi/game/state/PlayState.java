@@ -1,31 +1,24 @@
 package it.polimi.game.state;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.activities.MenuActivity;
 import it.polimi.activities.PauseActivity;
 import it.polimi.core.Assets;
 import it.polimi.framework.util.Painter;
-import it.polimi.core.GameMainActivity;
 import it.polimi.framework.util.RandomNumberGenerator;
 import it.polimi.framework.util.UIButton;
 import it.polimi.game.model.Bee;
 import it.polimi.game.model.Bowl;
 import it.polimi.game.model.Game;
 import it.polimi.game.model.GameHandler;
-import it.polimi.game.model.Player;
 import it.polimi.game.model.Seed;
-import it.polimi.game.model.Tray;
 
 public class PlayState extends State{
     private UIButton pauseBtn;
@@ -62,7 +55,6 @@ public class PlayState extends State{
     };
 
     public void update(float delta){
-        checkPlayability();
         if((bee1.getX()==Game.getInstance().getxBee1())&&(bee1.getY()==Game.getInstance().getyBee1())){
             Game.getInstance().setxBee1((int) bee1.getxHome());
             Game.getInstance().setyBee1((int) bee1.getyHome());
@@ -73,12 +65,6 @@ public class PlayState extends State{
         }
         if(gh.getIsGameFinished()){
             setCurrentState(new ScoreState());
-        }
-    }
-
-    private void checkPlayability() {
-        if(bee2.atHome()&&bee1.atHome()){
-            Game.getInstance().makePlayable();
         }
     }
 
@@ -171,16 +157,15 @@ public class PlayState extends State{
     }
 
     public boolean onTouch(MotionEvent e, int scaledX, int scaledY){
+        if(Game.getInstance().isPlayable()){
         if (e.getAction() == MotionEvent.ACTION_DOWN) {
            for(UIButton u:bp1) {
-              // if(Game.getInstance().getGh().getActivePlayer().equals(Game.getInstance().getGh().getP1())){
-               if(Game.getInstance().isPlayable()){
+              if(Game.getInstance().getGh().getActivePlayer().equals(Game.getInstance().getGh().getP1())){
                     u.onTouchDown(scaledX, scaledY);
                }
             }
             for(UIButton ub:bp2) {
-                //if(Game.getInstance().getGh().getActivePlayer().equals(Game.getInstance().getGh().getP2())){
-                if(Game.getInstance().isPlayable()){
+                if(Game.getInstance().getGh().getActivePlayer().equals(Game.getInstance().getGh().getP2())){
                     ub.onTouchDown(scaledX, scaledY);
                 }
             }
@@ -190,17 +175,22 @@ public class PlayState extends State{
             int i=0;
             for(UIButton ub:bp1) {
                 i++;
-                if ((ub.isPressed(scaledX, scaledY))&&(Game.getInstance().isPlayable())&&(!Game.getInstance().getGh().getP1().getId().equals(1))) {
+                if ((ub.isPressed(scaledX, scaledY))&&(Game.getInstance().getGh().getActivePlayer().equals(Game.getInstance().getGh().getP1()))&&(!Game.getInstance().getGh().getP1().getId().equals(1))) {
                     ub.cancel();
-                    Game.getInstance().getGh().playTurn(i);
+                    TurnRunner r = new TurnRunner(i);
+                    Thread t = new Thread(r);
+                    t.start();
+
                 }
             }
             for(UIButton ub:bp2) {
                 i++;
-                if ((ub.isPressed(scaledX, scaledY))&&(Game.getInstance().isPlayable())&&(!Game.getInstance().getGh().getP1().getId().equals(1))) {
+                if ((ub.isPressed(scaledX, scaledY))&&(Game.getInstance().getGh().getActivePlayer().equals(Game.getInstance().getGh().getP2()))&&(!Game.getInstance().getGh().getP1().getId().equals(1))) {
                     ub.cancel();
-                    Game.getInstance().getGh().playTurn(i);
-                }
+                    TurnRunner r = new TurnRunner(i);
+                    Thread t = new Thread(r);
+                    t.start();
+                    }
             }
 
             if (pauseBtn.isPressed(scaledX,scaledY)){
@@ -215,6 +205,9 @@ public class PlayState extends State{
                     ub.cancel();
                 }
         }
-        return true;
+        return true;}else{
+            return false;
+        }
     }
+
 }

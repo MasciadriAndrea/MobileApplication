@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -122,6 +123,8 @@ public class GameView extends SurfaceView implements Runnable {
 			}
 		}
 	}
+
+
 
 	public void onResume() {
 	}
