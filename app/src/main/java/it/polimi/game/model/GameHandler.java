@@ -300,6 +300,7 @@ public class GameHandler {
             System.out.println("!!!!ERROR: total amount of seeds different from expected!!!!!!!!!!!!");
         }
         if(this.equals(Game.getInstance().getGh())) {
+            Game.getInstance().makePlayable();
             this.matchResult.storeData(win, t1.getSeeds(), t2.getSeeds());
         }
          // update all the result in matchResult, player and bestmoves

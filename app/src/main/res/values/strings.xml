@@ -11,6 +11,10 @@
     <string name="title_activity_statistics">Statistics</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_pause">Pause</string>
+    <string name="statTab1">WonGames</string>
+    <string name="statTab2">BestResults</string>
+    <string name="statTab3">BestMoves</string>
     <string name="hello_world">Hello world!</string>
+
 
 </resources>

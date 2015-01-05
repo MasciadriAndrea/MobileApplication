@@ -8,6 +8,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.polimi.core.R;
 
@@ -20,12 +23,17 @@ public class StatisticsActivity extends FragmentActivity implements
     private TabsPagerAdapter mAdapter;
     private ActionBar actionBar;
     // Tab titles
-    private String[] tabs = {"Won Games", "Best results", "Best Moves"};
+    private String[] tabs = {"","",""};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_statistics);
+        tabs[0]=  getResources().getString(R.string.statTab1);
+        tabs[1]=  getResources().getString(R.string.statTab2);
+        tabs[2]=  getResources().getString(R.string.statTab3);
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         actionBar = getActionBar();
@@ -36,11 +44,19 @@ public class StatisticsActivity extends FragmentActivity implements
         viewPager.setAdapter(mAdapter);
         //Requires API 14 as minimum
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        //actionBar.setCustomView(R.layout.action_bar_stat);
 
         // Adding Tabs
+
+        //settare titolo nel layout, un layout per ciascuna tab
         for (String tab_name : tabs) {
-            actionBar.addTab(actionBar.newTab().setText(tab_name)
-                    .setTabListener(this));
+        Tab newTab = actionBar.newTab().setTabListener(this);
+            RelativeLayout tabView = (RelativeLayout) LinearLayout.inflate(this, R.layout.tab_view, null);
+            TextView tvTabTitle = (TextView) tabView.findViewById(R.id.tab_title);
+            tvTabTitle.setText(tab_name);
+            newTab.setCustomView(tabView);
+
+            actionBar.addTab(newTab);
         }
 
         /**
