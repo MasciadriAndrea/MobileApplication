@@ -10,7 +10,7 @@ public class GameHandlerTest extends TestCase {
     private Integer nIni=3;
     private Player p1;
     private Player p2;
-
+    /*
     protected void setUp() {
         p1=new Player("Foo",1);
         p2=new Player("Bar",2);
@@ -87,7 +87,7 @@ public class GameHandlerTest extends TestCase {
             turn 2: selectedBowlId=11 -> 11 is owned by player 2 and now is player 1 turn -> canceled
             turn 3: selectedBowlId=2 -> ok.. is player1 turn again
             turn 4: selectedBowlId=3 -> ok.. now is player 2 turn
-         */
+         *//*
        Integer[] expectedBoard={2,1,0,0,0,2,2,2,2,2,2,3,1,3};
         //initialization of the game
         GameHandler ghF=new GameHandler(p1,p2,initialBoardP1,initialBoardP2,nIni);
@@ -101,7 +101,7 @@ public class GameHandlerTest extends TestCase {
             assertEquals(expectedBoard[i],board[i]);
         }
     }
-
+*/
 }
 
 

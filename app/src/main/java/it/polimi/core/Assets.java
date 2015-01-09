@@ -22,7 +22,7 @@ public class Assets {
 	private static MediaPlayer mediaPlayer;
 	public static Bitmap background,welcome,bowl,tray,bee_red,bee_green,bee_megabrain,bowl_red,bowl_green, menu;
     public static Bitmap seed0,seed45,seed90,seed135;
-    public static int winID, stealID, seedID;
+    public static int winID, stealID, seedID, sadID;
 
 	// 1. Load Assets, initialize Frames and Animations.
 	public static void load() {
@@ -48,6 +48,7 @@ public class Assets {
         winID = loadSound("clap.wav");
         seedID = loadSound("fall.wav");
         stealID = loadSound("laugh.wav");
+        sadID = loadSound("sad.wav");
 	}
 
 	public static void onResume() {

@@ -332,7 +332,11 @@ public class GameHandler {
             updatePositionBee(oC.getId()-1);
         }
         Integer seeds=oC.pullOutSeeds();
-        playSound(Assets.stealID);
+        if(seeds>0){
+            playSound(Assets.stealID);
+        }else{
+            playSound(Assets.sadID);
+        }
         int position = oC.getId();
         if(activePlayer.equals(p2)){
             position--;

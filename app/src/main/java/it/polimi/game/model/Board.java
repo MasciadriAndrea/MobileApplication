@@ -41,7 +41,7 @@ public class Board {
 
     private void buildBoard(Player p1, Player p2){
         Integer nIni=Game.getInstance().getnSeeds();
-        int[] initialBoardDefault={nIni,nIni,nIni,nIni,nIni,nIni,0};
+        int[] initialBoardDefault=new int[]{nIni,nIni,nIni,nIni,nIni,nIni,0};
         this.buildBoard(initialBoardDefault,initialBoardDefault, p1, p2);
     }
 

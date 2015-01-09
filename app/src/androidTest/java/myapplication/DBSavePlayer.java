@@ -21,7 +21,7 @@ public class DBSavePlayer extends AndroidTestCase {
     private static final Double wonGameResult = 1.0;
     private static final Double maxScoreResult = 1.0;
     private static final Date lastGamePlayed = new Date(System.currentTimeMillis());
-
+    /*
     public void setUp() throws SQLException {
         RenamingDelegatingContext context
                 = new RenamingDelegatingContext(getContext(), "test_");
@@ -53,7 +53,7 @@ public class DBSavePlayer extends AndroidTestCase {
         playerDAO.close();
         super.tearDown();
     }
-
+*/
 }
 
 

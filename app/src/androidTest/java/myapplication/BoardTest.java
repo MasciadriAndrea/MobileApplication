@@ -2,6 +2,7 @@ package myapplication;
 
 
 import it.polimi.game.model.Board;
+import it.polimi.game.model.Game;
 import it.polimi.game.model.Player;
 
 import junit.framework.TestCase;
@@ -16,6 +17,7 @@ public class BoardTest extends TestCase {
     protected void setUp() {
         p1=new Player("Foo",1);
         p2=new Player("Bar",2);
+        Game.getInstance().setnSeeds(3);
         b=new Board(p1,p2);
     }
 

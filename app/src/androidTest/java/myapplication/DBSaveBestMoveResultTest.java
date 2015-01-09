@@ -11,9 +11,6 @@ import it.polimi.game.model.Player;
 import it.polimi.game.persistence.BestMoveResultDAO;
 import it.polimi.game.persistence.PlayerDAO;
 
-/**
- * Created by Paolo on 28/12/2014.
- */
 public class DBSaveBestMoveResultTest extends AndroidTestCase {
 
     private BestMoveResultDAO bestMoveResultDAO;
@@ -25,7 +22,7 @@ public class DBSaveBestMoveResultTest extends AndroidTestCase {
     private static final Double maxScoreResult = 1.0;
     private static final Date lastGamePlayed = new Date(System.currentTimeMillis());
     private static final Integer result = 10;
-
+    /*
     public void setUp() throws SQLException {
         RenamingDelegatingContext context
                 = new RenamingDelegatingContext(getContext(), "test_");
@@ -64,4 +61,5 @@ public class DBSaveBestMoveResultTest extends AndroidTestCase {
         bestMoveResultDAO.close();
         super.tearDown();
     }
+    */
 }
