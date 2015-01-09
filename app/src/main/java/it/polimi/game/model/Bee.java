@@ -1,5 +1,7 @@
 package it.polimi.game.model;
 
+import android.util.Log;
+
 public class Bee {
     private float x, y;
     private float xHome, yHome;
@@ -29,37 +31,49 @@ public class Bee {
         float stepX;
         float stepY;
         int vel=40;
-            if(getX()>x){
-                if(getX()-x<vel){
-                    stepX= x-getX();
-                }else {
+        int angVel=10;
+
+        float dx=x-getX();
+        float dy=y-getY();
+        double definedAngle=Math.toDegrees(Math.atan2(dx, -dy));
+        //TODO fix rotation
+        this.ang=definedAngle;
+       // if(((Math.abs(definedAngle - this.ang))%360>30)&&(!atHome())){
+         //   this.ang+=angVel;
+           // Log.v("Bee", definedAngle+" ang ->"+ang+" diff ->"+Math.abs(definedAngle - this.ang));
+        //}else {
+          //  this.ang+=angVel;
+            if (getX() > x) {
+                if (getX() - x < vel) {
+                    stepX = x - getX();
+                } else {
                     stepX = -vel;
                 }
-            }else {
+            } else {
                 if (x - getX() < vel) {
-                    stepX= x- getX();
+                    stepX = x - getX();
                 } else {
                     stepX = +vel;
                 }
             }
-            if(getY()>y){
-                if(getY()-y<vel){
-                    stepY= y-getY();
-                }else {
+            if (getY() > y) {
+                if (getY() - y < vel) {
+                    stepY = y - getY();
+                } else {
                     stepY = -vel;
                 }
-            }else {
+            } else {
                 if (y - getY() < vel) {
-                    stepY= y- getY();
+                    stepY = y - getY();
                 } else {
                     stepY = +vel;
                 }
             }
-            update(getX()+stepX,getY()+stepY);
-            float dx=x-getX();
-            float dy=y-getY();
-            this.ang=(Math.atan2(dx,dy)*360)+180;
-            if (atHome()) ang=this.angHome;
+            update(getX() + stepX, getY() + stepY);
+            if (atHome()) {
+                ang = this.angHome;
+            }
+        //}
     }
 
     public float getX() {

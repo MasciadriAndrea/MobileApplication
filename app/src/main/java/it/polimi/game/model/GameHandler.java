@@ -267,23 +267,16 @@ public class GameHandler {
         List<Bowl> bowlsP2=this.getBoard().getSemiBoardByPlayer(getP2()).getBowls();
         Integer seeds1=0;
         Integer seeds2=0;
-        //String str="inside finishGame -> ";
         for(Bowl bowl:bowlsP1){
             seeds1=seeds1+bowl.pullOutSeeds();
-            //str+=bowl.getSeeds().toString()+"-";
         }
         Tray t1=this.getBoard().getSemiBoardByPlayer(this.getP1()).getTray();
-        //str+=t1.getSeeds().toString()+"-";
         t1.incrementSeeds(seeds1);
         for(Bowl bowl:bowlsP2){
             seeds2=seeds2+bowl.pullOutSeeds();
-            //str+=bowl.getSeeds().toString()+"-";
         }
         Tray t2=this.getBoard().getSemiBoardByPlayer(this.getP2()).getTray();
         t2.incrementSeeds(seeds2);
-        //str+=t2.getSeeds().toString()+"-";
-        //TODO here there is a debugging string
-        //System.out.println(str);
         this.setIsGameFinished(true);
 
         Player win=null;
