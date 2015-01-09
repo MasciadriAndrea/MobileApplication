@@ -30,6 +30,8 @@ public class PlayerDAO implements ContractDAO {
             }
             if(singleton.getPlayerById(1)==null) {
                 singleton.addPlayer("Megabrain");
+                singleton.addPlayer("Player 1");
+                singleton.addPlayer("Player 2");
             }
         }
         return singleton ;

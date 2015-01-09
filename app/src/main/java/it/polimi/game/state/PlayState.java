@@ -50,8 +50,13 @@ public class PlayState extends State{
         p2Bee=Assets.bee_red;
         if(Game.getInstance().getGh().getP2().getId().equals(1)){p2Bee=Assets.bee_megabrain;}
         createSeeds();
-
         pauseBtn = new UIButton(900,540,1020,660,Assets.menu,Assets.menu);
+        GameHandler gh=Game.getInstance().getGh();
+        if(gh.getActivePlayer().getId().equals(1)){//1 is megabrain
+            TurnRunner r = new TurnRunner(gh.megabrainSelectBowlId());
+            Thread t = new Thread(r);
+            t.start();
+        }
     };
 
     public void update(float delta){

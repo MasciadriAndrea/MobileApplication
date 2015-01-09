@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import it.polimi.game.model.Bowl;
+import it.polimi.game.model.Game;
 import it.polimi.game.model.GameHandler;
 import it.polimi.game.model.Player;
 
@@ -56,7 +57,7 @@ public class LogicHandlerNew {
                 iniP1[i] = board[i];
                 iniP2[i] = board[i + 7];
             }
-            GameHandler gh = new GameHandler(p1, p2, iniP1, iniP2, nSeeds);
+            GameHandler gh = new GameHandler(p1, p2, iniP1, iniP2, nSeeds, Game.getInstance().getGh().getIsFastGame());
             gh.setActivePlayer(activePlayer);
             Boolean isEmpty = false;
             for (Bowl bowl : gh.getBoard().getSemiBoardByPlayer(activePlayer).getBowls()) {

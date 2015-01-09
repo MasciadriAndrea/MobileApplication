@@ -23,6 +23,7 @@ public class GameHandler {
     private Boolean isHH;
     private Boolean isGameFinished;
     private Board board;
+    private Boolean isFastGame;
     private MatchResult matchResult;
     private static Integer MEGABRAIN=1;
     public static Player TIE=new Player("TIE",0);
@@ -31,15 +32,13 @@ public class GameHandler {
     private static Integer PERFORMSTEAL=1;
     private Integer nSeeds;
 
-    public GameHandler(Player p1){
+    public GameHandler(Player p1,Boolean isFastGame){
        //constructor for Human vs Megabrain mode
         nSeeds=Game.getInstance().getnSeeds();
        Player p2=PlayerHandler.getInstance().getPlayerById(MEGABRAIN);
-       this.initGame(p1,p2,false,nSeeds);
-       this.setBoard(new Board(p1,p2));
-       if(this.activePlayer.equals(p2)){
-        this.playTurn(this.megabrainSelectBowlId());
-       }
+        this.initGame(p1,p2,false,nSeeds,isFastGame);
+        this.setBoard(new Board(p1,p2));
+
 
    }
 
@@ -49,16 +48,16 @@ public class GameHandler {
         return false;
     }
 
-    public GameHandler(Player p1, Player p2) {
+    public GameHandler(Player p1, Player p2, Boolean isFastGame) {
         //constructor for H vs H mode
         nSeeds=Game.getInstance().getnSeeds();
-        this.initGame(p1, p2, true,nSeeds);
+        this.initGame(p1, p2, true,nSeeds, isFastGame);
         this.setBoard(new Board(p1, p2));
     }
 
-    public GameHandler(Player p1, Player p2, int[] initialBoardP1,int[] initialBoardP2,int iniS ) {
+    public GameHandler(Player p1, Player p2, int[] initialBoardP1,int[] initialBoardP2,int iniS, Boolean isFastGame ) {
         //constructor for testing with initializated board
-        this.initGame(p1,p2,true,iniS);
+        this.initGame(p1,p2,true,iniS, isFastGame);
         this.setBoard(new Board(initialBoardP1,initialBoardP2, p1, p2));
     }
 
@@ -219,12 +218,17 @@ public class GameHandler {
         }
     }
 
-    private void initGame(Player p1, Player p2,Boolean isHH,Integer initSeeds){
+    private void initGame(Player p1, Player p2,Boolean isHH,Integer initSeeds, Boolean isFastGame){
         this.p1 = p1;
         this.p2 = p2;
         this.setIsHH(isHH);
         this.setIsGameFinished(false);
+        this.setIsFastGame(isFastGame);
+        int r=(int) Math.round(Math.random());
         this.setActivePlayer(p1);
+        if((r==0)&&(!this.isHH)){
+            this.setActivePlayer(p2);
+        }
         this.matchResult=new MatchResult(initSeeds,p1,p2);
     }
 
@@ -306,7 +310,7 @@ public class GameHandler {
         }
     }
 
-    private Integer megabrainSelectBowlId(){
+    public Integer megabrainSelectBowlId(){
         Integer sbp= LogicHandler.getInstance().megabrainSelectBowlPosition(this.getBoard().getBoardStatus(),this.getActivePlayer(),this.p1,this.p2,nSeeds,5);
         Integer[] moves = {};
         if (activePlayer.equals(p1)) {
@@ -328,20 +332,21 @@ public class GameHandler {
 
     private void stealSeeds(Bowl lastPosition){
         Bowl oC=lastPosition.getOppositeBowl();
-        if(graphicsOn()){
-            updatePositionBee(oC.getId()-1);
-        }
-        Integer seeds=oC.pullOutSeeds();
-        if(seeds>0){
+        Integer seeds=0;int position;
+        List<Seed> seedsImg1=new ArrayList<Seed>();
+        if(oC.getSeeds()>0) {
+            if (graphicsOn()) {
+                updatePositionBee(oC.getId() - 1);
+            }
+            seeds = oC.pullOutSeeds();
             playSound(Assets.stealID);
-        }else{
-            playSound(Assets.sadID);
+
+            position = oC.getId();
+            if (activePlayer.equals(p2)) {
+                position--;
+            }
+             seedsImg1 = Game.getInstance().getSeedsByPosition(position, this);
         }
-        int position = oC.getId();
-        if(activePlayer.equals(p2)){
-            position--;
-        }
-        List<Seed> seedsImg1=Game.getInstance().getSeedsByPosition(position,this);
         if(graphicsOn()){
             updatePositionBee(lastPosition.getId() - 1);
         }
@@ -433,6 +438,14 @@ public class GameHandler {
 
     public void setBoard(Board board) {
         this.board = board;
+    }
+
+    public Boolean getIsFastGame() {
+        return isFastGame;
+    }
+
+    public void setIsFastGame(Boolean isFastGame) {
+        this.isFastGame = isFastGame;
     }
 }
 

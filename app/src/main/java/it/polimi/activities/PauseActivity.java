@@ -61,12 +61,13 @@ public class PauseActivity extends Activity {
         Player p1=Game.getInstance().getGh().getP1();
         Player p2=Game.getInstance().getGh().getP2();
         Game.getInstance().getGameActivity().finish();
-        if(p2.getId().equals(1)){
+        Boolean isFast=Game.getInstance().getGh().getIsFastGame();
+        if(!Game.getInstance().getGh().getIsHH()){
             //game human vs megabrain
-            Game.getInstance().setGh(new GameHandler(p1));
+            Game.getInstance().setGh(new GameHandler(p1,isFast));
         }else{
             //game human vs human
-            Game.getInstance().setGh(new GameHandler(p1,p2));
+            Game.getInstance().setGh(new GameHandler(p1,p2,isFast));
         }
         Intent i = new Intent(Game.getInstance().getMenuActivity(),GameMainActivity.class);
         startActivity(i);

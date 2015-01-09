@@ -53,18 +53,24 @@ public class MatchResult {
         this.winner.incrementPlayedGames();
         this.loser.incrementPlayedGames();
         this.winner.incrementWins();
-        this.loser.updateWonGameResult();
-        this.winner.updateWonGameResult();
-        this.loser.updateMaxScoreResult(looserSeeds.doubleValue());//TODO this result must be normalized!
-        this.winner.updateMaxScoreResult(winnerSeeds.doubleValue());//TODO this result must be normalized!
+        if(!Game.getInstance().getGh().getIsFastGame()) {
+            this.loser.updateWonGameResult();
+            this.winner.updateWonGameResult();
+            this.loser.updateMaxScoreResult(normalizeValue(looserSeeds.doubleValue()));
+            this.winner.updateMaxScoreResult(normalizeValue(winnerSeeds.doubleValue()));
 
-        //Update players
-        playerDAO.updatePlayer(winner);
-        playerDAO.updatePlayer(loser);
-        PlayerHandler.getInstance().updateList();
+            //Update players
+            playerDAO.updatePlayer(winner);
+            playerDAO.updatePlayer(loser);
+            PlayerHandler.getInstance().updateList();
 
-        BestMovesHandler.getInstance().insertResult(p1,this.getBestMove(this.p1));//TODO maybe this value should be normalized
-        BestMovesHandler.getInstance().insertResult(p2,this.getBestMove(this.p2));//TODO maybe this value should be normalized
+            BestMovesHandler.getInstance().insertResult(p1, (int) normalizeValue(this.getBestMove(this.p1)));
+            BestMovesHandler.getInstance().insertResult(p2, (int) normalizeValue(this.getBestMove(this.p2)));
+        }
+    }
+
+    public double normalizeValue(double value){
+        return Math.round((value * 100) / (Game.getInstance().getnSeeds() * 12));
     }
 
     public Integer getBestMove(Player p){

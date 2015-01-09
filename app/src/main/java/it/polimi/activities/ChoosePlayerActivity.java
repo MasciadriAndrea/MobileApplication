@@ -85,6 +85,26 @@ public class ChoosePlayerActivity extends Activity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
+    public void onClickSkip(View arg0){
+        username.clearFocus();
+        if(isSinglePlayer){
+            //start game versus megabrain
+            Player p1=PlayerHandler.getInstance().getPlayerById(2);
+            Game.getInstance().setGh(new GameHandler(p1,true));
+            Intent i = new Intent(this,GameMainActivity.class);
+            startActivity(i);
+            finish();
+        }else{
+
+                Player p1=PlayerHandler.getInstance().getPlayerById(2);
+                Player p2=PlayerHandler.getInstance().getPlayerById(3);
+                Game.getInstance().setGh(new GameHandler(p1,p2,true));
+                Intent i = new Intent(this,GameMainActivity.class);
+                startActivity(i);
+                finish();
+        }
+    }
+
     public void onClickB(View arg0){
         username.clearFocus();
         String txtStr = username.getText().toString().trim();
@@ -107,7 +127,7 @@ public class ChoosePlayerActivity extends Activity {
             if(isSinglePlayer){
                 //start game versus megabrain
                 Player p1=selectedPlayer;
-                Game.getInstance().setGh(new GameHandler(p1));
+                Game.getInstance().setGh(new GameHandler(p1,false));
                 Intent i = new Intent(this,GameMainActivity.class);
                 startActivity(i);
                 finish();
@@ -124,7 +144,7 @@ public class ChoosePlayerActivity extends Activity {
                     //start multiplayer game
                     Player p1=PlayerHandler.getInstance().getPlayerById(playerId);
                     Player p2=selectedPlayer;
-                    Game.getInstance().setGh(new GameHandler(p1,p2));
+                    Game.getInstance().setGh(new GameHandler(p1,p2,false));
                     Intent i = new Intent(this,GameMainActivity.class);
                     startActivity(i);
                     finish();

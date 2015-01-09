@@ -61,7 +61,7 @@ public class LogicHandler {
                 iniP1[i] = board[i];
                 iniP2[i] = board[i + 7];
             }
-            GameHandler gh = new GameHandler(p1, p2, iniP1, iniP2, nSeeds);
+            GameHandler gh = new GameHandler(p1, p2, iniP1, iniP2, nSeeds,Game.getInstance().getGh().getIsFastGame());
             gh.setActivePlayer(activePlayer);
             Boolean isEmpty = false;
             for (Bowl bowl : gh.getBoard().getSemiBoardByPlayer(activePlayer).getBowls()) {
@@ -236,7 +236,7 @@ public class LogicHandler {
                 iniP1[i] = board[i];
                 iniP2[i] = board[i + 7];
             }
-            GameHandler gh = new GameHandler(p1, p2, iniP1, iniP2, nSeeds);
+            GameHandler gh = new GameHandler(p1, p2, iniP1, iniP2, nSeeds,Game.getInstance().getGh().getIsFastGame());
             gh.setActivePlayer(activePlayer);
             Integer selectedPointer,ns;
             if(activePlayer.equals(p1)){
