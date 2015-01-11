@@ -15,6 +15,6 @@
     <string name="statTab2">BestResults</string>
     <string name="statTab3">BestMoves</string>
     <string name="hello_world">Hello world!</string>
-
+    <string name="title_activity_prova">prova</string>
 
 </resources>

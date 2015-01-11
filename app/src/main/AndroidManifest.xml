@@ -6,7 +6,7 @@
     android:versionName="1.1" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="14"
         android:targetSdkVersion="21" />
 
     <application
@@ -52,12 +52,18 @@
         <activity
             android:name="it.polimi.activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:screenOrientation="sensorLandscape" >>
+            android:screenOrientation="sensorLandscape" >
+>
         </activity>
         <activity
             android:name="it.polimi.activities.PauseActivity"
             android:label="@string/title_activity_pause"
-            android:screenOrientation="sensorLandscape" >>
+            android:screenOrientation="sensorLandscape" >
+>
+        </activity>
+        <activity
+            android:name="it.polimi.activities.prova"
+            android:label="@string/title_activity_prova" >
         </activity>
     </application>
 
