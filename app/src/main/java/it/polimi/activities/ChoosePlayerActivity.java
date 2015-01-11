@@ -168,7 +168,7 @@ public class ChoosePlayerActivity extends Activity {
                                   List<String> objects, List<Player> listPlayers) {
             super(context, textViewResourceId, objects);
             for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i),listPlayers.get(i).getId() );
+                    mIdMap.put(objects.get(i),listPlayers.get(i).getId() );
             }
         }
 

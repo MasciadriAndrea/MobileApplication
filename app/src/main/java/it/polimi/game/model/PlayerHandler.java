@@ -18,11 +18,19 @@ public class PlayerHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        /*List<Player> playerList = playerDAO.getAllPlayers();
+        this.players = new ArrayList<Player>();
+        for (Player player : playerList){
+            if ((player.getId()!= 1)&&(player.getId() != 2)&&(player.getId() != 3)){
+                this.players.add(player);
+            }
+        }*/
         this.setPlayers(playerDAO.getAllPlayers());
     }
 
     public Player getPlayerById(int idP){
-        for(Player p:this.getPlayers()){
+        for(Player p: players){
             if((int) p.getId()==idP){
                 return p;
             }
@@ -36,11 +44,26 @@ public class PlayerHandler {
         return instance;
     }
     public void updateList(){
-      this.setPlayers(playerDAO.getAllPlayers());
+
+        /*List<Player> playerList = playerDAO.getAllPlayers();
+        for (Player player : playerList){
+            if ((player.getId()!= 1)&&(player.getId() != 2)&&(player.getId() != 3)){
+                this.players.add(player);
+            }
+        }*/
+        this.setPlayers(playerDAO.getAllPlayers());
     }
 
+
+    //Return all players excluded Megabrain, Player1, Player2
     public List<Player> getPlayers() {
-        return players;
+        List<Player> playerList = new ArrayList<Player>();
+        for (Player player : this.players){
+            if ((player.getId() != 2)&&(player.getId() != 3)){
+                playerList.add(player);
+            }
+        }
+        return playerList;
     }
 
     public void setPlayers(List<Player> players) {
