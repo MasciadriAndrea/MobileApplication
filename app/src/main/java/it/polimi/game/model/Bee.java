@@ -32,17 +32,31 @@ public class Bee {
         float stepY;
         int vel=40;
         int angVel=10;
-
+        //boolean finishRot=false;
         float dx=x-getX();
         float dy=y-getY();
-        double definedAngle=Math.toDegrees(Math.atan2(dx, -dy));
+        double definedAngle=(Math.toDegrees(Math.atan2(dx, -dy)))%360;
+        /*if((Math.abs(definedAngle-this.ang)<30)||((Math.abs(definedAngle+this.ang)<30))){
+            finishRot=true;
+        }*/
         //TODO fix rotation
         this.ang=definedAngle;
-       // if(((Math.abs(definedAngle - this.ang))%360>30)&&(!atHome())){
-         //   this.ang+=angVel;
-           // Log.v("Bee", definedAngle+" ang ->"+ang+" diff ->"+Math.abs(definedAngle - this.ang));
-        //}else {
-          //  this.ang+=angVel;
+        /*if(definedAngle > this.ang){
+            if(definedAngle>this.ang+angVel){
+                this.ang+=angVel;
+            }else{
+                this.ang=definedAngle;
+            }
+        }else{
+            if(definedAngle<this.ang-angVel){
+                this.ang-=angVel;
+            }else{
+                this.ang=definedAngle;
+            }
+        }*/
+
+    // if(((Math.abs(definedAngle - this.ang))<30)&&(!atHome())){
+      //  if(finishRot) {
             if (getX() > x) {
                 if (getX() - x < vel) {
                     stepX = x - getX();
@@ -70,10 +84,10 @@ public class Bee {
                 }
             }
             update(getX() + stepX, getY() + stepY);
-            if (atHome()) {
+            /*if (atHome()) {
                 ang = this.angHome;
-            }
-        //}
+            }*/
+       // }
     }
 
     public float getX() {

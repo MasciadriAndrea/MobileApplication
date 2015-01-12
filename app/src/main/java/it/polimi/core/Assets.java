@@ -12,6 +12,7 @@ import android.graphics.Matrix;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.widget.ImageView;
 
 import it.polimi.framework.animation.Animation;
 import it.polimi.game.model.Game;
@@ -131,10 +132,16 @@ public class Assets {
     public static Bitmap rotate(Bitmap b,float x)
     {   int width = b.getWidth();
         int height = b.getHeight();
+        int newWidth=300;
+        int newHeight=300;
+
+        //float scaleWidth=((float) newWidth)/width;
+        //float scaleHeight=((float) newHeight)/height;
         Matrix matrix = new Matrix();
         matrix.postRotate(x);
+        //matrix.postScale(scaleWidth,scaleHeight);
         Bitmap resizedBitmap = Bitmap.createBitmap(b, 0, 0,width, height, matrix, true);
-        return resizedBitmap;
+        return  resizedBitmap;
     }
 
 }

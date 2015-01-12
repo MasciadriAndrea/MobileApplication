@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.polimi.core.R;
 
@@ -38,7 +40,9 @@ public class ChoosePlayerActivity extends Activity {
     PlayerDAO playerDAO;
     int playerId;
     Boolean isSinglePlayer;
-    Button select;
+    Button select,backbtn;
+    Button skip;
+    private TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,10 @@ public class ChoosePlayerActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_choose_player);
+        Typeface type = Typeface.createFromAsset(this.getAssets(),"fonts/ahronbd.ttf");
+        tv=(TextView) findViewById(R.id.label);
+        backbtn=(Button) findViewById(R.id.backbtn);
+        tv.setTypeface(type);
         Intent i=getIntent();
         playerId=i.getIntExtra("player",0);
         isSinglePlayer=i.getBooleanExtra("isSinglePlayer",false);
@@ -60,7 +68,12 @@ public class ChoosePlayerActivity extends Activity {
         username=(EditText) findViewById(R.id.editText);
         lv=(ListView) findViewById(R.id.listView);
         select=(Button) findViewById(R.id.resumeBtn);
-
+        skip=(Button) findViewById(R.id.skip);
+        if(!isSinglePlayer){
+            if(playerId != 0) {
+                skip.setVisibility(View.INVISIBLE);
+            }
+        }
         List<Player> listPlayers = PlayerHandler.getInstance().getPlayers();
         List<String> listNames = new ArrayList<String>();
         for (Player p : listPlayers)
@@ -187,6 +200,9 @@ public class ChoosePlayerActivity extends Activity {
 
     }
 
+    public void backButton(View v){
+        this.onBackPressed();
+    }
 
     @Override
     public void onBackPressed() {

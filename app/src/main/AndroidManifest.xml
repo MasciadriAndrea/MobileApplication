@@ -65,6 +65,10 @@
             android:name="it.polimi.activities.prova"
             android:label="@string/title_activity_prova" >
         </activity>
+        <activity
+            android:name="it.polimi.activities.RulesActivity"
+            android:label="@string/title_activity_rules" >
+        </activity>
     </application>
 
 </manifest>

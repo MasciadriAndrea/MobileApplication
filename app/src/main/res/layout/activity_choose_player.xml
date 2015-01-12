@@ -8,51 +8,82 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="it.polimi.activities.ChoosePlayerActivity"
     android:background="@drawable/background">
-        <TextView
-            android:text="Type your name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/label"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textColor="#0000ff" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text=""
-            android:ems="10"
-            android:id="@+id/editText"
-            android:layout_below="@+id/label"
-            android:layout_centerHorizontal="true" />
-
-        <Button
-            android:onClick="onClickB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select"
-            android:id="@+id/resumeBtn"
-            android:layout_below="@+id/editText"
-            android:layout_centerHorizontal="true" />
-
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView"
-            android:layout_below="@+id/resumeBtn"
-            android:layout_centerHorizontal="true"
-            android:choiceMode="singleChoice"
-            android:background="#0000ff" />
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="6"
+            android:id="@+id/or">
+            <Button
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:id="@+id/backbtn"
+                android:background="@drawable/back"
+                android:onClick="backButton"
+                />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_weight="4"
+                android:id="@+id/ve">
+                <TextView
+                    android:text="TYPE YOUR NAME"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/label"
+                    android:textColor="#ff3d210d"
+                    android:textSize="40dp" />
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <EditText
+        android:background="@drawable/name_edit"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="5dp"
+        android:inputType="textPersonName"
+        android:text=""
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_below="@+id/label"
+        android:layout_centerHorizontal="true"
+        android:maxLength="8"/>
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Skip"
-        android:id="@+id/button"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="onClickSkip"/>
+        android:background="@drawable/ok"
+        android:onClick="onClickB"
+        android:layout_marginLeft="20dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/resumeBtn"
+        android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true" />
+    </LinearLayout>
+
+
+                <ListView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/listView"
+                    android:layout_below="@+id/resumeBtn"
+                    android:layout_centerHorizontal="true"
+                    android:choiceMode="singleChoice"
+                    android:background="#ff3d210d" />
+                </LinearLayout>
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/skip"
+                android:id="@+id/skip"
+                android:onClick="onClickSkip"/>
+                />
+            </LinearLayout>
+
 
 </RelativeLayout>
