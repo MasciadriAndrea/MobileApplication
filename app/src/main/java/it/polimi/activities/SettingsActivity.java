@@ -1,6 +1,7 @@
 package it.polimi.activities;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.polimi.core.R;
@@ -21,6 +23,7 @@ public class SettingsActivity extends Activity {
     private NumberPicker np;
     private ToggleButton musicB,soundB,animationsB;
     private Button saveB;
+    private TextView t1,t2,t3,t4,t5,t6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,21 @@ public class SettingsActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_settings);
-        musicB = (ToggleButton) findViewById(R.id.musicb);
+        Typeface type = Typeface.createFromAsset(this.getAssets(),"fonts/ahronbd.ttf");
+
+        t1 = (TextView) findViewById(R.id.textView4);
+        t1.setTypeface(type);
+        t2 = (TextView) findViewById(R.id.textViewTM);
+        t2.setTypeface(type);
+        t3 = (TextView) findViewById(R.id.textView);
+        t3.setTypeface(type);
+        t4 = (TextView) findViewById(R.id.textView5);
+        t4.setTypeface(type);
+        t5 = (TextView) findViewById(R.id.textView6);
+        t5.setTypeface(type);
+        t6 = (TextView) findViewById(R.id.textView2);
+        t6.setTypeface(type);
+
         musicB.setChecked(Game.getInstance().getMusic());
 
         soundB = (ToggleButton) findViewById(R.id.soundb);
