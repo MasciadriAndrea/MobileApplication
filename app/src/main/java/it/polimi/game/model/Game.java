@@ -22,13 +22,14 @@ public class Game {
     private Bee bee1,bee2;
     private List<Seed> seeds;
     private Integer xBee1,yBee1,xBee2,yBee2;
-    Integer[] xBowl;Integer[] xTray;
-    Integer[] yBowl;Integer[] yTray;
+    Integer[] xBowl;Integer[] xTray;Integer[] xLabel;Integer[] xNames;
+    Integer[] yBowl;Integer[] yTray;Integer[] yLabel;Integer[] yNames;
     private Boolean playable;
     private Boolean graphic;
     private Boolean sound;
     private Boolean music;
     private Integer nSeeds;
+    private Integer sizeBowl;
 
     protected Game() {
         seeds=new ArrayList<Seed>();
@@ -37,20 +38,28 @@ public class Game {
         this.gh=null;
         gameActivity=null;
         menuActivity= null;
-        xBee1=1585;yBee1=865;
-        xBee2=85;yBee2=85;
-        bee1=new Bee(xBee1,yBee1,0);
-        bee2=new Bee(xBee2,yBee2,180);
+        xBee1=1426;yBee1=475;
+        xBee2=244;yBee2=475;
+        xNames= new Integer[]{1085,585};
+        yNames= new Integer[]{600,600};
+        bee1=new Bee(xBee1,yBee1,180);
+        bee2=new Bee(xBee2,yBee2,0);
+        sizeBowl=300;
         xBowl=new Integer[]{0,0,0,0,0,0,0,0,0,0,0,0};
         yBowl=new Integer[]{0,0,0,0,0,0,0,0,0,0,0,0};
-        xTray=new Integer[]{1585,85};
-        yTray=new Integer[]{475,475};
-
+        xLabel=new Integer[]{0,0,0,0,0,0,0,0,0,0,0,0};
+        yLabel=new Integer[]{0,0,0,0,0,0,0,0,0,0,0,0};
+        xTray=new Integer[]{1696,40};
+        yTray=new Integer[]{500,500};
         for(int i=0;i<6;i++){
-            xBowl[i]=85+(250*i);
-            xBowl[i+6]=1585-(250*i);
-            yBowl[i]=865;
-            yBowl[i+6]=85;
+            xBowl[i]=60+(sizeBowl*i);
+            xBowl[i+6]=1560-(sizeBowl*i);
+            xLabel[i]=xBowl[i];
+            xLabel[i+6]=xBowl[i+6];
+            yBowl[i]=840;
+            yBowl[i+6]=60;
+            yLabel[i]=yBowl[i]-30;
+            yLabel[i+6]=yBowl[i+6]+sizeBowl+50;
         }
     }
 
@@ -255,10 +264,30 @@ public class Game {
         this.loadActivity = loadActivity;
     }
 
+    public Integer getSizeBowl() {
+        return sizeBowl;
+    }
+
     public void saveSettings(Boolean music, Boolean sound, Boolean animations, Integer nseeds){
         this.setGraphic(animations);
         this.setMusic(music);
         this.setnSeeds(nseeds);
         this.setSound(sound);
+    }
+
+    public Integer[] getxLabel() {
+        return xLabel;
+    }
+
+    public Integer[] getyLabel() {
+        return yLabel;
+    }
+
+    public Integer[] getxNames() {
+        return xNames;
+    }
+
+    public Integer[] getyNames() {
+        return yNames;
     }
 }

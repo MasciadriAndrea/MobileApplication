@@ -24,33 +24,31 @@ public class PlayState extends State{
     private UIButton pauseBtn;
     private List<UIButton> bp1;
     private List<UIButton> bp2;
-    private Bitmap p1Bee,p2Bee,bowlP1,bowlP2,bowlInactive;
+    private Bitmap p1Bee,p2Bee,bowlP1,bowlP2,bowlInactive,seed;
     Bee bee1,bee2;
     private GameHandler gh;
-    private static int color1=Color.rgb(33,0,0);
-    private Bitmap[] seedImg;
+    private static int color1=Color.rgb(61,33,13);
 
     public void init(){
         Game.getInstance().makePlayable();
-        gh=Game.getInstance().getGh();
-        seedImg=new Bitmap[]{Assets.seed0,Assets.seed45,Assets.seed90,Assets.seed135};
+        Game game=Game.getInstance();
+        gh=game.getGh();
+        seed=Assets.seed;
         bp1=new ArrayList<UIButton>();
         bp2=new ArrayList<UIButton>();
-        bowlP1=Assets.bowl_green;
-        bowlP2=Assets.bowl_red;
+        bowlP1=Assets.bowl_1;
+        bowlP2=Assets.bowl_2;
         bowlInactive=Assets.bowl;
         for (int i=0;i<6;i++){
-            bp1.add(new UIButton(85+(250*i), 865, 335+(250*i), 1115, bowlP1, bowlP1));
-            bp2.add(new UIButton(1585-(250*i), 85, 1835-(250*i), 335, bowlP2, bowlP2));
+            bp1.add(new UIButton(game.getxBowl()[i],game.getyBowl()[i], game.getxBowl()[i]+game.getSizeBowl(), game.getyBowl()[i]+game.getSizeBowl(), bowlP1, bowlP1));
+            bp2.add(new UIButton(game.getxBowl()[i+6],game.getyBowl()[i+6], game.getxBowl()[i+6]+game.getSizeBowl(), game.getyBowl()[i+6]+game.getSizeBowl(), bowlP2, bowlP2));
         }
         bee1=Game.getInstance().getBee1();
         bee2=Game.getInstance().getBee2();
-        p1Bee=Assets.bee_green;
-        if(Game.getInstance().getGh().getP1().getId().equals(1)){p1Bee=Assets.bee_megabrain;}
-        p2Bee=Assets.bee_red;
-        if(Game.getInstance().getGh().getP2().getId().equals(1)){p2Bee=Assets.bee_megabrain;}
+        p1Bee=Assets.bee;
+        p2Bee=Assets.bee;
         createSeeds();
-        pauseBtn = new UIButton(900,540,1020,660,Assets.menu,Assets.menu);
+        pauseBtn = new UIButton(900,520,1020,680,Assets.menu,Assets.menu);
         GameHandler gh=Game.getInstance().getGh();
         if(gh.getActivePlayer().getId().equals(1)){//1 is megabrain
             TurnRunner r = new TurnRunner(gh.megabrainSelectBowlId());
@@ -74,10 +72,11 @@ public class PlayState extends State{
     }
 
     public void render(Painter g){
-        g.drawImage(Assets.background, 0, 0);
+        g.setColor(Color.rgb(170,205,255));//background
+        g.fillRect(0,0,1920,1200);
         g.setColor(color1);
         g.setFont(Typeface.DEFAULT_BOLD, 50);
-
+        Game game=Game.getInstance();
         //render pauseBtn
         pauseBtn.render(g);
 
@@ -85,45 +84,44 @@ public class PlayState extends State{
         int i=0;
         if(gh.getActivePlayer().equals(gh.getP1())){
             for (UIButton ub : bp1) {
-                g.drawString(bs[i].toString(), 210 + (250 * i), 835);
+                g.drawString(bs[i].toString(), game.getxLabel()[i], game.getyLabel()[i]);
                 ub.render(g);
                 i++;
             }
         }else{
             for (int j=0;j<6;j++){
-                g.drawString(bs[i].toString(), 210 + (250 * i), 835);
-                g.drawImage(bowlInactive, 85+(250*j), 865, 250,250);
+                g.drawString(bs[i].toString(), game.getxLabel()[j], game.getyLabel()[j]);
+                g.drawImage(bowlInactive, game.getxBowl()[j], game.getyBowl()[j], game.getSizeBowl(),game.getSizeBowl());
                 i++;
             }
         }
-
-        g.drawString(gh.getP1().getName(),1085, 600);
-        g.drawString(bs[i].toString(),1485, 600);
-        g.drawImage(Assets.tray, 1585,475, 250,250);//t1
+        g.drawImage(Assets.tray_1, game.getxTray()[0],game.getyTray()[0], 184,200);//t1
+        g.drawString(gh.getP1().getName(),game.getxNames()[0],game.getyNames()[0]);
+        g.drawString(bs[i].toString(),game.getxTray()[0]+70, game.getyTray()[0]+150);
         i++;
         if(gh.getActivePlayer().equals(gh.getP2())){
             for(UIButton ub:bp2) {
-                g.drawString(bs[i].toString(),1710-(250*(i-7)), 385);
+                g.drawString(bs[i].toString(),game.getxLabel()[i-1], game.getyLabel()[i-1]);
                 ub.render(g);
                 i++;
             }
           }else{
             for (int j=0;j<6;j++){
-                g.drawString(bs[i].toString(),1710-(250*(i-7)), 385);
-                g.drawImage(bowlInactive, 1585-(250*j), 85, 250,250);
+                g.drawString(bs[i].toString(),game.getxLabel()[j+6], game.getyLabel()[j+6]);
+                g.drawImage(bowlInactive, game.getxBowl()[j+6], game.getyBowl()[j+6], game.getSizeBowl(),game.getSizeBowl());
                 i++;
             }
         }
-        g.drawString(bs[i].toString(), 385, 600);
-        g.drawString(gh.getP2().getName(),585, 600);
-        g.drawImage(Assets.tray, 85,475, 250,250);//t2
+        g.drawImage(Assets.tray_2, game.getxTray()[1],game.getyTray()[1],  184,200);//t2
+        g.drawString(bs[i].toString(),game.getxTray()[1]+70, game.getyTray()[1]+150);
+        g.drawString(gh.getP2().getName(),game.getxNames()[1], game.getyNames()[1]);
         renderSeeds(g);
         renderBees(g);
     };
 
     public void renderSeeds(Painter g){
         for(Seed s:Game.getInstance().getSeeds()){
-            if(s.isVisible()) {
+            if((s.isVisible())&&(!s.inTray())) {
                 g.drawImage(s.getBm(), (int) s.getX(), (int) s.getY(), 50, 50);
             }
         }
@@ -136,14 +134,12 @@ public class PlayState extends State{
         List<Seed> seeds=new ArrayList<Seed>();
         for(Bowl b:bowlP1){
             for(int i=1;i<=b.getSeeds();i++){
-                int j=RandomNumberGenerator.getRandIntBetween(0, 3);
-                seeds.add(new Seed(b.getId()-1,seedImg[j]));
+                seeds.add(new Seed(b.getId()-1,seed));
             }
         }
         for(Bowl b:bowlP2){
             for(int i=1;i<=b.getSeeds();i++){
-                int j=RandomNumberGenerator.getRandIntBetween(0, 3);
-                seeds.add(new Seed(b.getId(),seedImg[j]));
+                seeds.add(new Seed(b.getId(),seed));
             }
         }
         Game.getInstance().setSeeds(seeds);

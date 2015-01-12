@@ -21,26 +21,21 @@ import it.polimi.game.model.GameHandler;
 public class Assets {
 	private static SoundPool soundPool;
 	private static MediaPlayer mediaPlayer;
-	public static Bitmap background,welcome,bowl,tray,bee_red,bee_green,bee_megabrain,bowl_red,bowl_green, menu;
-    public static Bitmap seed0,seed45,seed90,seed135;
+	public static Bitmap bowl,bowl_1,bowl_2,tray_1,tray_2,bee,seed, menu,win;
     public static int winID, stealID, seedID;
 
 	// 1. Load Assets, initialize Frames and Animations.
 	public static void load() {
 
-        welcome = loadBitmap("welcome.png", false);
-        background = loadBitmap("background.png", false);
         bowl = loadBitmap("bowl.png", false);
-        tray = loadBitmap("tray.png", false);
-        bowl_red = loadBitmap("bowl_red.png", false);
-        bowl_green = loadBitmap("bowl_green.png", false);
-        bee_red = loadBitmap("bee_red.png", false);
-        bee_green = loadBitmap("bee_green.png", false);
-        bee_megabrain = loadBitmap("bee_megabrain.png", false);
-        seed0 = loadBitmap("seed_0o.png", false);
-        seed45 = loadBitmap("seed_45o.png", false);
-        seed90 = loadBitmap("seed_90o.png", false);
-        seed135 = loadBitmap("seed_135o.png", false);
+        tray_1 = loadBitmap("tray_1.png", false);
+        tray_2 = loadBitmap("tray_2.png", false);
+        bowl_1 = loadBitmap("bowl_1.png", false);
+        bowl_2 = loadBitmap("bowl_2.png", false);
+        bee = loadBitmap("bee.png", false);
+        bee = loadBitmap("bee.png", false);
+        seed = loadBitmap("seed.png", false);
+        win = loadBitmap("win_screen.png", false);
         menu = loadBitmap("menu.png", false);
     }
 	

@@ -16,6 +16,13 @@ public class Seed {
         this.visible=true;
     }
 
+    public Boolean inTray(){
+        if((position==6)||(position==13)){
+            return true;
+        }
+        return false;
+    }
+
     public Boolean isVisible(){
         return visible;
     }
@@ -41,8 +48,8 @@ public class Seed {
              }
              }
         }
-        int dx= RandomNumberGenerator.getRandIntBetween(60, 180);
-        int dy=RandomNumberGenerator.getRandIntBetween(60, 180);
+        int dx= RandomNumberGenerator.getRandIntBetween(70, 170);
+        int dy=RandomNumberGenerator.getRandIntBetween(70, 170);
         this.x = x+dx;
         this.y = y+dy;
     }

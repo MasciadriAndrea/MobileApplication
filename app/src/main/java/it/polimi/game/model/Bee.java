@@ -84,9 +84,9 @@ public class Bee {
                 }
             }
             update(getX() + stepX, getY() + stepY);
-            /*if (atHome()) {
+            if (atHome()) {
                 ang = this.angHome;
-            }*/
+            }
        // }
     }
 
