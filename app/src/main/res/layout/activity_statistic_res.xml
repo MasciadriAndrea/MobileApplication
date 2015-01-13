@@ -1,0 +1,110 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="it.polimi.activities.StatisticResActivity"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+    android:background="#ffaacdff">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffaacdff"
+                android:layout_margin="10dp">
+
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/button4"
+                    android:background="@drawable/back" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/titleStat"
+                    android:id="@+id/textView"
+                    android:layout_gravity="center_vertical"
+                    android:autoText="false"
+                    android:gravity="center"
+                    android:textColor="#ff3d210d"
+                    android:textSize="40dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="#ffaacdff">
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:text="won games"
+                    android:id="@+id/button"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/tab_custom"
+                    />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:text="best results"
+                    android:id="@+id/button2"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/button"
+                    android:layout_toEndOf="@+id/button"
+                    android:layout_weight="1"
+                    android:background="@drawable/tab_pressed"
+                    android:textColor="#fcaa3c"
+                    />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:text="best moves"
+                    android:id="@+id/button3"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/tab_custom"
+                    />
+            </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="#ff3d210d">
+                    <ListView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/listView2"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:choiceMode="singleChoice" />
+                </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+    </RelativeLayout>

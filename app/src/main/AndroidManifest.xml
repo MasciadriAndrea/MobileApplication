@@ -63,7 +63,18 @@
         </activity>
         <activity
             android:name="it.polimi.activities.RulesActivity"
-            android:label="@string/title_activity_rules" >
+            android:label="@string/title_activity_rules"
+            android:screenOrientation="sensorLandscape">
+        </activity>
+        <activity
+            android:name="it.polimi.activities.StatisticResActivity"
+            android:label="@string/title_activity_statistic_res"
+            android:screenOrientation="sensorLandscape">
+        </activity>
+        <activity
+            android:name="it.polimi.activities.StatisticMovActivity"
+            android:label="@string/title_activity_statistic_mov"
+            android:screenOrientation="sensorLandscape">
         </activity>
     </application>
 

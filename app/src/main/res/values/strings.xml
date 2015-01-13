@@ -16,6 +16,9 @@
     <string name="statTab3">BestMoves</string>
     <string name="title_activity_rules">Rules</string>
     <string name="title_activity_prova">Prova</string>
-
+    <string name="titleStat">SCORES</string>
+    <string name="title_activity_statistic_res">StatisticResActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_statistic_mov">StatisticMovActivity</string>
 
 </resources>

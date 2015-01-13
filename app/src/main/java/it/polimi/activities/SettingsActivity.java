@@ -47,6 +47,7 @@ public class SettingsActivity extends Activity {
         t6 = (TextView) findViewById(R.id.textView2);
         t6.setTypeface(type);
 
+        musicB = (ToggleButton) findViewById(R.id.musicb);
         musicB.setChecked(Game.getInstance().getMusic());
 
         soundB = (ToggleButton) findViewById(R.id.soundb);

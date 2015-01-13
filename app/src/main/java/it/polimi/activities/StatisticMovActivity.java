@@ -13,7 +13,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,11 +40,11 @@ import it.polimi.game.model.BestMovesHandler;
 import it.polimi.game.model.Player;
 import it.polimi.game.model.PlayerHandler;
 
-public class StatisticsActivity  extends Activity {
+public class StatisticMovActivity  extends Activity {
     private PlayerHandler playerHandler;
     private ViewFlipper viewFlipper;
-    private ListView listview;
-    public List<ListItem> items;
+    private ListView listview3;
+    public List<ListItem> items3 ;
     public Button b1,b2,b3;
     private float lastX;
     // Tab titles
@@ -57,7 +56,7 @@ public class StatisticsActivity  extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_statistics);
+        setContentView(R.layout.activity_statistic_mov);
         viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
         Typeface type = Typeface.createFromAsset(this.getAssets(),"fonts/ahronbd.ttf");
         TextView tv=(TextView) findViewById(R.id.textView);
@@ -65,7 +64,9 @@ public class StatisticsActivity  extends Activity {
         b1 = (Button) findViewById(R.id.button);
         b1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                Intent i = new Intent(getBaseContext(),StatisticsActivity.class);
+                StatisticMovActivity.this.finish();
+                startActivity(i);
             }
         });
 
@@ -73,7 +74,7 @@ public class StatisticsActivity  extends Activity {
         b2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getBaseContext(),StatisticResActivity.class);
-                StatisticsActivity.this.finish();
+                StatisticMovActivity.this.finish();
                 startActivity(i);
             }
         });
@@ -81,36 +82,32 @@ public class StatisticsActivity  extends Activity {
         b3 = (Button) findViewById(R.id.button3);
         b3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(),StatisticMovActivity.class);
-                StatisticsActivity.this.finish();
-                startActivity(i);
+
             }
         });
+        /*b3.setPressed(true);b3.setTextColor(Color.parseColor("#fcaa3c"));
+        b2.setPressed(false);b2.setTextColor(Color.parseColor("#3d210d"));
+        b1.setPressed(false);b1.setTextColor(Color.parseColor("#3d210d"));*/
+        listview3=(ListView) findViewById(R.id.listView3);
 
-
-        /*b1.setPressed(true);
-        b1.setTextColor(Color.parseColor("#fcaa3c"));
-        b2.setPressed(false);
-        b2.setTextColor(Color.parseColor("#3d210d"));
-        b3.setPressed(false);
-        b3.setTextColor(Color.parseColor("#3d210d"));*/
-        listview = (ListView) findViewById(R.id.listView);
-
-
-        //-------------------------------------------lv1
         playerHandler = PlayerHandler.getInstance();
-        List<Player> listPlayers = playerHandler.getPlayers();
-        Collections.sort(listPlayers, new PlayerComparator());
+        BestMovesHandler bestMovesHandler = BestMovesHandler.getInstance();
+        List<BestMoveResult> listBestMoves = bestMovesHandler.getTenBest();
+        Collections.sort(listBestMoves, new BestMovesComparator());
 
-        this.items = new ArrayList<ListItem>();
-        for (Player player : listPlayers) {
-            if (player.getPlayedGames() != 0) {
-                Integer wonPerc = (player.getWonGames() * 100 / player.getPlayedGames());
-                items.add(new ListItem(player.getName(), wonPerc));
-            }
-
+        this.items3 = new ArrayList<ListItem>();
+        for (BestMoveResult bestMoveResult : listBestMoves){
+            Integer result = bestMoveResult.getResult();
+            String playerName = bestMoveResult.getPlayer().getName();
+            items3.add(new ListItem(playerName,result));
         }
-        listview.setAdapter(new StableArrayAdapter());
+        listview3.setAdapter(new StableArrayAdapter());
+    }
+
+    public void onclick1(View arg){
+        Intent i = new Intent(getBaseContext(),StatisticsActivity.class);
+        this.finish();
+        startActivity(i);
     }
 
     public void onclick2(View arg){
@@ -119,17 +116,10 @@ public class StatisticsActivity  extends Activity {
         startActivity(i);
     }
 
-
-    public void onclick3(View arg){
-        Intent i = new Intent(getBaseContext(),StatisticMovActivity.class);
-        this.finish();
-        startActivity(i);
-    }
-
     @Override
     public void onPause(){
         super.onPause();
-       Assets.onPause();
+        Assets.onPause();
     }
 
     @Override
@@ -137,7 +127,6 @@ public class StatisticsActivity  extends Activity {
         super.onResume();
         Assets.onResume();
     }
-
 
     private class StableArrayAdapter extends BaseAdapter {
 
@@ -171,37 +160,25 @@ public class StatisticsActivity  extends Activity {
         @Override
         public Object getItem(int position)
         {
-            return items.get(position);
+            return items3.get(position);
         }
 
         @Override
         public int getCount()
         {
-            return items.size();
+            return items3.size();
         }
 
     }
 
-    private class PlayerComparator implements Comparator<Player> {
+
+    private class BestMovesComparator implements Comparator<BestMoveResult> {
 
         @Override
-        public int compare(Player p1, Player p2) {
-            Integer p1perc,p2perc;
-            if(!p1.getPlayedGames().equals(0)){
-                p1perc = p1.getWonGames() * 100/p1.getPlayedGames();
-            }else{
-                p1perc=0;
-            }
-            if(!p2.getPlayedGames().equals(0)) {
-                p2perc = p2.getWonGames() * 100 / p2.getPlayedGames();
-            }else{
-                p2perc=0;
-            }
-            return  p2perc.compareTo(p1perc);
+        public int compare(BestMoveResult b1, BestMoveResult b2) {
+            return b2.getResult().compareTo(b1.getResult());
         }
     }
-
-
 }
 
 
