@@ -20,5 +20,6 @@
     <string name="title_activity_statistic_res">StatisticResActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_statistic_mov">StatisticMovActivity</string>
+    <string name="title_activity_history">HistoryActivity</string>
 
 </resources>

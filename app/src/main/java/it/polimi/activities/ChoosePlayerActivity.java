@@ -164,7 +164,6 @@ public class ChoosePlayerActivity extends Activity {
                 }
             }
         }else{
-            //TODO
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Insert a name!").setTitle("Bzzz");
             AlertDialog dialog = builder.create();

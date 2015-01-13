@@ -41,14 +41,10 @@ import it.polimi.game.model.Player;
 import it.polimi.game.model.PlayerHandler;
 
 public class StatisticMovActivity  extends Activity {
-    private PlayerHandler playerHandler;
-    private ViewFlipper viewFlipper;
     private ListView listview3;
     public List<ListItem> items3 ;
-    public Button b1,b2,b3;
-    private float lastX;
-    // Tab titles
-    private String[] tabs = {"","",""};
+    public Button b1,b2,b3,b4,back;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,40 +53,51 @@ public class StatisticMovActivity  extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_statistic_mov);
-        viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
         Typeface type = Typeface.createFromAsset(this.getAssets(),"fonts/ahronbd.ttf");
         TextView tv=(TextView) findViewById(R.id.textView);
         tv.setTypeface(type);
+        back=(Button) findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                StatisticMovActivity.this.finish();
+            }
+        });
         b1 = (Button) findViewById(R.id.button);
         b1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getBaseContext(),StatisticsActivity.class);
-                StatisticMovActivity.this.finish();
                 startActivity(i);
+                StatisticMovActivity.this.finish();
             }
         });
-
+        b1.setTypeface(type);
         b2 = (Button) findViewById(R.id.button2);
         b2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getBaseContext(),StatisticResActivity.class);
-                StatisticMovActivity.this.finish();
                 startActivity(i);
+                StatisticMovActivity.this.finish();
             }
         });
-
+        b2.setTypeface(type);
         b3 = (Button) findViewById(R.id.button3);
         b3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
             }
         });
-        /*b3.setPressed(true);b3.setTextColor(Color.parseColor("#fcaa3c"));
-        b2.setPressed(false);b2.setTextColor(Color.parseColor("#3d210d"));
-        b1.setPressed(false);b1.setTextColor(Color.parseColor("#3d210d"));*/
+        b3.setTypeface(type);
+        b4 = (Button) findViewById(R.id.buttonH);
+        b4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(),HistoryActivity.class);
+                startActivity(i);
+                StatisticMovActivity.this.finish();
+            }
+        });
+        b4.setTypeface(type);
         listview3=(ListView) findViewById(R.id.listView3);
 
-        playerHandler = PlayerHandler.getInstance();
         BestMovesHandler bestMovesHandler = BestMovesHandler.getInstance();
         List<BestMoveResult> listBestMoves = bestMovesHandler.getTenBest();
         Collections.sort(listBestMoves, new BestMovesComparator());
@@ -104,17 +111,7 @@ public class StatisticMovActivity  extends Activity {
         listview3.setAdapter(new StableArrayAdapter());
     }
 
-    public void onclick1(View arg){
-        Intent i = new Intent(getBaseContext(),StatisticsActivity.class);
-        this.finish();
-        startActivity(i);
-    }
 
-    public void onclick2(View arg){
-        Intent i = new Intent(getBaseContext(),StatisticResActivity.class);
-        this.finish();
-        startActivity(i);
-    }
 
     @Override
     public void onPause(){

@@ -19,13 +19,6 @@ public class PlayerHandler {
             e.printStackTrace();
         }
 
-        /*List<Player> playerList = playerDAO.getAllPlayers();
-        this.players = new ArrayList<Player>();
-        for (Player player : playerList){
-            if ((player.getId()!= 1)&&(player.getId() != 2)&&(player.getId() != 3)){
-                this.players.add(player);
-            }
-        }*/
         this.setPlayers(playerDAO.getAllPlayers());
     }
 
@@ -45,12 +38,6 @@ public class PlayerHandler {
     }
     public void updateList(){
 
-        /*List<Player> playerList = playerDAO.getAllPlayers();
-        for (Player player : playerList){
-            if ((player.getId()!= 1)&&(player.getId() != 2)&&(player.getId() != 3)){
-                this.players.add(player);
-            }
-        }*/
         this.setPlayers(playerDAO.getAllPlayers());
     }
 

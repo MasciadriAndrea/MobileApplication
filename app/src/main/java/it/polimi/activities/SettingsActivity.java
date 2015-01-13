@@ -36,8 +36,8 @@ public class SettingsActivity extends Activity {
 
         t1 = (TextView) findViewById(R.id.textView4);
         t1.setTypeface(type);
-        t2 = (TextView) findViewById(R.id.textViewTM);
-        t2.setTypeface(type);
+        //t2 = (TextView) findViewById(R.id.textViewTM);
+        //t2.setTypeface(type);
         t3 = (TextView) findViewById(R.id.textView);
         t3.setTypeface(type);
         t4 = (TextView) findViewById(R.id.textView5);

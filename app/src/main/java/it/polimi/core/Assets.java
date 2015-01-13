@@ -129,12 +129,8 @@ public class Assets {
         int height = b.getHeight();
         int newWidth=300;
         int newHeight=300;
-
-        //float scaleWidth=((float) newWidth)/width;
-        //float scaleHeight=((float) newHeight)/height;
         Matrix matrix = new Matrix();
         matrix.postRotate(x);
-        //matrix.postScale(scaleWidth,scaleHeight);
         Bitmap resizedBitmap = Bitmap.createBitmap(b, 0, 0,width, height, matrix, true);
         return  resizedBitmap;
     }

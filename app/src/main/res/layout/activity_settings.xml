@@ -89,19 +89,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Table mode"
-                    android:id="@+id/textViewTM"
+                    android:text="Animations"
+                    android:id="@+id/textView5"
                     android:textColor="#ff3d210d" />
                 <ToggleButton
                     android:layout_width="60dp"
                     android:layout_height="30dp"
                     android:text="New ToggleButton"
-                    android:id="@+id/tableB"
+                    android:id="@+id/animationsb"
                     android:background="@drawable/toggle_btn"
                     android:textOn=""
                     android:textOff=""
                     />
-</LinearLayout>
+
+            </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:gravity="center_horizontal"
@@ -138,24 +139,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp">
-                <TextView
-                    android:textSize="20dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Animations"
-                    android:id="@+id/textView5"
-                    android:textColor="#ff3d210d" />
-                <ToggleButton
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:text="New ToggleButton"
-                    android:id="@+id/animationsb"
-                    android:background="@drawable/toggle_btn"
-                    android:textOn=""
-                    android:textOff=""
-                    />
 
             </LinearLayout>
             </LinearLayout>

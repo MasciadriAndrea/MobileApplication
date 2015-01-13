@@ -43,13 +43,10 @@ import it.polimi.game.model.PlayerHandler;
 
 public class StatisticsActivity  extends Activity {
     private PlayerHandler playerHandler;
-    private ViewFlipper viewFlipper;
     private ListView listview;
     public List<ListItem> items;
-    public Button b1,b2,b3;
-    private float lastX;
-    // Tab titles
-    private String[] tabs = {"","",""};
+    public Button b1,b2,b3,b4,back;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,42 +55,50 @@ public class StatisticsActivity  extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_statistics);
-        viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
         Typeface type = Typeface.createFromAsset(this.getAssets(),"fonts/ahronbd.ttf");
         TextView tv=(TextView) findViewById(R.id.textView);
         tv.setTypeface(type);
+        back=(Button) findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                StatisticsActivity.this.finish();
+            }
+        });
         b1 = (Button) findViewById(R.id.button);
         b1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
             }
         });
+        b1.setTypeface(type);
 
         b2 = (Button) findViewById(R.id.button2);
         b2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getBaseContext(),StatisticResActivity.class);
-                StatisticsActivity.this.finish();
                 startActivity(i);
+                StatisticsActivity.this.finish();
             }
         });
-
+        b2.setTypeface(type);
         b3 = (Button) findViewById(R.id.button3);
         b3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getBaseContext(),StatisticMovActivity.class);
-                StatisticsActivity.this.finish();
                 startActivity(i);
+                StatisticsActivity.this.finish();
             }
         });
-
-
-        /*b1.setPressed(true);
-        b1.setTextColor(Color.parseColor("#fcaa3c"));
-        b2.setPressed(false);
-        b2.setTextColor(Color.parseColor("#3d210d"));
-        b3.setPressed(false);
-        b3.setTextColor(Color.parseColor("#3d210d"));*/
+        b3.setTypeface(type);
+        b4 = (Button) findViewById(R.id.buttonH);
+        b4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(),HistoryActivity.class);
+                startActivity(i);
+                StatisticsActivity.this.finish();
+            }
+        });
+        b4.setTypeface(type);
         listview = (ListView) findViewById(R.id.listView);
 
 
@@ -113,18 +118,6 @@ public class StatisticsActivity  extends Activity {
         listview.setAdapter(new StableArrayAdapter());
     }
 
-    public void onclick2(View arg){
-        Intent i = new Intent(getBaseContext(),StatisticResActivity.class);
-        this.finish();
-        startActivity(i);
-    }
-
-
-    public void onclick3(View arg){
-        Intent i = new Intent(getBaseContext(),StatisticMovActivity.class);
-        this.finish();
-        startActivity(i);
-    }
 
     @Override
     public void onPause(){

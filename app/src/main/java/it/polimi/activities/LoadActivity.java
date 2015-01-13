@@ -29,7 +29,6 @@ public class LoadActivity extends Activity {
         Intent i = new Intent(this,MenuActivity.class);
         startActivity(i);
         PlayerHandler.getInstance();
-        // Commented not kill this activity used for context
-        //this.finish();
+        //  not kill this activity used for context
     }
 }

@@ -22,7 +22,7 @@
                 <Button
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:id="@+id/button4"
+                    android:id="@+id/back"
                     android:background="@drawable/back" />
 
                 <TextView
@@ -82,6 +82,16 @@
                     android:background="@drawable/tab_pressed"
                     android:textColor="#fcaa3c"
                     />
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:text="history"
+                    android:id="@+id/buttonH"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/tab_custom" />
             </LinearLayout>
 
 

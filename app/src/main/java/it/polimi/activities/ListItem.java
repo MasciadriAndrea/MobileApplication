@@ -1,8 +1,5 @@
 package it.polimi.activities;
 
-/**
- * Created by Paolo on 29/12/2014.
- */
 public class ListItem {
     private String playerName;
     private Integer value;

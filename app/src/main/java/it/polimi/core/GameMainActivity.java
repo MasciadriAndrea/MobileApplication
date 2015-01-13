@@ -13,12 +13,10 @@ public class GameMainActivity extends Activity {
 	public static final int GAME_HEIGHT = 1200;
 	public static GameView sGame;
 	public static AssetManager assets;
-	//private static SharedPreferences prefs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//prefs = getPreferences(Activity.MODE_PRIVATE);
 		assets = Game.getInstance().getAssets();
 		sGame = new GameView(this, GAME_WIDTH, GAME_HEIGHT);
 		setContentView(sGame);

@@ -3,10 +3,7 @@ package it.polimi.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,10 +13,7 @@ import android.widget.TextView;
 import com.polimi.core.R;
 
 import it.polimi.core.Assets;
-import it.polimi.core.GameMainActivity;
 import it.polimi.game.model.Game;
-import it.polimi.game.model.GameHandler;
-import it.polimi.game.model.Player;
 
 public class MenuActivity extends Activity {
     private Button b_single,b_multi, b_statistics,b_settings,b_rules;

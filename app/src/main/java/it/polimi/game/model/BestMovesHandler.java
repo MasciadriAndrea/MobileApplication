@@ -37,7 +37,6 @@ public class BestMovesHandler {
 
     public void insertResult(Player pl,Integer nSeedCollected){
         Integer result=nSeedCollected;
-        //TODO this result maybe should be normalized!
         //1 add in right position
         Boolean find=false;
         Integer position=0;
@@ -56,7 +55,6 @@ public class BestMovesHandler {
             BestMoveResult bnew=new BestMoveResult(pl,result);
             tenBest.add(insertPosition,bnew);
             BestMoveResultDAO.getInstance().addBestMoveResult(new BestMoveResult(pl,result));
-            //2 truncate tenBest (size max=10)
             if(tenBest.size()>10) {
                 BestMoveResult eleventh=tenBest.get(10);
                 BestMoveResultDAO.getInstance().deleteBestMoveResult(eleventh);

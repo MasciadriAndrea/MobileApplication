@@ -74,7 +74,6 @@ public class LogicHandler {
                 Integer[] boardAfter = gh.getBoard().getBoardStatus();
                 Player nextActivePlayer = gh.getActivePlayer();
                 Boolean gameFinish = gh.getIsGameFinished();
-                //TODO
                 String boardStr = "";
                 for (int i = 0; i < 14; i++) {
                     boardStr = boardStr + boardAfter[i].toString() + "-";
@@ -288,7 +287,7 @@ public class LogicHandler {
         return null;
     }
 
-    //TODO Anna! Change function to get the best choice
+    //TODO This function could be improved
     private Integer getScoreDif(Player p1, Player p2, GameHandler gh,Turn turn){
         int scoreDif;
         if (p1.getId().equals(1)){//player 1 is megabrain
