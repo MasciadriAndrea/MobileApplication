@@ -47,13 +47,13 @@ public class MatchResult {
             this.winnerSeeds=seeds2;
             this.looserSeeds=seeds1;
         }
-
         this.winner.setLastGamePlayed(this.data);
         this.loser.setLastGamePlayed(this.data);
-        this.winner.incrementPlayedGames();
-        this.loser.incrementPlayedGames();
-        this.winner.incrementWins();
+        HistoryHandler.getInstance().addGameHistory(new GameHistory(winner,loser,winnerSeeds,looserSeeds,data));
         if(!Game.getInstance().getGh().getIsFastGame()) {
+            this.winner.incrementPlayedGames();
+            this.loser.incrementPlayedGames();
+            this.winner.incrementWins();
             this.loser.updateWonGameResult();
             this.winner.updateWonGameResult();
             this.loser.updateMaxScoreResult(normalizeValue(looserSeeds.doubleValue()));
@@ -66,6 +66,7 @@ public class MatchResult {
 
             BestMovesHandler.getInstance().insertResult(p1, (int) normalizeValue(this.getBestMove(this.p1)));
             BestMovesHandler.getInstance().insertResult(p2, (int) normalizeValue(this.getBestMove(this.p2)));
+
         }
     }
 

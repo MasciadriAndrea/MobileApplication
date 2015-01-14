@@ -153,7 +153,7 @@ public class StatisticResActivity  extends Activity {
                     convertView.findViewById(R.id.value);
 
             nameTextView.setText(stat.getPlayerName());
-            valueTextView.setText(String.valueOf(stat.getValue()));
+            valueTextView.setText(String.valueOf(stat.getValue())+" %");
 
             return convertView;
         }

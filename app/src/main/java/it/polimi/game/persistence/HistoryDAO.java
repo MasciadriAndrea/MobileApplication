@@ -40,7 +40,6 @@ public class HistoryDAO implements ContractDAO {
 
         GameHistory newGameHistory = new GameHistory();
 
-        newGameHistory.setId(cursor.getInt(0));
         newGameHistory.setP1(PlayerHandler.getInstance().getPlayerById(cursor.getInt(1)));
         newGameHistory.setP2(PlayerHandler.getInstance().getPlayerById(cursor.getInt(2)));
         newGameHistory.setScore1(cursor.getInt(3));
@@ -79,7 +78,7 @@ public class HistoryDAO implements ContractDAO {
     public List<GameHistory> getLastGameHistory(){
 
         List<GameHistory> listGameHistory = new ArrayList<GameHistory>();
-        Cursor cursor = db.query(DatabaseHelper.HISTORY,null,null,null,null,null,dbHelper.HISTORY_FIELDS[5],"5");
+        Cursor cursor = db.query(DatabaseHelper.HISTORY,null,null,null,null,null,dbHelper.HISTORY_FIELDS[5] +" DESC");
 
         int i=0;
         while (cursor.moveToNext()) {
