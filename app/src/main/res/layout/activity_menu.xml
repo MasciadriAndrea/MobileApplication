@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:background="@drawable/button_custom"
-                android:text="Singleplayer"
+                android:text="@string/singleplayer"
                 android:layout_weight="4"
                 android:id="@+id/button_single"
                 android:textSize="25dp" />
@@ -38,7 +38,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="4"
                 android:background="@drawable/button_custom"
-                android:text="Multiplayer"
+                android:text="@string/multiplayer"
                 android:id="@+id/button_multi"
                 android:textSize="25dp" />
 
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:background="@drawable/button_custom"
-                android:text="Statistics"
+                android:text="@string/title_activity_statistics"
                 android:layout_weight="4"
                 android:id="@+id/button_statistic"
                 android:textSize="25dp" />
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:background="@drawable/button_custom"
-                android:text="Settings"
+                android:text="@string/title_activity_settings"
                 android:layout_weight="4"
                 android:id="@+id/button_setting"
                 android:textSize="25dp" />

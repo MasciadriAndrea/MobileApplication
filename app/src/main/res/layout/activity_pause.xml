@@ -24,12 +24,12 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Music"
+            android:text="@string/music"
             android:id="@+id/textView"
             android:autoText="false"
             android:textColor="#ff3d210d" />
         <ToggleButton
-            android:text="Music"
+            android:text="@string/music"
             android:id="@+id/musicToggleButton"
             android:checked="false"
             android:layout_marginRight="50dp"
@@ -43,11 +43,11 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Sounds"
+            android:text="@string/sound"
             android:id="@+id/textView2"
             android:textColor="#ff3d210d" />
         <ToggleButton
-            android:text="Sounds"
+            android:text="@string/sound"
             android:id="@+id/soundsToggleButton"
             android:layout_marginRight="50dp"
             android:checked="false"
@@ -67,7 +67,7 @@
     <Button
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:text="Resume"
+        android:text="@string/resume"
         android:id="@+id/resumeBtn"
         android:onClick="onResumeBtn"
         android:background="@drawable/button_custom"
@@ -76,7 +76,7 @@
     <Button
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:text="Restart"
+        android:text="@string/restart"
         android:id="@+id/restartBtn"
         android:onClick="onRestartBtn"
         android:background="@drawable/button_custom"
@@ -85,7 +85,7 @@
     <Button
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:text="Quit"
+        android:text="@string/quit"
         android:id="@+id/quitBtn"
         android:onClick="onQuitBtn"
         android:background="@drawable/button_custom"

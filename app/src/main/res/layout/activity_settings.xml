@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Settings"
+                android:text="@string/title_activity_settings"
                 android:id="@+id/textView2"
                 android:layout_gravity="center_horizontal"
                 android:textColor="#ff3d210d" />
@@ -66,7 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Sound"
+                    android:text="@string/sound"
                     android:id="@+id/textView4"
                     android:textColor="#ff3d210d" />
                 <ToggleButton
@@ -89,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Animations"
+                    android:text="@string/animations"
                     android:id="@+id/textView5"
                     android:textColor="#ff3d210d" />
                 <ToggleButton
@@ -121,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Music"
+                    android:text="@string/music"
                     android:id="@+id/textView"
                     android:textColor="#ff3d210d" />
                 <ToggleButton
@@ -155,7 +155,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Number of seeds"
+                    android:text="@string/number_seeds"
                     android:id="@+id/textView6"
                     android:textColor="#ff3d210d" />
                 <NumberPicker
