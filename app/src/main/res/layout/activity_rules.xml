@@ -21,47 +21,23 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/imageView"
-                android:src="@drawable/tut_1"
-                android:layout_margin="0dp"/>
-        </RelativeLayout>
+            android:layout_height="fill_parent"
+            android:background="@drawable/tut_1"></RelativeLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/imageView2"
-                android:src="@drawable/tut_2"
-                android:layout_margin="0dp"/>
-        </RelativeLayout>
+            android:layout_height="fill_parent"
+            android:background="@drawable/tut_2"></RelativeLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/imageView3"
-                android:src="@drawable/tut_3"
-                android:layout_margin="0dp"/>
-        </RelativeLayout>
+            android:layout_height="fill_parent"
+            android:background="@drawable/tut_3"></RelativeLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/imageView4"
-                android:src="@drawable/tut_4"
-                android:layout_margin="0dp"/>
-        </RelativeLayout>
+            android:layout_height="fill_parent"
+            android:background="@drawable/tut_4"></RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
