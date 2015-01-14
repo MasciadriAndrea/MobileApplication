@@ -8,7 +8,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="it.polimi.activities.SettingsActivity"
     android:id="@+id/set"
-    android:background="#ffaacdff"
+    android:background="@color/light_blue"
     >
     <Button
         android:layout_alignParentLeft="true"
@@ -40,7 +40,7 @@
                 android:text="@string/title_activity_settings"
                 android:id="@+id/textView2"
                 android:layout_gravity="center_horizontal"
-                android:textColor="#ff3d210d" />
+                android:textColor="@color/brown" />
 
         </LinearLayout>
         <GridLayout
@@ -73,7 +73,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/sound"
                     android:id="@+id/textView4"
-                    android:textColor="#ff3d210d"
+                    android:textColor="@color/brown"
                     android:layout_gravity="center_horizontal" />
                 <ToggleButton
                     android:layout_width="60dp"
@@ -100,7 +100,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/animations"
                     android:id="@+id/textView5"
-                    android:textColor="#ff3d210d"
+                    android:textColor="@color/brown"
                     android:layout_gravity="center_horizontal" />
                 <ToggleButton
                     android:layout_width="60dp"
@@ -135,7 +135,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/music"
                     android:id="@+id/textView"
-                    android:textColor="#ff3d210d"
+                    android:textColor="@color/brown"
                     android:layout_gravity="center_horizontal" />
                 <ToggleButton
                     android:layout_width="60dp"
@@ -163,12 +163,12 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/number_seeds"
                     android:id="@+id/textView6"
-                    android:textColor="#ff3d210d" />
+                    android:textColor="@color/brown" />
                 <NumberPicker
                     android:layout_width="150dp"
                     android:layout_height="110dp"
                     android:id="@+id/np"
-                    android:textColor="#ff3d210d"/>
+                    android:textColor="@color/brown"/>
             </LinearLayout>
             </GridLayout>
 

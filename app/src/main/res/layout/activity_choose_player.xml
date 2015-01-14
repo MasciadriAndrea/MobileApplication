@@ -7,7 +7,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="it.polimi.activities.ChoosePlayerActivity"
-    android:background="#ffaacdff">
+    android:background="@color/light_blue">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/label"
-                    android:textColor="#ff3d210d"
+                    android:textColor="@color/brown"
                     android:textSize="35dp" />
 <LinearLayout
     android:orientation="horizontal"
@@ -53,7 +53,7 @@
         android:layout_centerHorizontal="true"
         android:maxLength="8"
         android:textAlignment="center"
-        android:textColor="#ff3d210d"
+        android:textColor="@color/brown"
         android:textSize="25dp"
         android:padding="10dp"/>
     <Button
@@ -76,7 +76,8 @@
                     android:layout_below="@+id/resumeBtn"
                     android:layout_centerHorizontal="true"
                     android:choiceMode="singleChoice"
-                    android:background="#ff3d210d" />
+                    android:background="@color/brown"
+                    />
                 </LinearLayout>
             <Button
                 android:layout_width="120dp"

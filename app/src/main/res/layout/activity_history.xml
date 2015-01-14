@@ -15,7 +15,7 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#ffaacdff"
+            android:background="@color/light_blue"
             android:layout_margin="10dp">
 
 
@@ -34,7 +34,7 @@
                 android:layout_gravity="center_vertical"
                 android:autoText="false"
                 android:gravity="center"
-                android:textColor="#ff3d210d"
+                android:textColor="@color/brown"
                 android:textSize="40dp" />
         </LinearLayout>
 
@@ -57,7 +57,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/tab_custom"
                 android:textSize="20dp"
-                android:textColor="#ff3d210d" />
+                android:textColor="@color/brown" />
 
             <Button
                 android:layout_width="0dp"
@@ -70,7 +70,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/tab_custom"
                 android:textSize="20dp"
-                android:textColor="#ff3d210d" />
+                android:textColor="@color/brown" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -84,7 +84,7 @@
                 android:background="@drawable/tab_custom"
 
                 android:textSize="20dp"
-                android:textColor="#ff3d210d" />
+                android:textColor="@color/brown" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -96,7 +96,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1"
                 android:background="@drawable/tab_pressed"
-                android:textColor="#fcaa3c"
+                android:textColor="@color/orange"
                 android:textSize="20dp" />
         </LinearLayout>
 
@@ -105,7 +105,7 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#ff3d210d">
+            android:background="@color/brown">
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
