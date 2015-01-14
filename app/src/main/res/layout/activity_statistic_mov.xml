@@ -56,8 +56,9 @@
                     android:layout_alignParentStart="true"
                     android:layout_weight="1"
                     android:background="@drawable/tab_custom"
-                    android:textSize="22dp"
-                    android:textColor="#ff3d210d" />
+                    android:textSize="20dp"
+                    android:textColor="#ff3d210d"
+                    android:layout_gravity="right" />
 
                 <Button
                     android:layout_width="0dp"
@@ -69,7 +70,7 @@
                     android:layout_toEndOf="@+id/button"
                     android:layout_weight="1"
                     android:background="@drawable/tab_custom"
-                    android:textSize="22dp"
+                    android:textSize="20dp"
                     android:textColor="#ff3d210d" />
 
                 <Button
@@ -83,7 +84,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/tab_pressed"
                     android:textColor="#fcaa3c"
-                    android:textSize="22dp" />
+                    android:textSize="20dp" />
                 <Button
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="0dp"
@@ -94,7 +95,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_weight="1"
                     android:background="@drawable/tab_custom"
-                    android:textSize="22dp"
+                    android:textSize="20dp"
                     android:textColor="#ff3d210d" />
             </LinearLayout>
 
