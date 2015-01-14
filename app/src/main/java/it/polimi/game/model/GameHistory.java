@@ -3,18 +3,24 @@ package it.polimi.game.model;
 import java.util.Date;
 
 public class GameHistory {
+    private Integer id;
     private Player p1;
     private Player p2;
     private Integer score1;
     private Integer score2;
     private Date data;
 
-    public GameHistory(Player p1, Player p2, Integer score1, Integer score2, Date data) {
+    public GameHistory(Integer id, Player p1, Player p2, Integer score1, Integer score2, Date data) {
+        this.id = id;
         this.p1 = p1;
         this.p2 = p2;
         this.score1 = score1;
         this.score2 = score2;
         this.data = data;
+    }
+
+    public GameHistory() {
+        super();
     }
 
     public Player getP1() {
@@ -55,5 +61,13 @@ public class GameHistory {
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
