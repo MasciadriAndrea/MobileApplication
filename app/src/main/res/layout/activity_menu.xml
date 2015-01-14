@@ -30,7 +30,8 @@
                 android:text="Singleplayer"
                 android:layout_weight="4"
                 android:id="@+id/button_single"
-                android:textSize="25dp" />
+                android:textSize="25dp"
+                android:textColor="#ff3d210d" />
 
             <Button
                 android:layout_columnSpan="3"
@@ -40,7 +41,8 @@
                 android:background="@drawable/button_custom"
                 android:text="Multiplayer"
                 android:id="@+id/button_multi"
-                android:textSize="25dp" />
+                android:textSize="25dp"
+                android:textColor="#ff3d210d" />
 
             <Button
                 android:layout_columnSpan="3"
@@ -50,7 +52,8 @@
                 android:text="Statistics"
                 android:layout_weight="4"
                 android:id="@+id/button_statistic"
-                android:textSize="25dp" />
+                android:textSize="25dp"
+                android:textColor="#ff3d210d" />
 
             <Button
                 android:layout_columnSpan="2"
@@ -60,7 +63,8 @@
                 android:text="Settings"
                 android:layout_weight="4"
                 android:id="@+id/button_setting"
-                android:textSize="25dp" />
+                android:textSize="25dp"
+                android:textColor="#ff3d210d" />
 
 
         </LinearLayout>
