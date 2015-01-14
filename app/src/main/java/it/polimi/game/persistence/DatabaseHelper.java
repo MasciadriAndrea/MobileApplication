@@ -45,14 +45,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + BEST_MOVE_RESULT_FIELDS[1]+" integer,"
                 + BEST_MOVE_RESULT_FIELDS[2]+" integer not null, FOREIGN KEY ("+BEST_MOVE_RESULT_FIELDS[1]+") REFERENCES "+ PLAYER +" ("+ PLAYER_FIELDS[0] +"));";
 
-        DATABASE_CREATE_HISTORY = "create table" + HISTORY +" ("+ HISTORY_FIELDS[0] + " integer primary key autoincrement,"
+        DATABASE_CREATE_HISTORY = "create table " + HISTORY +" ("+ HISTORY_FIELDS[0] + " integer primary key autoincrement,"
                 + HISTORY_FIELDS[1] + " integer,"
                 + HISTORY_FIELDS[2] + " integer,"
                 + HISTORY_FIELDS[3] + " integer,"
                 + HISTORY_FIELDS[4] + " integer,"
                 + HISTORY_FIELDS[5] + " date,"
-                +" FOREIGN KEY ("+HISTORY_FIELDS[1]+") REFERENCES "+ PLAYER +" ("+ PLAYER_FIELDS[0] +")),"
-                +" FOREIGN KEY ("+HISTORY_FIELDS[2]+") REFERENCES "+ PLAYER +" ("+ PLAYER_FIELDS[0] +"));";
+                +" FOREIGN KEY ("+HISTORY_FIELDS[1]+","+HISTORY_FIELDS[2]+") REFERENCES "+ PLAYER +" ("+ PLAYER_FIELDS[0]+","+PLAYER_FIELDS[0]+"));";
+               // +" FOREIGN KEY ("+HISTORY_FIELDS[2]+") REFERENCES "+ PLAYER +" ("+ PLAYER_FIELDS[0] +"));";
 
         DATABASE_UPGRADING = "DROP TABLE IF EXISTS " + PLAYER + ";" +
                 "DROP TABLE IF EXISTS " + BEST_MOVE_RESULT + ";" +
