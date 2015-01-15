@@ -56,15 +56,7 @@
         android:textColor="@color/brown"
         android:textSize="25dp"
         android:padding="10dp"/>
-    <Button
-        android:background="@drawable/ok"
-        android:onClick="onClickB"
-        android:layout_marginLeft="20dp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/resumeBtn"
-        android:layout_centerHorizontal="true" />
-    </LinearLayout>
+</LinearLayout>
 
 
                 <ListView
@@ -79,14 +71,32 @@
                     android:background="@color/brown"
                     />
                 </LinearLayout>
+            <RelativeLayout
+                android:layout_width="120dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="right|top">
+            <Button
+                android:background="@drawable/ok"
+                android:onClick="onClickB"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/resumeBtn"
+                android:layout_gravity="right"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true" />
+
             <Button
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:background="@drawable/skip"
                 android:id="@+id/skip"
                 android:onClick="onClickSkip"
+                android:layout_gravity="bottom"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="false"
                 android:layout_marginLeft="10dp" />
                 />
+            </RelativeLayout>
             </LinearLayout>
 
 

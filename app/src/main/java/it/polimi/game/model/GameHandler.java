@@ -11,6 +11,7 @@ import java.util.List;
 import it.polimi.core.Assets;
 import it.polimi.core.GameMainActivity;
 import it.polimi.game.model.megabrain.LogicHandler;
+import it.polimi.game.model.megabrain.Megabrain;
 import it.polimi.game.model.megabrain.Turn;
 import it.polimi.game.persistence.PlayerDAO;
 
@@ -226,6 +227,7 @@ public class GameHandler {
         this.setIsFastGame(isFastGame);
         int r=(int) Math.round(Math.random());
         this.setActivePlayer(p1);
+        r=1;
         if((r==0)&&(!this.isHH)){
             this.setActivePlayer(p2);
         }
@@ -311,7 +313,10 @@ public class GameHandler {
     }
 
     public Integer megabrainSelectBowlId(){
-        Integer sbp= LogicHandler.getInstance().megabrainSelectBowlPosition(this.getBoard().getBoardStatus(),this.getActivePlayer(),this.p1,this.p2,nSeeds,5);
+        //Integer sbp= LogicHandler.getInstance().megabrainSelectBowlPosition(this.getBoard().getBoardStatus(),this.getActivePlayer(),this.p1,this.p2,nSeeds,5);
+        Game.getInstance().makeUnPlayable();
+        Megabrain.getInstance().initializate(this.p1,this.p2,this.getActivePlayer(),Game.getInstance().getnSeeds());
+        Integer sbp= Megabrain.getInstance().megabrainSelectBowlPosition(this.getBoard().getBoardStatus(),this.getActivePlayer());
         Integer[] moves = {};
         if (activePlayer.equals(p1)) {
         //if megabrain (activePlayer) is p1
@@ -319,8 +324,8 @@ public class GameHandler {
         } else {
             moves = new Integer[]{7, 8, 9, 10, 11, 12};
         }
-        Log.v("Megabrain","MB want to select bowl n: "+moves[sbp].toString());
-        return moves[sbp];
+        Log.v("Megabrain","MB want to select bowl n: "+sbp.toString());
+        return sbp;
     }
 
     private Boolean isMegabrainTurn(){
