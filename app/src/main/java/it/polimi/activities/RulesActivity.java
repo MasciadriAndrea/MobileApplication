@@ -1,6 +1,7 @@
 package it.polimi.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,6 +25,7 @@ public class RulesActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        try{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -32,7 +34,10 @@ public class RulesActivity extends Activity {
         vf = (ViewFlipper) findViewById(R.id.viewFlipper);
         gotIt=(Button) findViewById(R.id.btn_got);
         Typeface type = Typeface.createFromAsset(this.getAssets(),"fonts/ahronbd.ttf");
-        gotIt.setTypeface(type);
+        gotIt.setTypeface(type);}
+        catch(Exception e){
+            this.finish();
+        }
     }
 
     public void gotIt(View v){
