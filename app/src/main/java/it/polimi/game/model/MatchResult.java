@@ -44,8 +44,18 @@ public class MatchResult {
             this.winnerSeeds=seeds1;
             this.looserSeeds=seeds2;
         }else{
-            this.winnerSeeds=seeds2;
-            this.looserSeeds=seeds1;
+            if(this.winner.getId().equals(0)){
+                //TIE
+                this.winner=p1;
+                this.loser=p2;
+                this.winnerSeeds=seeds1;
+                this.looserSeeds=seeds2;
+                this.loser.incrementWins();
+            }else {
+                this.winnerSeeds = seeds2;
+                this.looserSeeds = seeds1;
+            }
+
         }
         this.winner.setLastGamePlayed(this.data);
         this.loser.setLastGamePlayed(this.data);

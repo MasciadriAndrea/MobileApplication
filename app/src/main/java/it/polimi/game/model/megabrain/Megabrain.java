@@ -13,10 +13,11 @@ public class Megabrain {
     private Player p1,p2,megabrain;
     private Integer nSeeds;
     private Integer maxScore,minScore;
-    private static int levelMegabrain=5;
+    private static int levelMegabrain=4;
     private static int levelPlayer=2;
-    private static double weight1=0.01;
+    private static double weight1=0.5;
     private static double weight2=0.1;
+    private static double weight3=0.01;
 
 
     public static Megabrain getInstance(){
@@ -263,14 +264,16 @@ public class Megabrain {
         int scoreDif;
         if (p1.getId().equals(1)){//player 1 is megabrain
             scoreDif = gh.getBoard().getSemiBoardByPlayer(p1).getTray().getSeeds() - gh.getBoard().getSemiBoardByPlayer(p2).getTray().getSeeds();
+            scoreDif= (int) Math.round(scoreDif*this.weight1);
             //scoreDif-= (gh.getBoard().getSemiBoardByPlayer(p1).getNumberOfNonEmptyBowl())*this.weight1;
             //scoreDif=scoreDif*2;
-            scoreDif+= turn.getLostSeeds()*this.weight2;
+            //scoreDif-= turn.getLostSeeds()*this.weight2;
         } else {
             scoreDif = gh.getBoard().getSemiBoardByPlayer(p2).getTray().getSeeds() - gh.getBoard().getSemiBoardByPlayer(p1).getTray().getSeeds();
+            scoreDif=(int) Math.round(scoreDif*this.weight1);
             //scoreDif+= gh.getBoard().getSemiBoardByPlayer(p2).getNumberOfNonEmptyBowl()*this.weight1;
             //scoreDif=scoreDif*2;
-            scoreDif+= turn.getLostSeeds()*this.weight2;
+            //scoreDif+= turn.getLostSeeds()*this.weight2;
         }
 
         return scoreDif;

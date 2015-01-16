@@ -227,7 +227,6 @@ public class GameHandler {
         this.setIsFastGame(isFastGame);
         int r=(int) Math.round(Math.random());
         this.setActivePlayer(p1);
-        r=1;
         if((r==0)&&(!this.isHH)){
             this.setActivePlayer(p2);
         }

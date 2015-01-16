@@ -25,12 +25,15 @@ public class PlayState extends State{
     private UIButton pauseBtn;
     private List<UIButton> bp1;
     private List<UIButton> bp2;
+    private Boolean isMegabrainFirst,isRendered;
     private Bitmap p1Bee,p2Bee,bowlP1,bowlP2,bowlInactive,seed;
     Bee bee1,bee2;
     private GameHandler gh;
     private static int color1=Color.rgb(61,33,13);
 
     public void init(){
+        isRendered=false;
+        isMegabrainFirst=false;
         Game.getInstance().makePlayable();
         Game game=Game.getInstance();
         gh=game.getGh();
@@ -52,9 +55,8 @@ public class PlayState extends State{
         pauseBtn = new UIButton(900,520,1020,680,Assets.menu,Assets.menu);
         GameHandler gh=Game.getInstance().getGh();
         if(gh.getActivePlayer().getId().equals(1)){//1 is megabrain
-            TurnRunner r = new TurnRunner(gh.megabrainSelectBowlId());
-            Thread t = new Thread(r);
-            t.start();
+            Game.getInstance().makeUnPlayable();
+            this.isMegabrainFirst=true;
         }
     };
 
@@ -69,6 +71,12 @@ public class PlayState extends State{
         }
         if(gh.getIsGameFinished()){
             setCurrentState(new ScoreState());
+        }
+        if((isRendered)&&(isMegabrainFirst)){
+            TurnRunner r = new TurnRunner(gh.megabrainSelectBowlId());
+            Thread t = new Thread(r);
+            t.start();
+            isMegabrainFirst=false;
         }
     }
 
@@ -118,6 +126,7 @@ public class PlayState extends State{
         g.drawString(gh.getP2().getName(),game.getxNames()[1], game.getyNames()[1]);
         renderSeeds(g);
         renderBees(g);
+        isRendered=true;
     };
 
     public void renderSeeds(Painter g){
