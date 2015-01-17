@@ -5,7 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +45,7 @@ public class PlayState extends State{
         bowlP1=Assets.bowl_1;
         bowlP2=Assets.bowl_2;
         bowlInactive=Assets.bowl;
-        for (int i=0;i<6;i++){
-            bp1.add(new UIButton(game.getxBowl()[i],game.getyBowl()[i], game.getxBowl()[i]+game.getSizeBowl(), game.getyBowl()[i]+game.getSizeBowl(), bowlP1, bowlP1));
-            bp2.add(new UIButton(game.getxBowl()[i+6],game.getyBowl()[i+6], game.getxBowl()[i+6]+game.getSizeBowl(), game.getyBowl()[i+6]+game.getSizeBowl(), bowlP2, bowlP2));
-        }
+        initializeButton();
         bee1=Game.getInstance().getBee1();
         bee2=Game.getInstance().getBee2();
         p1Bee=Assets.bee;
@@ -58,7 +57,18 @@ public class PlayState extends State{
             Game.getInstance().makeUnPlayable();
             this.isMegabrainFirst=true;
         }
+        Game.getInstance().setAngp1(0);
+        if(Game.getInstance().getGh().getIsHH()){
+            if(Game.getInstance().isTableMode()) {
+                Game.getInstance().setAngp2(180);
+            }else{
+                Game.getInstance().setAngp2(0);
+            }
+        }else{
+            Game.getInstance().setAngp2(0);
+        }
     };
+
 
     public void update(float delta){
         if((bee1.getX()==Game.getInstance().getxBee1())&&(bee1.getY()==Game.getInstance().getyBee1())){
@@ -71,6 +81,12 @@ public class PlayState extends State{
         }
         if(gh.getIsGameFinished()){
             setCurrentState(new ScoreState());
+        }
+        if((Game.getInstance().getSwitchPlayer())&&(bee1.atHome())&&(bee2.atHome())) {
+            Game.getInstance().switchPositions();
+            initializeButton();
+            this.redistributeSeeds();
+            Game.getInstance().setSwitchPlayer(false);
         }
         if((isRendered)&&(isMegabrainFirst)){
             TurnRunner r = new TurnRunner(gh.megabrainSelectBowlId());
@@ -93,37 +109,46 @@ public class PlayState extends State{
         int i=0;
         if(gh.getActivePlayer().equals(gh.getP1())){
             for (UIButton ub : bp1) {
-                g.drawString(bs[i].toString(), game.getxLabel()[i], game.getyLabel()[i]);
+                g.drawString(bs[i].toString(), game.getxLabel()[i], game.getyLabel()[i], game.getAngp1());//string bowl p1
                 ub.render(g);
                 i++;
             }
         }else{
             for (int j=0;j<6;j++){
-                g.drawString(bs[i].toString(), game.getxLabel()[j], game.getyLabel()[j]);
+                g.drawString(bs[i].toString(), game.getxLabel()[j], game.getyLabel()[j],game.getAngp1());//string bowl p1
                 g.drawImage(bowlInactive, game.getxBowl()[j], game.getyBowl()[j], game.getSizeBowl(),game.getSizeBowl());
                 i++;
             }
         }
-        g.drawImage(Assets.tray_1, game.getxTray()[0],game.getyTray()[0], 184,200);//t1
-        g.drawString(gh.getP1().getName(),game.getxNames()[0],game.getyNames()[0]);
-        g.drawString(bs[i].toString(),game.getxTray()[0]+70, game.getyTray()[0]+150);
+        int yT1=game.getyTray()[0];
+        if ((game.getAngp2()!=0)&&(!Game.getInstance().isTableMode())){
+            yT1-=75;
+        }
+        g.drawImage(Assets.rotate(Assets.tray_1, (float)game.getAngp1()), game.getxTray()[0],game.getyTray()[0], 184,200);//t1
+        g.drawString(gh.getP1().getName(),game.getxNames()[0],game.getyNames()[0], game.getAngp1());//name p1
+        g.drawString(bs[i].toString(),game.getxTray()[0]+70, yT1+150, game.getAngp1());//string tray p1
         i++;
         if(gh.getActivePlayer().equals(gh.getP2())){
             for(UIButton ub:bp2) {
-                g.drawString(bs[i].toString(),game.getxLabel()[i-1], game.getyLabel()[i-1]);
+                g.drawString(bs[i].toString(),game.getxLabel()[i-1], game.getyLabel()[i-1], game.getAngp2());//string bowl p2
                 ub.render(g);
                 i++;
             }
           }else{
             for (int j=0;j<6;j++){
-                g.drawString(bs[i].toString(),game.getxLabel()[j+6], game.getyLabel()[j+6]);
+                g.drawString(bs[i].toString(),game.getxLabel()[j+6], game.getyLabel()[j+6], game.getAngp2());//string bowl p2
                 g.drawImage(bowlInactive, game.getxBowl()[j+6], game.getyBowl()[j+6], game.getSizeBowl(),game.getSizeBowl());
                 i++;
             }
         }
-        g.drawImage(Assets.tray_2, game.getxTray()[1],game.getyTray()[1],  184,200);//t2
-        g.drawString(bs[i].toString(),game.getxTray()[1]+70, game.getyTray()[1]+150);
-        g.drawString(gh.getP2().getName(),game.getxNames()[1], game.getyNames()[1]);
+        int yT2=game.getyTray()[1];
+        int xT2=game.getxTray()[1];
+        if ((game.getAngp2()!=0)){
+            yT2-=75;xT2+=20;
+        }
+        g.drawImage(Assets.rotate(Assets.tray_2, (float)game.getAngp2()), game.getxTray()[1],game.getyTray()[1],  184,200);//t2
+        g.drawString(bs[i].toString(),xT2+70, yT2+150, game.getAngp2());//string tray p2
+        g.drawString(gh.getP2().getName(),game.getxNames()[1], game.getyNames()[1], game.getAngp2());//name p2
         renderSeeds(g);
         renderBees(g);
         isRendered=true;
@@ -169,6 +194,11 @@ public class PlayState extends State{
 
     public boolean onTouch(MotionEvent e, int scaledX, int scaledY){
         if(Game.getInstance().isPlayable()){
+           /*
+           TODO
+            if(Game.getInstance().getAngleScreen()==180){
+            scaledX=1920-scaledX;
+            scaledY=1200-scaledY;}*/
         if (e.getAction() == MotionEvent.ACTION_DOWN) {
            for(UIButton u:bp1) {
               if(Game.getInstance().getGh().getActivePlayer().equals(Game.getInstance().getGh().getP1())){
@@ -218,6 +248,23 @@ public class PlayState extends State{
         }
         return true;}else{
             return false;
+        }
+    }
+
+
+    private void initializeButton(){
+        Game game=Game.getInstance();
+        bp1.clear();bp2.clear();
+        for (int i=0;i<6;i++){
+            bp1.add(new UIButton(game.getxBowl()[i],game.getyBowl()[i], game.getxBowl()[i]+game.getSizeBowl(), game.getyBowl()[i]+game.getSizeBowl(), bowlP1, bowlP1));
+            bp2.add(new UIButton(game.getxBowl()[i+6],game.getyBowl()[i+6], game.getxBowl()[i+6]+game.getSizeBowl(), game.getyBowl()[i+6]+game.getSizeBowl(), bowlP2, bowlP2));
+        }
+    }
+
+    private void redistributeSeeds(){
+        List<Seed> sds=Game.getInstance().getSeeds();
+        for(Seed seed:sds){
+            seed.updatePosition(seed.getPosition());
         }
     }
 

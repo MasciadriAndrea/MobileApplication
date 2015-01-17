@@ -5,12 +5,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import it.polimi.framework.util.InputHandler;
 import it.polimi.framework.util.Painter;
+import it.polimi.game.model.Game;
 import it.polimi.game.state.PlayState;
 import it.polimi.game.state.State;
 
@@ -35,6 +37,7 @@ public class GameView extends SurfaceView implements Runnable {
 				gameImage.getHeight());
 		gameImageDst = new Rect();
 		gameCanvas = new Canvas(gameImage);
+        Game.getInstance().setCanvas(gameCanvas);
 		graphics = new Painter(gameCanvas);
 		SurfaceHolder holder = getHolder();
 		holder.addCallback(new Callback() {
@@ -94,15 +97,21 @@ public class GameView extends SurfaceView implements Runnable {
 
 	private void updateAndRender(long delta) {
 		currentState.update(delta / 1000f);
-		currentState.render(graphics);
-		renderGameImage();
+        currentState.render(graphics);
+      	renderGameImage();
 	}
 
 	private void renderGameImage() {
 		Canvas screen = getHolder().lockCanvas();
 		if (screen != null) {
 			screen.getClipBounds(gameImageDst);
-			screen.drawBitmap(gameImage, gameImageSrc, gameImageDst, null);
+            /*if(Game.getInstance().getSwitchPlayer()) {
+                //Log.d("", "Rotate");
+                //Game.getInstance().changeAngleScreen();
+                Game.getInstance().setSwitchPlayer(false);
+            }*/
+            screen.drawBitmap(gameImage, gameImageSrc, gameImageDst, null);
+            //screen.drawBitmap(Assets.rotate(gameImage,Game.getInstance().getAngleScreen()), gameImageSrc, gameImageDst, null);
 			getHolder().unlockCanvasAndPost(screen);
 		}
 	}

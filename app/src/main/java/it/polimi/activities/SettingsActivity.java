@@ -21,7 +21,7 @@ import it.polimi.game.model.SettingsHandler;
 
 public class SettingsActivity extends Activity {
     private NumberPicker np;
-    private ToggleButton musicB,soundB,animationsB;
+    private ToggleButton musicB,soundB,animationsB,tableB;
     private Button saveB;
     private TextView t1,t2,t3,t4,t5,t6;
 
@@ -36,8 +36,8 @@ public class SettingsActivity extends Activity {
 
         t1 = (TextView) findViewById(R.id.textView4);
         t1.setTypeface(type);
-        //t2 = (TextView) findViewById(R.id.textViewTM);
-        //t2.setTypeface(type);
+        t2 = (TextView) findViewById(R.id.textVieww);
+        t2.setTypeface(type);
         t3 = (TextView) findViewById(R.id.textView);
         t3.setTypeface(type);
         t4 = (TextView) findViewById(R.id.textView5);
@@ -56,6 +56,9 @@ public class SettingsActivity extends Activity {
         animationsB = (ToggleButton) findViewById(R.id.animationsb);
         animationsB.setChecked(Game.getInstance().getGraphic());
 
+       tableB = (ToggleButton) findViewById(R.id.tableb);
+       tableB.setChecked(Game.getInstance().getTableMode());
+
         saveB = (Button) findViewById(R.id.saveb);
 
         np = (NumberPicker) findViewById(R.id.np);
@@ -68,7 +71,7 @@ public class SettingsActivity extends Activity {
     }
 
     public void onSave(View arg){
-        SettingsHandler.getInstance().saveSettings(musicB.isChecked(), soundB.isChecked(), animationsB.isChecked(), np.getValue());
+        SettingsHandler.getInstance().saveSettings(musicB.isChecked(), soundB.isChecked(), animationsB.isChecked(), tableB.isChecked(), np.getValue());
         if(!musicB.isChecked()){
             Assets.onPause();
         }else{

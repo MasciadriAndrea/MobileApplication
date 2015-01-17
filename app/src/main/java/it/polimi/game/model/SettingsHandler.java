@@ -39,12 +39,14 @@ public class SettingsHandler {
                         String ms=eElement.getElementsByTagName("music").item(0).getTextContent();
                         String as= eElement.getElementsByTagName("animations").item(0).getTextContent();
                         String ns=eElement.getElementsByTagName("nseeds").item(0).getTextContent();
-                        Boolean sound,music,animations;
+                        String ts=eElement.getElementsByTagName("table").item(0).getTextContent();
+                        Boolean sound,music,animations,table;
                         Integer nseeds=Integer.parseInt(ns);
                         if(ss.equals("true")){sound=true;}else{sound=false;}
                         if(ms.equals("true")){music=true;}else{music=false;}
                         if(as.equals("true")){animations=true;}else{animations=false;}
-                        Game.getInstance().saveSettings(music, sound, animations, nseeds);
+                        if(ts.equals("true")){table=true;}else{table=false;}
+                        Game.getInstance().saveSettings(music, sound, animations,table, nseeds);
                 }
 
             else{
@@ -61,15 +63,15 @@ public class SettingsHandler {
     }
 
     protected void createConfigFile(){
-        saveSettings(true, true, true, 3);
+        saveSettings(true, true, true, false, 3);
     }
 
-    public void saveSettings(Boolean music, Boolean sound, Boolean animations, Integer nseeds){
-        Game.getInstance().saveSettings(music, sound, animations, nseeds);
+    public void saveSettings(Boolean music, Boolean sound, Boolean animations,Boolean table, Integer nseeds){
+        Game.getInstance().saveSettings(music, sound, animations,table, nseeds);
         try {
             File file = new File(Game.getInstance().getLoadActivity().getFilesDir(), "/setting.xml");
             FileWriter fw = new FileWriter(file);
-            fw.write("<settings><music>"+music.toString()+"</music><sound>"+sound.toString()+"</sound><animations>"+animations.toString()+"</animations><nseeds>"+nseeds.toString()+"</nseeds></settings>");
+            fw.write("<settings><music>"+music.toString()+"</music><sound>"+sound.toString()+"</sound><animations>"+animations.toString()+"</animations><table>"+table.toString()+"</table><nseeds>"+nseeds.toString()+"</nseeds></settings>");
             fw.flush();
             fw.close();
             this.settingsInitialization();

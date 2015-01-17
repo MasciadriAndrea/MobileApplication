@@ -3,6 +3,7 @@ package it.polimi.game.model;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
@@ -28,10 +29,17 @@ public class Game {
     private Boolean graphic;
     private Boolean sound;
     private Boolean music;
+    private Boolean tableMode;
     private Integer nSeeds;
     private Integer sizeBowl;
+    private int angp1,angp2;
+    private Canvas canvas;
+    private Boolean switchPlayer;
+    private int angleScreen;
 
     protected Game() {
+        switchPlayer=false;
+        angleScreen=0;
         seeds=new ArrayList<Seed>();
         playable=true;
         assets = null;
@@ -60,6 +68,43 @@ public class Game {
             yBowl[i+6]=60;
             yLabel[i]=yBowl[i]-30;
             yLabel[i+6]=yBowl[i+6]+sizeBowl+50;
+        }
+    }
+
+    public void switchPositions(){
+        //switch positions of bowls and labels of p1 and p2
+        //transpose vector of bowls and labels of p1 and p2
+        Integer[] xBowlNew=new Integer[]{xBowl[6],xBowl[7],xBowl[8],xBowl[9],xBowl[10],xBowl[11],xBowl[0],xBowl[1],xBowl[2],xBowl[3],xBowl[4],xBowl[5]};
+        Integer[] yBowlNew=new Integer[]{yBowl[6],yBowl[7],yBowl[8],yBowl[9],yBowl[10],yBowl[11],yBowl[0],yBowl[1],yBowl[2],yBowl[3],yBowl[4],yBowl[5]};
+        Integer[] xLabelNew=new Integer[]{xLabel[6],xLabel[7],xLabel[8],xLabel[9],xLabel[10],xLabel[11],xLabel[0],xLabel[1],xLabel[2],xLabel[3],xLabel[4],xLabel[5]};
+        Integer[] yLabelNew=new Integer[]{yLabel[6],yLabel[7],yLabel[8],yLabel[9],yLabel[10],yLabel[11],yLabel[0],yLabel[1],yLabel[2],yLabel[3],yLabel[4],yLabel[5]};
+        xBowl=xBowlNew;
+        yBowl=yBowlNew;
+        xLabel=xLabelNew;
+        yLabel=yLabelNew;
+        //change positions of trays and labels
+        Integer[] xTrayNew=new Integer[]{xTray[1],xTray[0]};
+        Integer[] yTrayNew=new Integer[]{yTray[1],yTray[0]};
+        xTray=xTrayNew;
+        yTray=yTrayNew;
+        //change position of bees
+        float xb1=bee1.getxHome();
+        float yb1=bee1.getyHome();
+        double angb1=bee1.getAngHome();
+        bee1.setBee(bee2.getxHome(),bee2.getyHome(),bee2.getAngHome());
+        bee2.setBee(xb1,yb1,angb1);
+        //change positions of names
+        Integer[] xNameNew=new Integer[]{xNames[1],xNames[0]};
+        Integer[] yNameNew=new Integer[]{yNames[1],yNames[0]};
+        xNames=xNameNew;
+        yNames=yNameNew;
+    }
+
+    public void changeAngleScreen(){
+        if(this.angleScreen==0){
+            this.angleScreen=180;
+        } else{
+            this.angleScreen=0;
         }
     }
 
@@ -268,11 +313,12 @@ public class Game {
         return sizeBowl;
     }
 
-    public void saveSettings(Boolean music, Boolean sound, Boolean animations, Integer nseeds){
+    public void saveSettings(Boolean music, Boolean sound, Boolean animations,Boolean table, Integer nseeds){
         this.setGraphic(animations);
         this.setMusic(music);
         this.setnSeeds(nseeds);
         this.setSound(sound);
+        this.setTableMode(table);
     }
 
     public Integer[] getxLabel() {
@@ -289,5 +335,68 @@ public class Game {
 
     public Integer[] getyNames() {
         return yNames;
+    }
+
+    public int getAngp1() {
+        return angp1;
+    }
+
+    public int getAngp2() {
+        return angp2;
+    }
+
+    public Boolean isTableMode(){
+        return tableMode;
+    }
+
+    public void setTableMode(Boolean tm){
+        this.tableMode=tm;
+    }
+
+    public void setAngp1(int angp1) {
+        this.angp1 = angp1;
+    }
+
+    public void setAngp2(int angp2) {
+        this.angp2 = angp2;
+    }
+
+    public void changeAngles(){
+        int an=0;
+        if(this.angp1==0){
+            an=180;
+        }else{
+            an=0;
+        }
+        this.angp1=an;
+        this.angp2=an;
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public void setCanvas(Canvas canvas) {
+        this.canvas = canvas;
+    }
+
+    public Boolean getSwitchPlayer() {
+        return switchPlayer;
+    }
+
+    public void setSwitchPlayer(Boolean switchPlayer) {
+        this.switchPlayer = switchPlayer;
+    }
+
+    public int getAngleScreen() {
+        return angleScreen;
+    }
+
+    public void setAngleScreen(int angleScreen) {
+        this.angleScreen = angleScreen;
+    }
+
+    public Boolean getTableMode() {
+        return tableMode;
     }
 }

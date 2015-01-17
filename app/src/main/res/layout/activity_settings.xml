@@ -120,13 +120,15 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:weightSum="2">
             <LinearLayout
 
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
                 <TextView
                     android:textSize="25dp"
                     android:layout_marginRight="5dp"
@@ -147,14 +149,42 @@
                     android:textOff=""
                     />
             </LinearLayout>
+                <LinearLayout
+
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal">
+                    <TextView
+                        android:textSize="25dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/tableMode"
+                        android:id="@+id/textVieww"
+                        android:textColor="@color/brown"
+                        android:layout_gravity="center_horizontal" />
+                    <ToggleButton
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:text="New ToggleButton"
+                        android:id="@+id/tableb"
+                        android:background="@drawable/toggle_btn"
+                        android:textOn=""
+                        android:textOff=""
+                        />
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
+                android:gravity="center|center_horizontal"
                 android:layout_margin="10dp"
                 android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_vertical"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+               >
                 <TextView
                     android:textSize="25dp"
                     android:layout_marginRight="5dp"

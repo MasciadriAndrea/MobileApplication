@@ -36,7 +36,7 @@ public class PauseActivity extends Activity {
         musicB.setChecked(Game.getInstance().getMusic());
         musicB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-               SettingsHandler.getInstance().saveSettings(musicB.isChecked(), Game.getInstance().getSound(), Game.getInstance().getGraphic(),
+               SettingsHandler.getInstance().saveSettings(musicB.isChecked(), Game.getInstance().getSound(), Game.getInstance().getGraphic(),Game.getInstance().getTableMode(),
                        Game.getInstance().getnSeeds());
 
             }
@@ -46,7 +46,7 @@ public class PauseActivity extends Activity {
         soundB.setChecked(Game.getInstance().getSound());
         soundB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                SettingsHandler.getInstance().saveSettings(Game.getInstance().getMusic(), soundB.isChecked(), Game.getInstance().getGraphic(),
+                SettingsHandler.getInstance().saveSettings(Game.getInstance().getMusic(), soundB.isChecked(), Game.getInstance().getGraphic(),Game.getInstance().getTableMode(),
                         Game.getInstance().getnSeeds());
 
             }

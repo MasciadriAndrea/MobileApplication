@@ -7,6 +7,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 
+import it.polimi.game.model.Game;
+
 public class Painter {
 	private Canvas canvas;
 	private Paint paint;
@@ -35,6 +37,19 @@ public class Painter {
 		canvas.drawText(str, x, y, paint);
 	}
 
+    public void drawString(String str, int x, int y, int angle) {
+        if(angle!=0){
+        canvas.save();
+        canvas.rotate(angle, x, y);
+            int delta=str.length()*22;
+        canvas.drawText(str, x-delta, y+22, paint);
+        canvas.restore();}else{
+            drawString(str, x, y);
+        }
+    }
+
+
+
 	public void fillRect(int x, int y, int width, int height) {
 		dstRect.set(x, y, x + width, y + height);
 		paint.setStyle(Paint.Style.FILL);
@@ -56,4 +71,8 @@ public class Painter {
 		dstRectF.set(x, y, x + width, y + height);
 		canvas.drawOval(dstRectF, paint);
 	}
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
 }

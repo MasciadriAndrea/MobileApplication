@@ -16,6 +16,15 @@ public class Bee {
         this.ang=ang;
     }
 
+    public void setBee(float x, float y,double ang){
+        this.xHome=x;
+        this.yHome=y;
+        this.x = x;
+        this.y = y;
+        this.angHome=ang;
+        this.ang=ang;
+    }
+
     public void update(float x,float y) {
         this.x=x;
         this.y=y;
@@ -87,6 +96,10 @@ public class Bee {
 
     public double getAng() {
         return ang;
+    }
+
+    public double getAngHome() {
+        return angHome;
     }
 
 }

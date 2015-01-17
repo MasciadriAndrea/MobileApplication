@@ -36,11 +36,9 @@ public class GameHandler {
     public GameHandler(Player p1,Boolean isFastGame){
        //constructor for Human vs Megabrain mode
         nSeeds=Game.getInstance().getnSeeds();
-       Player p2=PlayerHandler.getInstance().getPlayerById(MEGABRAIN);
+        Player p2=PlayerHandler.getInstance().getPlayerById(MEGABRAIN);
         this.initGame(p1,p2,false,nSeeds,isFastGame);
         this.setBoard(new Board(p1,p2));
-
-
    }
 
     public Boolean graphicsOn(){
@@ -231,6 +229,7 @@ public class GameHandler {
             this.setActivePlayer(p2);
         }
         this.matchResult=new MatchResult(initSeeds,p1,p2);
+        Game.getInstance().setAngleScreen(0);
     }
 
     private Boolean zeroSeeds(Player player){
@@ -264,6 +263,14 @@ public class GameHandler {
             this.setActivePlayer(this.getP2());
         }else{
             this.setActivePlayer(this.getP1());
+        }
+        if(this.equals(Game.getInstance().getGh())){
+        if(Game.getInstance().getGh().getIsHH()){
+            if(!Game.getInstance().isTableMode())
+            {   Game.getInstance().setSwitchPlayer(true);
+               //Game.getInstance().changeAngles();
+            }
+        }
         }
     }
 

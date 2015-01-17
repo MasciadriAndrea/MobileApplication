@@ -15,7 +15,7 @@ public class Megabrain {
     private Integer maxScore,minScore;
     private static int levelMegabrain=4;
     private static int levelPlayer=2;
-    private static double weight1=0.5;
+    private static double weight1=1;
     private static double weight2=0.1;
     private static double weight3=0.01;
 
