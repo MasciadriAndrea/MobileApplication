@@ -105,13 +105,7 @@ public class GameView extends SurfaceView implements Runnable {
 		Canvas screen = getHolder().lockCanvas();
 		if (screen != null) {
 			screen.getClipBounds(gameImageDst);
-            /*if(Game.getInstance().getSwitchPlayer()) {
-                //Log.d("", "Rotate");
-                //Game.getInstance().changeAngleScreen();
-                Game.getInstance().setSwitchPlayer(false);
-            }*/
             screen.drawBitmap(gameImage, gameImageSrc, gameImageDst, null);
-            //screen.drawBitmap(Assets.rotate(gameImage,Game.getInstance().getAngleScreen()), gameImageSrc, gameImageDst, null);
 			getHolder().unlockCanvasAndPost(screen);
 		}
 	}

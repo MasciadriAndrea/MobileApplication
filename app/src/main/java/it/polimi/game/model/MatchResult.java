@@ -10,6 +10,7 @@ import it.polimi.game.persistence.PlayerDAO;
 public class MatchResult {
     private Player winner;
     private Player loser;
+    private Boolean isTie;
     private Integer winnerSeeds;
     private Integer looserSeeds;
     private Integer seedsPerBowl;
@@ -30,6 +31,7 @@ public class MatchResult {
         this.looserSeeds=0;
         this.bestMoveP1=0;
         this.bestMoveP2=0;
+        this.isTie=false;
         this.p1=p1;
         this.p2=p2;
         Calendar calendar = new GregorianCalendar();
@@ -37,26 +39,28 @@ public class MatchResult {
     }
 
     public void storeData(Player player, Integer seeds1, Integer seeds2){
-        this.winner=player;
-        this.loser=p1;
-        if(this.winner.equals(this.p1)) {
+        if(seeds1==seeds2){
+            //TIE
+            this.isTie=true;
+            this.winner=p1;
             this.loser=p2;
             this.winnerSeeds=seeds1;
             this.looserSeeds=seeds2;
-        }else{
-            if(this.winner.getId().equals(0)){
-                //TIE
-                this.winner=p1;
-                this.loser=p2;
-                this.winnerSeeds=seeds1;
-                this.looserSeeds=seeds2;
-                this.loser.incrementWins();
+            if(!Game.getInstance().getGh().getIsFastGame()) {
+                this.loser.incrementWins();}
             }else {
-                this.winnerSeeds = seeds2;
-                this.looserSeeds = seeds1;
-            }
+                this.winner=player;
+                this.loser=p1;
+                if (this.winner.equals(this.p1)) {
+                    this.loser = p2;
+                    this.winnerSeeds = seeds1;
+                    this.looserSeeds = seeds2;
+                } else {
+                    this.winnerSeeds = seeds2;
+                    this.looserSeeds = seeds1;
+                }
 
-        }
+            }
         this.winner.setLastGamePlayed(this.data);
         this.loser.setLastGamePlayed(this.data);
         HistoryHandler.getInstance().addGameHistory(new GameHistory(winner,loser,winnerSeeds,looserSeeds,data));
@@ -142,5 +146,13 @@ public class MatchResult {
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    public Boolean getIsTie() {
+        return isTie;
+    }
+
+    public void setIsTie(Boolean isTie) {
+        this.isTie = isTie;
     }
 }

@@ -32,8 +32,11 @@ public class ScoreState extends State {
         g.setColor(Color.WHITE);
         g.setFont(Typeface.DEFAULT_BOLD, 100);
         String winner=Game.getInstance().getGh().getMatchResult().getWinner().getName();
-        if(!winner.equals("TIE"))
-        g.drawString("The winner is:", 540, 650);
+        if(!Game.getInstance().getGh().getMatchResult().getIsTie()){
+            g.drawString("The winner is:", 540, 650);}
+        else{
+            winner="TIE";
+        }
         g.setFont(Typeface.DEFAULT_BOLD, 140);
         g.drawString(winner, 1040, 820);
         g.setFont(Typeface.DEFAULT_BOLD, 100);

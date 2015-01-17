@@ -38,14 +38,18 @@ public class Game {
     private int angleScreen;
 
     protected Game() {
-        switchPlayer=false;
-        angleScreen=0;
         seeds=new ArrayList<Seed>();
         playable=true;
         assets = null;
         this.gh=null;
         gameActivity=null;
         menuActivity= null;
+        this.initializateCoordinates();
+    }
+
+    public void initializateCoordinates(){
+        switchPlayer=false;
+        angleScreen=0;
         xBee1=1426;yBee1=475;
         xBee2=244;yBee2=475;
         xNames= new Integer[]{1085,585};

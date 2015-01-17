@@ -10,7 +10,6 @@ import java.util.List;
 
 import it.polimi.core.Assets;
 import it.polimi.core.GameMainActivity;
-import it.polimi.game.model.megabrain.LogicHandler;
 import it.polimi.game.model.megabrain.Megabrain;
 import it.polimi.game.model.megabrain.Turn;
 import it.polimi.game.persistence.PlayerDAO;
@@ -27,7 +26,6 @@ public class GameHandler {
     private Boolean isFastGame;
     private MatchResult matchResult;
     private static Integer MEGABRAIN=1;
-    public static Player TIE=new Player("TIE",0);
     private static Integer ISGAMEFINISHED=3;
     private static Integer ISMYTURNAGAIN=2;
     private static Integer PERFORMSTEAL=1;
@@ -229,7 +227,7 @@ public class GameHandler {
             this.setActivePlayer(p2);
         }
         this.matchResult=new MatchResult(initSeeds,p1,p2);
-        Game.getInstance().setAngleScreen(0);
+        Game.getInstance().initializateCoordinates();
     }
 
     private Boolean zeroSeeds(Player player){
@@ -265,12 +263,12 @@ public class GameHandler {
             this.setActivePlayer(this.getP1());
         }
         if(this.equals(Game.getInstance().getGh())){
-        if(Game.getInstance().getGh().getIsHH()){
-            if(!Game.getInstance().isTableMode())
-            {   Game.getInstance().setSwitchPlayer(true);
-               //Game.getInstance().changeAngles();
+            if(Game.getInstance().getGh().getIsHH()){
+                if(!Game.getInstance().isTableMode())
+                {  //this is to switch the player (rotation) in normal mode h vs h
+                    Game.getInstance().setSwitchPlayer(true);
+                }
             }
-        }
         }
     }
 
@@ -298,7 +296,7 @@ public class GameHandler {
             if(t2.getSeeds()>t1.getSeeds()){
                 win=this.getP2();
             }else{
-                win=this.TIE;
+                win=this.getP1();
             }
         }
         if(t2.getSeeds()+t1.getSeeds()!=(Game.getInstance().getnSeeds()*12)){
