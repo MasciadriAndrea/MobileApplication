@@ -35,12 +35,10 @@ public class Megabrain {
         this.megabrain=megabrain;
         this.maxScore=nSeeds*12;
         this.minScore=-maxScore;
-      // this.maxScoreP= Game.getInstance().getnSeeds()*12;
     }
 
     public Turn buildTree(Integer[] board,Player activePlayer,Integer selectedBowlId,Turn idParent,int level){
         if(level>0) {
-            //TODO Log.v("Megabrain","level "+Integer.toString(level));
             Turn turn = new Turn(idParent, activePlayer, selectedBowlId);
             int[] iniP1 = {0, 0, 0, 0, 0, 0, 0};
             int[] iniP2 = {0, 0, 0, 0, 0, 0, 0};
@@ -53,11 +51,9 @@ public class Megabrain {
             Integer selectedPointer,ns;
             if(activePlayer.equals(p1)){
                 selectedPointer=selectedBowlId-1;
-                 //selectedPointer=selectedBowlId;
                 ns=iniP1[selectedPointer];
             }else{
                  selectedPointer=selectedBowlId-7;
-                //selectedPointer=selectedBowlId;
                 ns=iniP2[selectedPointer];
             }
            Integer lostSeeds=ns+selectedPointer-6;
@@ -95,7 +91,6 @@ public class Megabrain {
                     }
                     if(nextActivePlayer.equals(megabrain)) {
                         for (int i = 0; i < 6; i++) {
-                           // Log.v("Megabrain", "megabrain sceglie "+moves[i].toString());
                             Integer start;
                             if (nextActivePlayer.equals(p1)) {//if megabrain (activePlayer) is p1
                                 start=0;
@@ -115,22 +110,18 @@ public class Megabrain {
                         root.setScoreDif(0);
                         Integer[] movesP = {};
                         Turn[] childrenP = new Turn[]{null, null, null, null, null, null};
-                        //TODO
                         if (nextActivePlayer.equals(p1)) {//if megabrain (activePlayer) is p1
                             movesP = new Integer[]{1, 2, 3, 4, 5, 6};
                         } else {
                             movesP = new Integer[]{7, 8, 9, 10, 11, 12};
                         }
                         for (Integer i=0;i<6;i++) {
-                            //TODO Log.v("Megabrain -> player","start build player tree");
                             Integer levelP=Math.min(level,this.levelPlayer);
                             childrenP[i]=buildTree(boardAfter, nextActivePlayer, movesP[i], root, levelP);
-                            //TODO Log.v("Megabrain -> player","finish build player tree");
                         }
                         root.setChildren(childrenP);
                         Integer levelP=Math.min(level,this.levelPlayer);
                         Integer whatPlayerHaveChoose=evaluateTree(root,levelP).getPosition();
-                       // Log.v("Megabrain", "player sceglie "+whatPlayerHaveChoose.toString());
                         Integer whatPlayerHaveChooseIndex=0;
                         if(whatPlayerHaveChoose==null){
                             whatPlayerHaveChoose=whatPlayerHaveChoose;
@@ -141,8 +132,6 @@ public class Megabrain {
                             children[whatPlayerHaveChooseIndex] = buildTree(boardAfter, nextActivePlayer, whatPlayerHaveChoose, turn, level);
                         }
                     }
-                }else{
-                  //  Log.v("Megabrain","stop growing ->finish game or level 0");
                 }
 
                 turn.setChildren(children);
@@ -150,9 +139,7 @@ public class Megabrain {
             }
             return null;
         }
-        else{
-           // Log.v("Megabrain","stop growing -> level 0");
-        }
+
         return null;
 
     }
@@ -169,7 +156,6 @@ public class Megabrain {
                 isLeaf=true;
             }
             if(isLeaf){
-               //Log.v("mb","leaf and the score is -> "+node.getScoreDif());
                return new ScorePos(node.getSelectedBowl(),node.getScoreDif());
             }else {
                //call this function for every child
@@ -182,7 +168,6 @@ public class Megabrain {
                     score=maxScore;
                 }
                 childrenScore=new Integer[]{score, score, score, score, score, score};
-                //TODO
                 String str="";
                 for(Integer i=0;i<6;i++){
                     if(node.getChildren()[i]!=null){
@@ -196,34 +181,24 @@ public class Megabrain {
                     }
 
                 }
-                //TODO
                 str="";
                 for(int j=0;j<childrenScore.length;j++){
                     str+=childrenScore[j].toString()+";";
                 }
-                //Log.v("mb","player: "+node.getActualPlayer().getName()+" score of his child: "+str);
                 for(Integer foo=0;foo<childrenScore.length;foo++) {
 
                     if (node.getActualPlayer().equals(megabrain)) {
                         //I want to maximise
 
                         if (score < childrenScore[foo]) {
-                            //TODO
-                            //Log.v("m", "yeeeeeah is more score: " + score.toString() + " child score " + childrenScore[foo].toString());
                             score = childrenScore[foo];
                             position = foo;
-                        } else {
-                            //Log.v("m", "nooooo it's not more score: " + score.toString() + " child score " + childrenScore[foo].toString());
                         }
                     } else {
                         //I want to minimize
                         if (score > childrenScore[foo]) {
-                            //TODO
-                            //Log.v("m", "yeeeeeah is less score: " + score.toString() + " child score " + childrenScore[foo].toString());
                             score = childrenScore[foo];
                             position = foo;
-                        } else {
-                          //  Log.v("m", "nooo it's not less score: " + score.toString() + " child score " + childrenScore[foo].toString());
                         }
                     }
                 }
@@ -233,7 +208,6 @@ public class Megabrain {
                     } else {
                         moves = new Integer[]{7, 8, 9, 10, 11, 12};
                     }
-                    //Log.v("mb","he choose ->" +position.toString());
                     return new ScorePos(moves[position],score);
 
             }
@@ -265,6 +239,9 @@ public class Megabrain {
         if (p1.getId().equals(1)){//player 1 is megabrain
             scoreDif = gh.getBoard().getSemiBoardByPlayer(p1).getTray().getSeeds() - gh.getBoard().getSemiBoardByPlayer(p2).getTray().getSeeds();
             scoreDif= (int) Math.round(scoreDif*this.weight1);
+
+            //-------------------             this could be one possible way to calculate score
+
             //scoreDif-= (gh.getBoard().getSemiBoardByPlayer(p1).getNumberOfNonEmptyBowl())*this.weight1;
             //scoreDif=scoreDif*2;
             //scoreDif-= turn.getLostSeeds()*this.weight2;

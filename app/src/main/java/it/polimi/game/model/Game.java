@@ -139,14 +139,12 @@ public class Game {
         } return false;
     }
     public void makePlayable(){
-        Log.v("Game","Playable");
         this.playable=true;
         GameMainActivity gma=(GameMainActivity) Game.getInstance().getGameActivity();
         gma.getsGame().setClickable(true);
     }
 
     public void makeUnPlayable(){
-        Log.v("Game","makeUnPlayable");
         this.playable=false;
         GameMainActivity gma=(GameMainActivity) Game.getInstance().getGameActivity();
         gma.getsGame().setClickable(false);

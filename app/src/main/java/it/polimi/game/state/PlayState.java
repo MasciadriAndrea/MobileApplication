@@ -34,6 +34,7 @@ public class PlayState extends State{
     private static int color1=Color.rgb(61,33,13);
 
     public void init(){
+        Game.getInstance().initializateCoordinates();
         isRendered=false;
         isMegabrainFirst=false;
         Game.getInstance().makePlayable();
@@ -85,7 +86,6 @@ public class PlayState extends State{
         if((Game.getInstance().getSwitchPlayer())&&(bee1.atHome())&&(bee2.atHome())) {
             Game.getInstance().switchPositions();
             initializeButton();
-            this.redistributeSeeds();
             Game.getInstance().setSwitchPlayer(false);
         }
         if((isRendered)&&(isMegabrainFirst)){
@@ -194,11 +194,6 @@ public class PlayState extends State{
 
     public boolean onTouch(MotionEvent e, int scaledX, int scaledY){
         if(Game.getInstance().isPlayable()){
-           /*
-           TODO
-            if(Game.getInstance().getAngleScreen()==180){
-            scaledX=1920-scaledX;
-            scaledY=1200-scaledY;}*/
         if (e.getAction() == MotionEvent.ACTION_DOWN) {
            for(UIButton u:bp1) {
               if(Game.getInstance().getGh().getActivePlayer().equals(Game.getInstance().getGh().getP1())){
@@ -253,17 +248,21 @@ public class PlayState extends State{
 
 
     private void initializeButton(){
+        //bowls are buttons
         Game game=Game.getInstance();
         bp1.clear();bp2.clear();
         for (int i=0;i<6;i++){
             bp1.add(new UIButton(game.getxBowl()[i],game.getyBowl()[i], game.getxBowl()[i]+game.getSizeBowl(), game.getyBowl()[i]+game.getSizeBowl(), bowlP1, bowlP1));
             bp2.add(new UIButton(game.getxBowl()[i+6],game.getyBowl()[i+6], game.getxBowl()[i+6]+game.getSizeBowl(), game.getyBowl()[i+6]+game.getSizeBowl(), bowlP2, bowlP2));
         }
+        Game.getInstance().setSeeds(new ArrayList<Seed>());
+        this.createSeeds();
     }
 
     private void redistributeSeeds(){
         List<Seed> sds=Game.getInstance().getSeeds();
         for(Seed seed:sds){
+
             seed.updatePosition(seed.getPosition());
         }
     }

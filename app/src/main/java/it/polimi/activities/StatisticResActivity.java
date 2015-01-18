@@ -108,7 +108,7 @@ public class StatisticResActivity  extends Activity {
         this.items2 = new ArrayList<ListItem>();
         ArrayList<String> names = new ArrayList<String>();
         for (Player player : listPlayers){
-            //TODO here we can exclude megabrain's statistics
+            //here we can exclude megabrain's statistics
             Double maxScore = player.getMaxScoreResult();
             names.add(player.getName());
             items2.add(new ListItem(player.getName(),maxScore.intValue()));

@@ -227,7 +227,6 @@ public class GameHandler {
             this.setActivePlayer(p2);
         }
         this.matchResult=new MatchResult(initSeeds,p1,p2);
-        Game.getInstance().initializateCoordinates();
     }
 
     private Boolean zeroSeeds(Player player){
@@ -299,9 +298,7 @@ public class GameHandler {
                 win=this.getP1();
             }
         }
-        if(t2.getSeeds()+t1.getSeeds()!=(Game.getInstance().getnSeeds()*12)){
-            System.out.println("!!!!ERROR: total amount of seeds different from expected!!!!!!!!!!!!");
-        }
+
         if(this.equals(Game.getInstance().getGh())) {
             Game.getInstance().makePlayable();
             this.matchResult.storeData(win, t1.getSeeds(), t2.getSeeds());
@@ -317,7 +314,6 @@ public class GameHandler {
     }
 
     public Integer megabrainSelectBowlId(){
-        //Integer sbp= LogicHandler.getInstance().megabrainSelectBowlPosition(this.getBoard().getBoardStatus(),this.getActivePlayer(),this.p1,this.p2,nSeeds,5);
         Game.getInstance().makeUnPlayable();
         Megabrain.getInstance().initializate(this.p1,this.p2,this.getActivePlayer(),Game.getInstance().getnSeeds());
         Integer sbp= Megabrain.getInstance().megabrainSelectBowlPosition(this.getBoard().getBoardStatus(),this.getActivePlayer());
@@ -328,7 +324,7 @@ public class GameHandler {
         } else {
             moves = new Integer[]{7, 8, 9, 10, 11, 12};
         }
-        Log.v("Megabrain","MB want to select bowl n: "+sbp.toString());
+        //Log.v("Megabrain","MB want to select bowl n: "+sbp.toString());
         return sbp;
     }
 
